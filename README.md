@@ -15,7 +15,7 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
-## Version Control for Developers -10/12/2018
+## Version Control for Developers -10/12/2018(Needs revision)
  
 For future commits:
   * Any commit that changes the internal logics should be followed by a detailed commit  message that describes in detail what feature
