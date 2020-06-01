@@ -18,9 +18,7 @@ samples, guidance on mobile development, and a full API reference.
 ## Version Control for Developers -10/12/2018(Needs revision)
  
 For future commits:
-  * Any commit that changes the internal logics should be followed by a detailed commit  message that describes in detail what feature
-    are modified, and should start with "CORE:".
-  * Any commit that does not change the internal logics should have a commit message that is brief, and should not start with "CORE".
+  * Any major commits that changes the code in any significant(up to interpretation) should be begin with "CORE:", any minor changes 	     should not.
  
 Development from now on should follow the below branching protocal:
   * The git repo will now have two branches at all times: master and development. They should not be deleted under any conditions.
