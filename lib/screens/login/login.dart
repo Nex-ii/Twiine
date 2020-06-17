@@ -1,114 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:twiine/fonts/custom_icons.dart';
 
-class Login extends StatefulWidget{
+class Login extends StatefulWidget {
   @override
   LoginState createState() =>LoginState();
 }
 
-class LoginState extends State<Login> {
-
-  final username_controller = TextEditingController(),
-        password_controller = TextEditingController();
-
+class LoginState extends State<Login>{
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(
-          'Login',
-          style: new TextStyle(color: Colors.white),
-        ),
-      ),
-      body: new SingleChildScrollView(
-        child: new Container(
-          margin: new EdgeInsets.all(15.0),
-          child: new Form(
-            key: new GlobalKey(),
-            child: getFormUI(),
+    return Scaffold(
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Text(
+              'Welcome to Twiine',
+              style: TextStyle(height: 10, fontSize: 20),
+            ),
           ),
-        ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  ButtonTheme(
+                    minWidth: 250.0,
+                    child: OutlineButton(
+                        onPressed: _navigate_to_facebook_login,
+                        child: Wrap(
+                          alignment: WrapAlignment.center,
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              MyFlutterApp.facebook_squared,
+                            ),
+                            Text(' Login with Facebook'),
+                          ],
+                        )
+                    ),
+                  ),
+                  ButtonTheme(
+                    minWidth: 250.0,
+                    child: OutlineButton(
+                      onPressed: _navigate_to_phone_register,
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.phone),
+                          Text(' Register by phone number'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ButtonTheme(
+                    minWidth: 250.0,
+                    child: OutlineButton(
+                      onPressed: _navigate_to_email_register,
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.email),
+                          Text(' Register with email'),
+                        ],
+                      ),
+                    ),
+                  ),
+                  FlatButton(
+                    child: Text('Already have an account? login here',
+                        style: TextStyle(
+                            fontSize: 15.0, fontWeight: FontWeight.w300)),
+                    onPressed: _navigate_to_basic_login,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  @override
-  void dispose(){
-    username_controller.dispose();
-    password_controller.dispose();
-    super.dispose();
+  _navigate_to_facebook_login(){
+    Navigator.of(context).pushNamed('/login_facebook');
   }
 
-  Widget getFormUI() {
-    return new Column(
-      children: <Widget>[
-        new TextFormField(
-          decoration: new InputDecoration(
-              hintText: 'Email',
-              icon: new Icon(
-                Icons.mail,
-                color: Colors.grey,
-              )),
-          maxLines: 1,
-          maxLength: 32,
-          keyboardType: TextInputType.emailAddress,
-          controller: username_controller,
-        ),
-        new TextFormField(
-          decoration: new InputDecoration(
-              hintText: 'Password',
-              icon: new Icon(
-                Icons.lock,
-                color: Colors.grey,
-              )),
-          obscureText: true,
-          maxLines: 1,
-          maxLength: 10,
-          controller: password_controller,
-        ),
-        new SizedBox(height: 15.0),
-        new Row(
-          children: [
-            new FlatButton(
-              child: new Text('Forgot password?',
-                style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300)),
-                onPressed: navigate_to_forgot_password,
-            ),
-            new SizedBox(width: 10,),
-            new FlatButton(
-              child: new Text('Create Account',
-                  style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300)),
-              onPressed: navigate_to_create_account,
-            ),
-          ],
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-        new RaisedButton(
-          onPressed: navigate_to_home,
-          child: new Text('Login'),
-        )
-      ],
-    );
+  _navigate_to_phone_register(){
+    Navigator.of(context).pushNamed('/register_phone');
   }
 
-  /// Posts the username and password for credential validation
-  bool post_credentials(){
-    final String username = username_controller.text,
-                 password = password_controller.text;
-    throw UnimplementedError();
+  _navigate_to_email_register(){
+    Navigator.of(context).pushNamed('/register_email');
   }
 
-  navigate_to_home(){
-    if(post_credentials())
-      Navigator.of(context).pushNamed('/home');
+  _navigate_to_basic_login(){
+    Navigator.of(context).pushNamed('/login_basic');
   }
-
-  navigate_to_forgot_password(){
-    Navigator.of(context).pushNamed('/forgot_password');
-  }
-
-  navigate_to_create_account(){
-    Navigator.of(context).pushNamed('/create_account');
-  }
-
 
 }
