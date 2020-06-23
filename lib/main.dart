@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/create_account/create_account.dart';
-import 'package:twiine/screens/forgot_password/forgot_password.dart';
-import 'package:twiine/screens/login/login.dart';
-import 'package:twiine/screens/home/home.dart';
-import 'package:twiine/screens/login_basic/login_basic.dart';
-import 'package:twiine/screens/login_facebook/login_facebook.dart';
-import 'package:twiine/screens/register_email/register_email.dart';
-import 'package:twiine/screens/register_phone/register_phone.dart';
+import 'package:twiine/screens/pre_login/register/create_account/create_account.dart';
+import 'package:twiine/screens/pre_login/register/forgot_password/forgot_password.dart';
+import 'package:twiine/screens/pre_login/login/login.dart';
+import 'package:twiine/screens/post_login/home/home.dart';
+import 'package:twiine/screens/pre_login/login/login_basic/login_basic.dart';
+import 'package:twiine/screens/pre_login/login/login_facebook/login_facebook.dart';
+import 'package:twiine/screens/pre_login/register/register_email/register_email.dart';
+import 'package:twiine/screens/pre_login/register/register_phone/register_phone.dart';
 
 void main() => runApp(App());
 

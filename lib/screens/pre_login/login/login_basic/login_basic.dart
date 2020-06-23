@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginBasic extends StatefulWidget{
   @override
@@ -7,7 +8,11 @@ class LoginBasic extends StatefulWidget{
 
 class LoginState extends State<LoginBasic> {
 
-  final username_controller = TextEditingController(),
+  final formKey = new GlobalKey<FormState>();
+
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  final email_controller = TextEditingController(),
         password_controller = TextEditingController();
 
   @override
@@ -23,19 +28,12 @@ class LoginState extends State<LoginBasic> {
         child: Container(
           margin: EdgeInsets.all(15.0),
           child: Form(
-            key: GlobalKey(),
+            key: formKey,
             child: getFormUI(),
           ),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose(){
-    username_controller.dispose();
-    password_controller.dispose();
-    super.dispose();
   }
 
   Widget getFormUI() {
@@ -51,7 +49,8 @@ class LoginState extends State<LoginBasic> {
           maxLines: 1,
           maxLength: 32,
           keyboardType: TextInputType.emailAddress,
-          controller: username_controller,
+          validator: (value) => value.isEmpty ? "Email can't be empty" : null,
+          controller: email_controller,
         ),
         new TextFormField(
           decoration: new InputDecoration(
@@ -63,6 +62,7 @@ class LoginState extends State<LoginBasic> {
           obscureText: true,
           maxLines: 1,
           maxLength: 10,
+          validator: (value) => value.isEmpty ? "Password can't be empty" : null,
           controller: password_controller,
         ),
         new SizedBox(height: 15.0),
@@ -91,15 +91,24 @@ class LoginState extends State<LoginBasic> {
   }
 
   /// Posts the username and password for credential validation
-  bool post_credentials(){
-    final String username = username_controller.text,
-                 password = password_controller.text;
-    throw UnimplementedError();
+  Future<bool> post_credentials() async{
+    final form = formKey.currentState;
+    if(form.validate()) {
+      try {
+        final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+          email: email_controller.text,
+          password: password_controller.text,
+        )).user;
+      }catch(e){
+        print(e);
+      }
+      return true;
+    }
+    return false;
   }
 
   navigate_to_home(){
-    if(post_credentials())
-      Navigator.of(context).pushNamed('/home');
+    post_credentials().then((value) => Navigator.of(context).pushNamed('/home'));
   }
 
   navigate_to_forgot_password(){
