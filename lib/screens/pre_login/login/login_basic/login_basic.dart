@@ -95,10 +95,15 @@ class LoginState extends State<LoginBasic> {
     final form = formKey.currentState;
     if(form.validate()) {
       try {
-        final FirebaseUser user = (await _auth.createUserWithEmailAndPassword(
+        await _auth.sendSignInWithEmailLink(
           email: email_controller.text,
-          password: password_controller.text,
-        )).user;
+          url: "https://twiine.firebaseio.com",
+          handleCodeInApp: true,
+          androidInstallIfNotAvailable: true,
+          androidMinimumVersion: '21',
+          androidPackageName: 'com.example.twiine',
+          iOSBundleID: 'com.example.twiine',
+        );
       }catch(e){
         print(e);
       }
@@ -107,8 +112,53 @@ class LoginState extends State<LoginBasic> {
     return false;
   }
 
+//  Future<bool> post_credentials() async{
+//    final form = formKey.currentState;
+//    if(form.validate()) {
+//      try {
+//        PhoneVerificationFailed verificationFailed = (AuthException authException) {};
+//        PhoneVerificationCompleted verificationCompleted = (AuthCredential phoneAuthCredential) {
+//          _auth.signInWithCredential(phoneAuthCredential);
+//        };
+//        PhoneCodeSent codeSent =
+//            (String verificationId, [int forceResendingToken]) async {
+//        };
+//        PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
+//            (String verificationId) {
+//        };
+//        await verifyPhoneNumber(email_controller.text,
+//                                codeAutoRetrievalTimeout,
+//                                codeSent,
+//                                Duration(seconds: 5),
+//                                verificationCompleted,
+//                                verificationFailed);
+//      }catch(e){
+//        print(e);
+//      }
+//      return true;
+//    }
+//    return false;
+//  }
+//
+//  Future<void> verifyPhoneNumber(
+//      String phone,
+//      PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout,
+//      PhoneCodeSent codeSent,
+//      Duration duration,
+//      PhoneVerificationCompleted verificationCompleted,
+//      PhoneVerificationFailed verificationFailed) async {
+//    print(phone);
+//    return _auth.verifyPhoneNumber(
+//        phoneNumber: phone,
+//        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
+//        codeSent: codeSent,
+//        timeout: duration,
+//        verificationCompleted: verificationCompleted,
+//        verificationFailed: verificationFailed);
+//  }
+
   navigate_to_home(){
-    post_credentials().then((value) => Navigator.of(context).pushNamed('/home'));
+    post_credentials();//.then((value) => Navigator.of(context).pushNamed('/home'));
   }
 
   navigate_to_forgot_password(){
