@@ -26,10 +26,9 @@ class ProfileState extends State<Profile> {
         child: Column(
           children: <Widget>[
             Container(height: 20),
-            // Padding(padding: 10),
             CircleAvatar(
               radius: 60,
-              backgroundColor: Colors.brown.shade800,
+              backgroundColor: Colors.brown,
               child: Text('test'),
             ),
             Container(height: 30),
@@ -41,8 +40,54 @@ class ProfileState extends State<Profile> {
                 fontWeight: FontWeight.bold,
                 fontSize: 20
               ),
+            ),
+            Expanded(
+              child: ListView(
+                shrinkWrap: true,
+                padding: const EdgeInsets.all(20.0),
+                  children: ListTile.divideTiles( //          <-- ListTile.divideTiles
+                  context: context,
+                  tiles: [
+                    ListTile(
+                      title: Text("Profile Details"),
+                      subtitle: Text("FIRSTNAME LASTNAME"),
+                      onTap: () {
+                        // TODO: Edit profile page
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Button 2"),
+                      subtitle: Text("Button 2"),
+                      onTap: () {
+                        // TODO: add button
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Button 3"),
+                      subtitle: Text("Button 3"),
+                      onTap: () {
+                        // TODO: add button
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Button 4"),
+                      subtitle: Text("Button 4"),
+                      onTap: () {
+                        // TODO: add button
+                      },
+                    ),
+                    ListTile(
+                      title: Text("Button 5"),
+                      subtitle: Text("Button 5"),
+                      onTap: () {
+                        // TODO: add button
+                      },
+                    )
+                  ]
+                ).toList()
+              )
             )
-          ],
+          ]
         )
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -68,8 +113,8 @@ class ProfileState extends State<Profile> {
           BottomNavigationBarItem(
             icon: Icon(Icons.calendar_today, color: Colors.black),
             title: Text("Plan", style: TextStyle(color: Colors.black))
-          ),
-        ],
+          )
+        ]
       )
     );
   }
