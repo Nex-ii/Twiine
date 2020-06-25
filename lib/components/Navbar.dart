@@ -6,10 +6,6 @@ class Navbar extends BottomNavigationBar {
     currentIndex: index,
     items: [
       BottomNavigationBarItem(
-        icon: Icon(Icons.list, color: Colors.black),
-        title: Text("Feed", style: TextStyle(color: Colors.black))
-      ),
-      BottomNavigationBarItem(
         icon: Icon(Icons.event, color: Colors.black),
         title: Text("Scheduled", style: TextStyle(color: Colors.black))
       ),

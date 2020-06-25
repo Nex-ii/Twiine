@@ -79,7 +79,7 @@ class ProfileState extends State<Profile> {
                       bottomRight: Radius.circular(this.cardRadius),
                       bottomLeft: Radius.circular(this.cardRadius)
                     ),
-                    color: Colors.redAccent[400],
+                    color: Colors.redAccent[200],
                     boxShadow:  [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.9),
@@ -141,7 +141,7 @@ class ProfileState extends State<Profile> {
           ),
         ), 
       ),
-      bottomNavigationBar: Navbar(2),
+      bottomNavigationBar: Navbar(1),
     );
   }
 }
