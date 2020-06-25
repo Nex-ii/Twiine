@@ -7,9 +7,9 @@ class Profile extends StatefulWidget {
 }
 
 class ProfileState extends State<Profile> {
-  double cardRadius = 20.0;
-	double cardHeight = 220.0;
-	double cardWidth = 220.0;
+  double _cardRadius = 20.0;
+	double _cardHeight = 220.0;
+	double _cardWidth = 220.0;
 
   // TODO: we probably don't want to leave this as a url
   // Returns a card with the name of the place and the image url as the background
@@ -30,12 +30,12 @@ class ProfileState extends State<Profile> {
         ),
         child: Card(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(this.cardRadius),
+            borderRadius: BorderRadius.circular(this._cardRadius),
           ),
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Container(
-            width: this.cardWidth,
+            width: this._cardWidth,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(url),
@@ -77,8 +77,8 @@ class ProfileState extends State<Profile> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
-                      bottomRight: Radius.circular(this.cardRadius),
-                      bottomLeft: Radius.circular(this.cardRadius)
+                      bottomRight: Radius.circular(this._cardRadius),
+                      bottomLeft: Radius.circular(this._cardRadius)
                     ),
                     gradient: LinearGradient(
                       begin: Alignment.topLeft,
@@ -129,8 +129,8 @@ class ProfileState extends State<Profile> {
                 )
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: this.cardRadius),
-                height: this.cardHeight,
+                margin: EdgeInsets.symmetric(vertical: this._cardRadius),
+                height: this._cardHeight,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
