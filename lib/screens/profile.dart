@@ -84,12 +84,12 @@ class ProfileState extends State<Profile> {
                       colors: [Colors.purpleAccent, Colors.cyan]
                     ),
                     boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.9),
-                          spreadRadius: 3,
-                          blurRadius: 7,
-                          offset: Offset(0, 3)
-                      )
+											BoxShadow(
+												color: Colors.grey.withOpacity(0.9),
+												spreadRadius: 3,
+												blurRadius: 7,
+												offset: Offset(0, 3)
+											)
                     ]
                   ),
                   child: Column(
