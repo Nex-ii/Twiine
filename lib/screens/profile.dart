@@ -8,6 +8,8 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   double cardRadius = 20.0;
+	double cardHeight = 220.0;
+	double cardWidth = 220.0;
 
   // TODO: we probably don't want to leave this as a url
   // Returns a card with the name of the place and the image url as the background
@@ -33,7 +35,7 @@ class ProfileState extends State<Profile> {
           semanticContainer: true,
           clipBehavior: Clip.antiAliasWithSaveLayer,
           child: Container(
-            width: 220,
+            width: this.cardWidth,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(url),
@@ -128,7 +130,7 @@ class ProfileState extends State<Profile> {
               ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: this.cardRadius),
-                height: 220,
+                height: this.cardHeight,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[
