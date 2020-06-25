@@ -91,14 +91,14 @@ class ProfileState extends State<Profile> {
                   ),
                   child: Column(
                     children: <Widget>[
-                      Container(height: 40),
+                      Container(height: 60),
                       CircleAvatar(
                         backgroundImage: NetworkImage("https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4"),
                         radius: 60,
                         backgroundColor: Colors.brown,
                         child: Text('test'),
                       ),
-                      Container(height: 30),
+                      Container(height: 10),
                       Text(
                         "@realwayson",
                         textAlign: TextAlign.center,
