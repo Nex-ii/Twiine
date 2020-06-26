@@ -178,7 +178,6 @@ class ProfileState extends State<Profile> {
           )
         ]
       ),
-			bottomNavigationBar: Navbar(1)
     );
   }
 }

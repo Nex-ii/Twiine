@@ -7,6 +7,8 @@ import 'package:twiine/screens/login_basic/login_basic.dart';
 import 'package:twiine/screens/login_facebook/login_facebook.dart';
 import 'package:twiine/screens/register_email/register_email.dart';
 import 'package:twiine/screens/register_phone/register_phone.dart';
+import 'package:twiine/screens/profile/profile.dart';
+import 'package:twiine/components/Navbar.dart';
 
 void main() => runApp(App());
 
@@ -27,6 +29,8 @@ class App extends StatelessWidget{
         '/forgot_password' : (context) => ForgotPassword(),
         '/create_account' : (context) => CreateAccount(),
         '/home' : (context) => Home(),
+        '/profile' : (context) => Profile(),
+        '/navBar' : (context) => Navbar(),
       },
     );
   }

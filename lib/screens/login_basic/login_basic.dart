@@ -98,8 +98,8 @@ class LoginState extends State<LoginBasic> {
   }
 
   navigate_to_home(){
-    if(post_credentials())
-      Navigator.of(context).pushNamed('/home');
+    //if(post_credentials()) <-- add once implemented
+      Navigator.of(context).pushNamed('/navBar');
   }
 
   navigate_to_forgot_password(){
