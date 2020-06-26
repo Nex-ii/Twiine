@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/components/Navbar.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -177,7 +176,7 @@ class ProfileState extends State<Profile> {
             )
           )
         ]
-      ),
+      )
     );
   }
 }
