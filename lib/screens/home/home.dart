@@ -11,6 +11,7 @@ class HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text("Map Screen"),
         actions: <Widget>[
           IconButton(icon: Icon(Icons.search), onPressed:() {
@@ -18,7 +19,6 @@ class HomeState extends State<Home> {
           })
         ],
       ),
-      drawer: Drawer(),
     );
   }
 }

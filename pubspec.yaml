@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  google_maps_flutter: ^0.5.27+3
 
 
 
@@ -82,3 +83,9 @@ flutter:
     - family: MyFlutterApp
       fonts:
         - asset: lib/fonts/facebook.ttf
+    - family: Karla
+      fonts: 
+        - asset: lib/fonts/Karla-Regular.ttf
+        - asset: lib/fonts/Karla-Bold.ttf
+        - asset: lib/fonts/Karla-Italic.ttf
+        - asset: lib/fonts/Karla-BoldItalic.ttf
