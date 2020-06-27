@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/screens/home/home.dart';
 import 'package:twiine/screens/profile/profile.dart';
+import 'package:twiine/screens/requests/requests.dart';
+import 'package:twiine/screens/scheduled/scheduled.dart';
+
 
 class Navbar extends StatefulWidget{
   @override
@@ -10,12 +13,10 @@ class Navbar extends StatefulWidget{
 class NavbarState extends State<Navbar>{
   int _currentIndex = 3;
   final List<Widget> _children = [
-    //Scheduled(),
-    Home(), //Temp
+    Scheduled(),
     Profile(),
-    //Requests(),
+    Requests(),
     Home(),
-    Profile(),//Temp
   ];
 
   void onTappedBar(int index){
