@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/home/home.dart';
+import 'package:twiine/screens/post_login/home/home.dart';
 import 'package:twiine/screens/profile/profile.dart';
 
 class Navbar extends StatefulWidget{
