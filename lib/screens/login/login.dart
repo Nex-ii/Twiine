@@ -27,6 +27,7 @@ class LoginState extends State<Login>{
                 "twiine",
                 style: TextStyle(
                   fontSize: 50,
+                  fontWeight: FontWeight.bold,
                   color: Colors.white
                 ),
               ),
