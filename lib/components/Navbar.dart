@@ -8,7 +8,7 @@ class Navbar extends StatefulWidget{
 }
 
 class NavbarState extends State<Navbar>{
-  int _currentIndex = 3;
+  int _currentIndex = 1;
   final List<Widget> _children = [
     //Scheduled(),
     Home(), //Temp
