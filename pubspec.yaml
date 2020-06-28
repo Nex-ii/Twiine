@@ -85,3 +85,9 @@ flutter:
         - asset: lib/fonts/Karla-Bold.ttf
         - asset: lib/fonts/Karla-Italic.ttf
         - asset: lib/fonts/Karla-BoldItalic.ttf
+    - family: Acumin Pro
+      fonts: 
+        - asset: lib/fonts/Acumin-BdItPro.otf
+        - asset: lib/fonts/Acumin-BdPro.otf
+        - asset: lib/fonts/Acumin-ItPro.otf
+        - asset: lib/fonts/Acumin-RPro.otf
