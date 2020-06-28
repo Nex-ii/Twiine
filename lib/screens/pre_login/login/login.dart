@@ -1,13 +1,22 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+
+final FirebaseAuth _auth = FirebaseAuth.instance;
+
 class Login extends StatefulWidget {
+  Login({Key key}) : super(key: key);
+
   @override
-  LoginState createState() =>LoginState();
+  LoginState createState() => LoginState();
 }
 
 class LoginState extends State<Login>{
+
+  String _loginMessage = "ddd";
 
   BoxShadow _dropShadow = BoxShadow(
     color: Colors.grey.withOpacity(0.9),
@@ -58,7 +67,7 @@ class LoginState extends State<Login>{
                   )
                 ),
                 Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 50),
+                  padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(_buttonRadius),
                     child: Container(
@@ -85,6 +94,16 @@ class LoginState extends State<Login>{
                     onTap: () => {
                       Navigator.of(context).pushNamed('/login')
                     }
+                  )
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
+                  child: Text(
+                    _loginMessage,
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12
+                    ),
                   )
                 ),
                 Row(
@@ -140,7 +159,7 @@ class LoginState extends State<Login>{
                         ]
                       )
                     ),
-                    onTap: () => {}
+                    onTap: () => { _loginWithFacebook() }
                   )
                 ),
                 Padding(
@@ -219,6 +238,38 @@ class LoginState extends State<Login>{
         ]
       )
     );
+  }
+
+  _loginWithFacebook() async {
+    FacebookLogin facebookLogin = FacebookLogin();
+    FacebookLoginResult result = await facebookLogin.logIn(['email']);
+
+    switch (result.status) {
+      case FacebookLoginStatus.loggedIn:
+        AuthCredential credential = FacebookAuthProvider.getCredential(
+          accessToken: result.accessToken.token,
+        );
+
+        // TODO: figure out what to do with this, but for now, we're 
+        // authenticated with facebook
+        FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+        setState(() {
+          if (user != null)
+            _loginMessage = "Successfully authenticated with Facebook";
+          else
+            _loginMessage = "Failed to authenticate with Firebase";
+        });
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        break;
+      case FacebookLoginStatus.error:
+        break;
+      default:
+        setState(() {
+          _loginMessage = "Failed to authenticate with Facebook";
+        });
+        break;
+    }
   }
 
   _navigate_to_facebook_login(){
