@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/screens/create_account/create_account.dart';
 import 'package:twiine/screens/forgot_password/forgot_password.dart';
+import 'package:twiine/screens/login/landing_page.dart';
 import 'package:twiine/screens/login/login.dart';
 import 'package:twiine/screens/home/home.dart';
 import 'package:twiine/screens/login_basic/login_basic.dart';
@@ -21,7 +22,8 @@ class App extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/' : (context) => Login(),
+        '/' : (context) => LandingPage(),
+        '/login' : (context) => Login(),
         '/login_basic' : (context) => LoginBasic(),
         '/login_facebook' : (context) => LoginFacebook(),
         '/register_email' : (context) => RegisterEmail(),
