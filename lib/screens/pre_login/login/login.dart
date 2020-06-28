@@ -16,7 +16,7 @@ class Login extends StatefulWidget {
 
 class LoginState extends State<Login>{
 
-  String _loginMessage = "ddd";
+  String _loginMessage = "";
 
   BoxShadow _dropShadow = BoxShadow(
     color: Colors.grey.withOpacity(0.9),
