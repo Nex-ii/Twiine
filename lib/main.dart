@@ -17,7 +17,7 @@ class App extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Twiine',
-      theme: ThemeData(fontFamily: 'Karla'),
+      theme: ThemeData(fontFamily: 'Acumin Pro'),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {

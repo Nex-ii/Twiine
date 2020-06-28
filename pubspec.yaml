@@ -26,7 +26,6 @@ dependencies:
   google_maps_flutter: ^0.5.27+3
 
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
@@ -89,3 +88,9 @@ flutter:
         - asset: lib/fonts/Karla-Bold.ttf
         - asset: lib/fonts/Karla-Italic.ttf
         - asset: lib/fonts/Karla-BoldItalic.ttf
+    - family: Acumin Pro
+      fonts: 
+        - asset: lib/fonts/Acumin-BdItPro.otf
+        - asset: lib/fonts/Acumin-BdPro.otf
+        - asset: lib/fonts/Acumin-ItPro.otf
+        - asset: lib/fonts/Acumin-RPro.otf
