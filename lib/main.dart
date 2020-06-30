@@ -15,17 +15,20 @@ class App extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Twiine',
+      theme: ThemeData(fontFamily: 'Karla'),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/' : (context) => Login(),
         '/login_basic' : (context) => LoginBasic(),
-        '/login_facebook' :(context) => LoginFacebook(),
+        '/login_facebook' : (context) => LoginFacebook(),
         '/register_email' : (context) => RegisterEmail(),
         '/register_phone' : (context) => RegisterPhone(),
         '/forgot_password' : (context) => ForgotPassword(),
         '/create_account' : (context) => CreateAccount(),
         '/home' : (context) => Home(),
+        '/profile' : (context) => Profile(),
+        '/navBar' : (context) => Navbar(),
       },
     );
   }

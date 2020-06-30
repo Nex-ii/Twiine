@@ -73,7 +73,7 @@ class LoginState extends State<Login>{
                   FlatButton(
                     child: Text('Already have an account? login here',
                         style: TextStyle(
-                            fontSize: 15.0, fontWeight: FontWeight.w300)),
+                          fontSize: 15.0, fontWeight: FontWeight.w300)),
                     onPressed: _navigate_to_basic_login,
                   ),
                 ],
