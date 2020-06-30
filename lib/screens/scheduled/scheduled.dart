@@ -7,32 +7,36 @@ class Scheduled extends StatefulWidget{
 }
 
 class _ScheduledState extends State<Scheduled> {
-  createAlertDialog(BuildContext context) {
-
+  Future<String> createAlertDialog(BuildContext context) {
     TextEditingController customController = TextEditingController();
     return showDialog(context: context, builder:(context) {
       return AlertDialog(
-        title: Text("Your Name"),
+        title: Text("Add New Event"),
         content: TextField(
           controller: customController,
         ),
         actions: <Widget>[
-          
+          MaterialButton(
+            elevation: 5.0,
+            child: Text('Save'),
+            onPressed:(){
+              Navigator.of(context).pop(customController.text.toString());
+            },
+          )
         ]
       );
     });
   }
 
-  List<PlannedDates> calendar = [
-    PlannedDates(day: 1, month: 5, year: 1983, name: 'Dinner'),
-    PlannedDates(day: 20, month: 9, year: 2018, name: 'Something cool'),
-    PlannedDates(day: 4, month: 11, year: 2020, name: 'Party')
-  ];
-
+  List<dynamic> _selectedEvents;
   final list = new List.generate(3, (i) => "Item ${i + 1}");
-  TextEditingController _eventController = TextEditingController();
 
   @override
+  void initState(){
+    super.initState();
+    _selectedEvents = [];
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -41,13 +45,10 @@ class _ScheduledState extends State<Scheduled> {
           automaticallyImplyLeading: false,
         ),
         body: ListView.builder(
-          itemCount: calendar.length,
+          itemCount: _selectedEvents.length,
           itemBuilder: (context, index) =>
               ExpansionTile(
-                title: Text(calendar[index].month.toString() + '/' +
-                    calendar[index].day.toString() + '/' +
-                    calendar[index].year.toString() + '   ' +
-                    calendar[index].name),
+                title: Text(_selectedEvents[index]),
                 children: list
                     .map((val) =>
                 new ListTile(
@@ -58,7 +59,13 @@ class _ScheduledState extends State<Scheduled> {
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
-          onPressed: (){},
+          onPressed: (){
+            createAlertDialog(context).then((onValue) {
+              setState(() {
+                _selectedEvents.add(onValue);
+              });
+            });
+          },
      ),
     );
   }
