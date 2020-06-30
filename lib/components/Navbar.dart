@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/home/home.dart';
+import 'package:twiine/screens/post_login/home/home.dart';
 import 'package:twiine/screens/profile/profile.dart';
 
 class Navbar extends StatefulWidget{
@@ -8,7 +8,7 @@ class Navbar extends StatefulWidget{
 }
 
 class NavbarState extends State<Navbar>{
-  int _currentIndex = 3;
+  int _currentIndex = 1;
   final List<Widget> _children = [
     //Scheduled(),
     Home(), //Temp
