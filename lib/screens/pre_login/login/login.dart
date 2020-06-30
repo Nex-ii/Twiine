@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
+FirebaseUser user;
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -194,7 +196,7 @@ class LoginState extends State<Login>{
                         ]
                       )
                     ),
-                    onTap: () => {}
+                    onTap: () => { _loginWithGoogle() }
                   )
                 ),
                 Padding(
@@ -241,18 +243,20 @@ class LoginState extends State<Login>{
   }
 
   _loginWithFacebook() async {
+    // Authenticate with Facebook
     FacebookLogin facebookLogin = FacebookLogin();
     FacebookLoginResult result = await facebookLogin.logIn(['email']);
 
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
+        // Authenticate with Firebase
         AuthCredential credential = FacebookAuthProvider.getCredential(
           accessToken: result.accessToken.token,
         );
 
         // TODO: figure out what to do with this, but for now, we're 
         // authenticated with facebook
-        FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+        user = (await _auth.signInWithCredential(credential)).user;
         setState(() {
           if (user != null)
             _loginMessage = "Successfully authenticated with Facebook";
@@ -270,6 +274,42 @@ class LoginState extends State<Login>{
         });
         break;
     }
+  }
+
+  // TODO: this doesnt work yet
+  // refer to: https://stackoverflow.com/questions/54557479/flutter-and-google-sign-in-plugin-platformexceptionsign-in-failed-com-google
+  _loginWithGoogle() async {
+    GoogleSignIn _googleSignIn = GoogleSignIn(
+      scopes: [
+        'email'
+      ],
+    );
+    try {
+      // Authenticate with Google
+      GoogleSignInAccount signIn = (await _googleSignIn.signIn()
+        .catchError((error) => {
+          setState(() {
+            _loginMessage = "Failed to authenticate with Google: " + error;
+          })
+        }));
+      GoogleSignInAuthentication auth = await signIn.authentication;
+
+      // Authenticate with Firebase
+      AuthCredential credential = GoogleAuthProvider.getCredential(
+        idToken: auth.idToken,
+        accessToken: auth.idToken
+      );
+
+      user = (await _auth.signInWithCredential(credential)).user; 
+    }
+    on PlatformException catch (error) {
+      setState(() {
+        _loginMessage = "Failed to authenticate with Google: ";
+      });
+    }
+    setState(() {
+      _loginMessage = "Successfully authenticated with Google";
+    });
   }
 
   _navigate_to_facebook_login(){
