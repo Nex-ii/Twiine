@@ -105,8 +105,7 @@ class LoginState extends State<Login>{
       try {
         final facebookAuthCred =
         FacebookAuthProvider.getCredential(accessToken: result);
-        final user =
-        await FirebaseAuth.instance.signInWithCredential(facebookAuthCred);
+        final user = await FirebaseAuth.instance.signInWithCredential(facebookAuthCred);
       } catch (e) {}
     }
     ;}
