@@ -176,7 +176,11 @@ class ProfileState extends State<Profile> {
             )
           )
         ]
+<<<<<<< HEAD
       )
+=======
+      ),
+>>>>>>> 4e73c44335d363c3418f897915c57e3ddb6203ce
     );
   }
 }
