@@ -114,6 +114,7 @@ class LoginState extends State<Login>{
                                       FirebaseAuth.instance.signInWithCredential(authCreds);
                                     }else
                                       _verifyPhone(phoneNumberController.text);
+
                                   }
                               )
                           ),
@@ -300,6 +301,8 @@ class LoginState extends State<Login>{
       final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
         verificationId = verId;
         codeSent = true;
+
+        setState(() {});
       };
 
       final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
