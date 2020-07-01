@@ -26,10 +26,10 @@ class LoginState extends State<Login>{
   String _loginMessage = "";
 
   BoxShadow _dropShadow = BoxShadow(
-    color: Colors.grey.withOpacity(0.9),
-    spreadRadius: -2,
-    blurRadius: 6,
-    offset: Offset(0, 4)
+      color: Colors.grey.withOpacity(0.9),
+      spreadRadius: -2,
+      blurRadius: 6,
+      offset: Offset(0, 4)
   );
   double _dividerThickness = 2;
   double _buttonHeight = 50;
@@ -38,370 +38,289 @@ class LoginState extends State<Login>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-          body: ListView(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.all(50),
-                  child: Text(
-                    "[Terms and conditions statement]",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.grey
-                    )
-                  )
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(_buttonRadius),
-                    child: Container(
-                      width: MediaQuery. of(context).size.width,
-                      height: _buttonHeight,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(_buttonRadius),
-                        color: Colors.red,
-                        boxShadow: [ _dropShadow ]
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Center(
-                        child: Text(
-                          "Continue",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold
-                          )
-                        )
-                      )
-                    ),
-                    onTap: () => {
-                      Navigator.of(context).pushNamed('/login')
-                    }
-                  )
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
-                  child: Text(
-                    _loginMessage,
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontSize: 12
-                    ),
-                  )
-                ),
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Divider(
-                        thickness: _dividerThickness
-                      )
-                    ),
-                    Text(
-                      " or ",
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.grey
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        thickness: _dividerThickness
-                      )
-                    )
-                  ]
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(10, 30, 10, 20),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(_buttonRadius),
-                    child: Container(
-                      width: MediaQuery. of(context).size.width,
-                      height: _buttonHeight,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(_buttonRadius),
-                        color: Colors.white,
-                        boxShadow: [ _dropShadow ]
-                      ),
-                      padding: EdgeInsets.all(10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget> [
-                          IconButton(
-                            icon: FaIcon(FontAwesomeIcons.facebook),
-                            padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                            onPressed: null,
-
-                         ),
-                          TextField(
-                            decoration: new InputDecoration(
-                                labelText: codeSent ? "Verification Code" : "Phone Number"),
-                            keyboardType: TextInputType.phone,
-                            maxLength: 20,
-                            inputFormatters: <TextInputFormatter>[
+        body: ListView(
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+                  child: Column(
+                      children: <Widget>[
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                                "Welcome to twiine",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                )
+                            )
+                        ),
+                        TextField(
+                          decoration: new InputDecoration(
+                              labelText: codeSent ? "Verification Code" : "Phone Number"),
+                          keyboardType: TextInputType.phone,
+                          maxLength: 20,
+                          inputFormatters: <TextInputFormatter>[
 //                              WhitelistingTextInputFormatter.digitsOnly
-                            ],
-                            controller: phoneNumberController,
-                          ),
-                          Padding(
-                              padding: EdgeInsets.all(50),
-                              child: Text(
-                                  "[Terms and conditions statement]",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color: Colors.grey
+                          ],
+                          controller: phoneNumberController,
+                        ),
+                        Padding(
+                            padding: EdgeInsets.all(50),
+                            child: Text(
+                                "[Terms and conditions statement]",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.grey
+                                )
+                            )
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
+                            child: InkWell(
+                                borderRadius: BorderRadius.circular(
+                                    _buttonRadius),
+                                child: Container(
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
+                                    height: _buttonHeight,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            _buttonRadius),
+                                        color: Colors.red,
+                                        boxShadow: [ _dropShadow]
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Center(
+                                        child: Text(
+                                            codeSent ? "Verify" : "Continue",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold
+                                            )
+                                        )
+                                    )
+                                ),
+                                onTap: () {
+
+                                  if(codeSent){
+                                    AuthCredential authCreds = PhoneAuthProvider.getCredential(
+                                        verificationId: verificationId, smsCode: phoneNumberController.text);
+                                    FirebaseAuth.instance.signInWithCredential(authCreds);
+                                  }else
+                                    _verifyPhone(phoneNumberController.text);
+
+                                }
+                            )
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
+                            child: Text(
+                              _loginMessage,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 12
+                              ),
+                            )
+                        ),
+                        Row(
+                            children: <Widget>[
+                              Expanded(
+                                  child: Divider(
+                                      thickness: _dividerThickness
+                                  )
+                              ),
+                              Text(
+                                " or ",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.grey
+                                ),
+                              ),
+                              Expanded(
+                                  child: Divider(
+                                      thickness: _dividerThickness
                                   )
                               )
-                          ),
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 10),
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(
-                                      _buttonRadius),
-                                  child: Container(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width,
-                                      height: _buttonHeight,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              _buttonRadius),
-                                          color: Colors.red,
-                                          boxShadow: [ _dropShadow]
-                                      ),
-                                      padding: EdgeInsets.all(10),
-                                      child: Center(
-                                          child: Text(
-                                              codeSent ? "Verify" : "Continue",
+                            ]
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(10, 30, 10, 20),
+                            child: InkWell(
+                                borderRadius: BorderRadius.circular(
+                                    _buttonRadius),
+                                child: Container(
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
+                                    height: _buttonHeight,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            _buttonRadius),
+                                        color: Colors.white,
+                                        boxShadow: [ _dropShadow]
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .start,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: FaIcon(
+                                                FontAwesomeIcons.facebook),
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 0, 40, 0),
+                                            onPressed: null,
+                                          ),
+                                          Text(
+                                              "Continue with Facebook",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white,
+                                                  fontSize: 15,
                                                   fontWeight: FontWeight.bold
                                               )
                                           )
-                                      )
-                                  ),
-                                  onTap: () {
-
-                                    if(codeSent){
-                                      AuthCredential authCreds = PhoneAuthProvider.getCredential(
-                                      verificationId: verificationId, smsCode: phoneNumberController.text);
-                                      FirebaseAuth.instance.signInWithCredential(authCreds);
-                                    }else
-                                      _verifyPhone(phoneNumberController.text);
-
-                                  }
-                              )
-                          ),
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
-                              child: Text(
-                                _loginMessage,
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 12
-                                ),
-                              )
-                          ),
-                          Row(
-                              children: <Widget>[
-                                Expanded(
-                                    child: Divider(
-                                        thickness: _dividerThickness
+                                        ]
                                     )
                                 ),
-                                Text(
-                                  " or ",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.grey
-                                  ),
-                                ),
-                                Expanded(
-                                    child: Divider(
-                                        thickness: _dividerThickness
+                                onTap: () => { _loginWithFacebook()}
+                            )
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                            child: InkWell(
+                                borderRadius: BorderRadius.circular(
+                                    _buttonRadius),
+                                child: Container(
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
+                                    height: _buttonHeight,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            _buttonRadius),
+                                        color: Colors.white,
+                                        boxShadow: [ _dropShadow]
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .start,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: FaIcon(
+                                                FontAwesomeIcons.google),
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 0, 40, 0),
+                                            onPressed: null,
+                                          ),
+                                          Text(
+                                              "Continue with Google",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold
+                                              )
+                                          )
+                                        ]
                                     )
-                                )
-                              ]
-                          ),
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(10, 30, 10, 20),
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(
-                                      _buttonRadius),
-                                  child: Container(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width,
-                                      height: _buttonHeight,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              _buttonRadius),
-                                          color: Colors.white,
-                                          boxShadow: [ _dropShadow]
-                                      ),
-                                      padding: EdgeInsets.all(10),
-                                      child: Row(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .start,
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: FaIcon(
-                                                  FontAwesomeIcons.facebook),
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 40, 0),
-                                              onPressed: null,
-                                            ),
-                                            Text(
-                                                "Continue with Facebook",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold
-                                                )
-                                            )
-                                          ]
-                                      )
-                                  ),
-                                  onTap: () => { _loginWithFacebook()}
-                              )
-                          ),
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(
-                                      _buttonRadius),
-                                  child: Container(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width,
-                                      height: _buttonHeight,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              _buttonRadius),
-                                          color: Colors.white,
-                                          boxShadow: [ _dropShadow]
-                                      ),
-                                      padding: EdgeInsets.all(10),
-                                      child: Row(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .start,
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: FaIcon(
-                                                  FontAwesomeIcons.google),
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 40, 0),
-                                              onPressed: null,
-                                            ),
-                                            Text(
-                                                "Continue with Google",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold
-                                                )
-                                            )
-                                          ]
-                                      )
-                                  ),
-                                  onTap: () => { _loginWithGoogle()}
-                              )
-                          ),
-                          Padding(
-                              padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
-                              child: InkWell(
-                                  borderRadius: BorderRadius.circular(
-                                      _buttonRadius),
-                                  child: Container(
-                                      width: MediaQuery
-                                          .of(context)
-                                          .size
-                                          .width,
-                                      height: _buttonHeight,
-                                      decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(
-                                              _buttonRadius),
-                                          color: Colors.white,
-                                          boxShadow: [ _dropShadow]
-                                      ),
-                                      padding: EdgeInsets.all(10),
-                                      child: Row(
-                                          mainAxisAlignment: MainAxisAlignment
-                                              .start,
-                                          children: <Widget>[
-                                            IconButton(
-                                              icon: FaIcon(
-                                                  FontAwesomeIcons.apple),
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 40, 0),
-                                              onPressed: null,
-                                            ),
-                                            Text(
-                                                "Continue with Apple",
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    fontWeight: FontWeight.bold
-                                                )
-                                            )
-                                          ]
-                                      )
-                                  ),
-                                  onTap: () => {}
-                              )
-                          )
-                        ]
-                      )
-                    )
+                                ),
+                                onTap: () => { _loginWithGoogle()}
+                            )
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+                            child: InkWell(
+                                borderRadius: BorderRadius.circular(
+                                    _buttonRadius),
+                                child: Container(
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
+                                    height: _buttonHeight,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            _buttonRadius),
+                                        color: Colors.white,
+                                        boxShadow: [ _dropShadow]
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Row(
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .start,
+                                        children: <Widget>[
+                                          IconButton(
+                                            icon: FaIcon(
+                                                FontAwesomeIcons.apple),
+                                            padding: EdgeInsets.fromLTRB(
+                                                0, 0, 40, 0),
+                                            onPressed: null,
+                                          ),
+                                          Text(
+                                              "Continue with Apple",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold
+                                              )
+                                          )
+                                        ]
+                                    )
+                                ),
+                                onTap: () => {}
+                            )
+                        )
+                      ]
                   )
-                )
-              ]
-          )
-      );
+              )
+            ]
+        )
+    );
   }
 
   _verifyPhone(String phoneNumber) async{
 
-      final PhoneVerificationCompleted verified = (AuthCredential authResult) {
-        FirebaseAuth.instance.signInWithCredential(authResult);
-      };
+    final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+      FirebaseAuth.instance.signInWithCredential(authResult);
+    };
 
-      final PhoneVerificationFailed verificationfailed =
-          (AuthException authException) {
-            _loginMessage = authException.message;
-            codeSent = false;
-      };
+    final PhoneVerificationFailed verificationfailed =
+        (AuthException authException) {
+      _loginMessage = authException.message;
+      codeSent = false;
+    };
 
-      final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
-        verificationId = verId;
-        codeSent = true;
+    final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
+      verificationId = verId;
+      codeSent = true;
 
-        setState(() {});
-      };
+      setState(() {});
+    };
 
-      final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
-        this.verificationId = verId;
-      };
+    final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
+      this.verificationId = verId;
+    };
 
-      await FirebaseAuth.instance.verifyPhoneNumber(
-          phoneNumber: phoneNumber,
-          timeout: const Duration(seconds: 5),
-          verificationCompleted: verified,
-          verificationFailed: verificationfailed,
-          codeSent: smsSent,
-          codeAutoRetrievalTimeout: autoTimeout);
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phoneNumber,
+        timeout: const Duration(seconds: 5),
+        verificationCompleted: verified,
+        verificationFailed: verificationfailed,
+        codeSent: smsSent,
+        codeAutoRetrievalTimeout: autoTimeout);
 
-      FocusScopeNode focus = FocusScope.of(context);
-      if (!focus.hasPrimaryFocus)
-        focus.unfocus();
-      phoneNumberController.clear();
+    FocusScopeNode focus = FocusScope.of(context);
+    if (!focus.hasPrimaryFocus)
+      focus.unfocus();
+    phoneNumberController.clear();
   }
 
   _loginWithFacebook() async {
@@ -411,7 +330,7 @@ class LoginState extends State<Login>{
 
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
-        // Authenticate with Firebase
+      // Authenticate with Firebase
         AuthCredential credential = FacebookAuthProvider.getCredential(
           accessToken: result.accessToken.token,
         );
@@ -448,17 +367,17 @@ class LoginState extends State<Login>{
     try {
       // Authenticate with Google
       GoogleSignInAccount signIn = (await _googleSignIn.signIn()
-        .catchError((error) => {
-          setState(() {
-            _loginMessage = "Failed to authenticate with Google: " + error;
-          })
-        }));
+          .catchError((error) => {
+        setState(() {
+          _loginMessage = "Failed to authenticate with Google: " + error;
+        })
+      }));
       GoogleSignInAuthentication auth = await signIn.authentication;
 
       // Authenticate with Firebase
       AuthCredential credential = GoogleAuthProvider.getCredential(
-        idToken: auth.idToken,
-        accessToken: auth.idToken
+          idToken: auth.idToken,
+          accessToken: auth.idToken
       );
 
       user = (await _auth.signInWithCredential(credential)).user;
