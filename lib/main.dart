@@ -9,6 +9,7 @@ import 'package:twiine/screens/register_email/register_email.dart';
 import 'package:twiine/screens/register_phone/register_phone.dart';
 import 'package:twiine/screens/profile/profile.dart';
 import 'package:twiine/components/Navbar.dart';
+import 'package:twiine/screens/addEvent/addEvent.dart';
 
 void main() => runApp(App());
 
@@ -31,6 +32,7 @@ class App extends StatelessWidget{
         '/home' : (context) => Home(),
         '/profile' : (context) => Profile(),
         '/navBar' : (context) => Navbar(),
+        '/addEvent' : (context) => addEvent(),
       },
     );
   }

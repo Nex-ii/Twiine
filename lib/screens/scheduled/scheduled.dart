@@ -7,26 +7,26 @@ class Scheduled extends StatefulWidget{
 }
 
 class _ScheduledState extends State<Scheduled> {
-  Future<String> createAlertDialog(BuildContext context) {
-    TextEditingController customController = TextEditingController();
-    return showDialog(context: context, builder:(context) {
-      return AlertDialog(
-        title: Text("Add New Event"),
-        content: TextField(
-          controller: customController,
-        ),
-        actions: <Widget>[
-          MaterialButton(
-            elevation: 5.0,
-            child: Text('Save'),
-            onPressed:(){
-              Navigator.of(context).pop(customController.text.toString());
-            },
-          )
-        ]
-      );
-    });
-  }
+////  Future<String> createAlertDialog(BuildContext context) {
+////    TextEditingController customController = TextEditingController();
+////    return showDialog(context: context, builder:(context) {
+////      return AlertDialog(
+////        title: Text("Add New Event"),
+////        content: TextField(
+////          controller: customController,
+////        ),
+////        actions: <Widget>[
+////          MaterialButton(
+////            elevation: 5.0,
+////            child: Text('Save'),
+////            onPressed:(){
+////              Navigator.of(context).pop(customController.text.toString());
+////            },
+////          )
+////        ]
+////      );
+////    });
+//  }
 
   List<dynamic> _selectedEvents;
   final list = new List.generate(3, (i) => "Item ${i + 1}");
@@ -60,11 +60,12 @@ class _ScheduledState extends State<Scheduled> {
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: (){
-            createAlertDialog(context).then((onValue) {
-              setState(() {
-                _selectedEvents.add(onValue);
-              });
-            });
+//            createAlertDialog(context).then((onValue) {
+//              setState(() {
+//                _selectedEvents.add(onValue);
+//              });
+//            });
+            Navigator.of(context).pushNamed('/addEvent');
           },
      ),
     );

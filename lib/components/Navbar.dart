@@ -3,6 +3,7 @@ import 'package:twiine/screens/home/home.dart';
 import 'package:twiine/screens/profile/profile.dart';
 import 'package:twiine/screens/requests/requests.dart';
 import 'package:twiine/screens/scheduled/scheduled.dart';
+import 'package:twiine/screens/favorites/favorites.dart';
 
 
 class Navbar extends StatefulWidget{
@@ -17,6 +18,7 @@ class NavbarState extends State<Navbar>{
     Profile(),
     Requests(),
     Home(),
+    Favorites(),
   ];
 
   void onTappedBar(int index){
@@ -49,6 +51,10 @@ class NavbarState extends State<Navbar>{
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_today, color: Colors.black),
                 title: Text("Plan", style: TextStyle(color: Colors.black))
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.star, color: Colors.black),
+                title: Text("Favorites", style: TextStyle(color: Colors.black))
             )
           ],
       ),
