@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/scheduled/plannedDates.dart';
+import 'package:twiine/screens/post_login/scheduled/plannedDates.dart';
 
 class Scheduled extends StatefulWidget{
   @override

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/home/home.dart';
-import 'package:twiine/screens/profile/profile.dart';
-import 'package:twiine/screens/requests/requests.dart';
-import 'package:twiine/screens/scheduled/scheduled.dart';
-import 'package:twiine/screens/favorites/favorites.dart';
+import 'package:twiine/screens/post_login/home/home.dart';
+import 'package:twiine/screens/post_login/profile/profile.dart';
+import 'package:twiine/screens/post_login/requests/requests.dart';
+import 'package:twiine/screens/post_login/scheduled/scheduled.dart';
+import 'package:twiine/screens/post_login/favorites/favorites.dart';
 
 
 class Navbar extends StatefulWidget{
