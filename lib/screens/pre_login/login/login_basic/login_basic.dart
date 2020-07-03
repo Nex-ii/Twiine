@@ -3,98 +3,170 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginBasic extends StatefulWidget{
   @override
-  LoginState createState() =>LoginState();
+  LoginBasic({Key key}) : super(key: key);
+  LoginBasicState createState() => LoginBasicState();
 }
 
-class LoginState extends State<LoginBasic> {
+class LoginBasicState extends State<LoginBasic> {
+
+  String _loginMessage = "";
 
   final formKey = new GlobalKey<FormState>();
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   final email_controller = TextEditingController(),
-        password_controller = TextEditingController();
+      password_controller = TextEditingController();
+
+  BoxShadow _dropShadow = BoxShadow(
+      color: Colors.grey.withOpacity(0.9),
+      spreadRadius: -2,
+      blurRadius: 6,
+      offset: Offset(0, 4)
+  );
+  double _dividerThickness = 2;
+  double _buttonHeight = 50;
+  double _buttonRadius = 15;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Login',
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: EdgeInsets.all(15.0),
-          child: Form(
-            key: formKey,
-            child: getFormUI(),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget getFormUI() {
-    return Column(
-      children: <Widget>[
-        TextFormField(
-          decoration: InputDecoration(
-              hintText: 'Email',
-              icon: Icon(
-                Icons.mail,
-                color: Colors.grey,
-              )),
-          maxLines: 1,
-          maxLength: 32,
-          keyboardType: TextInputType.emailAddress,
-          validator: (value) => value.isEmpty ? "Email can't be empty" : null,
-          controller: email_controller,
-        ),
-        new TextFormField(
-          decoration: new InputDecoration(
-              hintText: 'Password',
-              icon: new Icon(
-                Icons.lock,
-                color: Colors.grey,
-              )),
-          obscureText: true,
-          maxLines: 1,
-          maxLength: 10,
-          validator: (value) => value.isEmpty ? "Password can't be empty" : null,
-          controller: password_controller,
-        ),
-        new SizedBox(height: 15.0),
-        new Row(
-          children: [
-            new FlatButton(
-              child: new Text('Forgot password?',
-                style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300)),
-                onPressed: navigate_to_forgot_password,
-            ),
-            new SizedBox(width: 10,),
-            new FlatButton(
-              child: new Text('Create Account',
-                  style: new TextStyle(fontSize: 15.0, fontWeight: FontWeight.w300)),
-              onPressed: navigate_to_create_account,
-            ),
-          ],
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-        new RaisedButton(
-          onPressed: navigate_to_home,
-          child: new Text('Login'),
+        body: ListView(
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+                  child: Column(
+                      children: <Widget>[
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                                "Sign in to twiine",
+                                textAlign: TextAlign.left,
+                                style: TextStyle(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                )
+                            )
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(0, 50, 10, 0),
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.grey,
+                                        width: 2
+                                    ),
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                child: Column(
+                                    children: [
+                                      Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              5, 5, 5, 0),
+                                          child: TextFormField(
+                                            decoration: new InputDecoration(
+                                                labelText: "Email",
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .transparent),
+                                                ),
+                                                border: InputBorder.none
+                                            ),
+                                            keyboardType: TextInputType.text,
+                                            controller: email_controller,
+                                          )
+                                      ),
+                                      Row(
+                                          children: [
+                                            Expanded(
+                                                child: Divider(
+                                                  thickness: _dividerThickness,
+                                                  color: Colors.grey,
+                                                )
+                                            )
+                                          ]
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              5, 0, 5, 5),
+                                          child: TextFormField(
+                                            obscureText: true,
+                                            decoration: new InputDecoration(
+                                                labelText: "Password",
+                                                focusedBorder: UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors
+                                                          .transparent),
+                                                ),
+                                                border: InputBorder.none
+                                            ),
+                                            controller: password_controller,
+                                          )
+                                      )
+                                    ]
+                                )
+                            )
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Text(
+                              _loginMessage,
+                              style: TextStyle(
+                                  color: Colors.red,
+                                  fontSize: 12
+                              ),
+                            )
+                        ),
+                        Padding(
+                            padding: EdgeInsets.fromLTRB(0, 50, 10, 10),
+                            child: InkWell(
+                                borderRadius: BorderRadius.circular(
+                                    _buttonRadius),
+                                child: Container(
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
+                                    height: _buttonHeight,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            _buttonRadius),
+                                        color: Colors.red,
+                                        boxShadow: [ _dropShadow]
+                                    ),
+                                    padding: EdgeInsets.all(10),
+                                    child: Center(
+                                        child: Text(
+                                            "Continue",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold
+                                            )
+                                        )
+                                    )
+                                ),
+                                onTap: () =>
+                                {
+                                  _signInWithEmail()
+                                }
+                            )
+                        )
+                      ]
+                  )
+              )
+            ]
         )
-      ],
     );
   }
 
   /// Posts the username and password for credential validation
-  Future<bool> post_credentials() async{
+  Future<bool> post_credentials() async {
     Navigator.of(context).pushNamed('/navBar'); //<-- Remove to test
     final form = formKey.currentState;
-    if(form.validate()) {
+    if (form.validate()) {
       try {
         await _auth.sendSignInWithEmailLink(
           email: email_controller.text,
@@ -105,7 +177,7 @@ class LoginState extends State<LoginBasic> {
           androidPackageName: 'com.example.twiine',
           iOSBundleID: 'com.example.twiine',
         );
-      }catch(e){
+      } catch (e) {
         print(e);
       }
       return true;
@@ -158,16 +230,36 @@ class LoginState extends State<LoginBasic> {
 //        verificationFailed: verificationFailed);
 //  }
 
-  navigate_to_home(){
-    post_credentials();//.then((value) => Navigator.of(context).pushNamed('/navBar'));
+  navigate_to_home() {
+    post_credentials(); //.then((value) => Navigator.of(context).pushNamed('/navBar'));
   }
 
-  navigate_to_forgot_password(){
+  navigate_to_forgot_password() {
     Navigator.of(context).pushNamed('/forgot_password');
   }
 
-  navigate_to_create_account(){
+  navigate_to_create_account() {
     Navigator.of(context).pushNamed('/create_account');
   }
 
+  _signInWithEmail() async {
+    FirebaseUser user = null;
+    try {
+      user = (await _auth.signInWithEmailAndPassword(
+        email: email_controller.text,
+        password: password_controller.text,
+      )).user;
+    }
+    catch (error) {
+
+    }
+    setState(() {
+      if (user != null) {
+        _loginMessage = "Successfully authenticated with email";
+      }
+      else {
+        _loginMessage = "Unable to authenticate with email";
+      }
+    });
+  }
 }
