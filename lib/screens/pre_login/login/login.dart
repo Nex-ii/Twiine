@@ -259,13 +259,13 @@ class LoginState extends State<Login>{
                                         children: <Widget>[
                                           IconButton(
                                             icon: FaIcon(
-                                                FontAwesomeIcons.apple),
+                                                FontAwesomeIcons.envelope),
                                             padding: EdgeInsets.fromLTRB(
                                                 0, 0, 40, 0),
                                             onPressed: null,
                                           ),
                                           Text(
-                                              "Continue with Apple",
+                                              "Continue with Email",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                   fontSize: 15,
@@ -275,7 +275,7 @@ class LoginState extends State<Login>{
                                         ]
                                     )
                                 ),
-                                onTap: () => {}
+                                onTap: () => { Navigator.of(context).pushNamed('/login_basic') }
                             )
                         )
                       ]
