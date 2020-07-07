@@ -176,7 +176,7 @@ class ProfileState extends State<Profile> {
             )
           )
         ]
-      )
+      ),
     );
   }
 }

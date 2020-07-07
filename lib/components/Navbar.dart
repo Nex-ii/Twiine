@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/home/home.dart';
-import 'package:twiine/screens/profile/profile.dart';
+import 'package:twiine/screens/post_login/home/home.dart';
+
+import 'package:twiine/screens/post_login/profile/profile.dart';
+import 'package:twiine/screens/post_login/requests/requests.dart';
+import 'package:twiine/screens/post_login/scheduled/scheduled.dart';
+import 'package:twiine/screens/post_login/favorites/favorites.dart';
+
 
 class Navbar extends StatefulWidget{
   @override
@@ -8,14 +13,13 @@ class Navbar extends StatefulWidget{
 }
 
 class NavbarState extends State<Navbar>{
-  int _currentIndex = 3;
+  int _currentIndex = 1;
   final List<Widget> _children = [
-    //Scheduled(),
-    Home(), //Temp
+    Scheduled(),
     Profile(),
-    //Requests(),
+    Requests(),
     Home(),
-    Profile(),//Temp
+    Favorites(),
   ];
 
   void onTappedBar(int index){
@@ -48,6 +52,10 @@ class NavbarState extends State<Navbar>{
             BottomNavigationBarItem(
                 icon: Icon(Icons.calendar_today, color: Colors.black),
                 title: Text("Plan", style: TextStyle(color: Colors.black))
+            ),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.star, color: Colors.black),
+                title: Text("Favorites", style: TextStyle(color: Colors.black))
             )
           ],
       ),
