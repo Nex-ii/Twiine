@@ -324,6 +324,7 @@ class LoginState extends State<Login>{
   }
 
   _loginWithFacebook() async {
+    Navigator.of(context).pushNamed('/navBar'); //<--Delete to test login
     // Authenticate with Facebook
     FacebookLogin facebookLogin = FacebookLogin();
     FacebookLoginResult result = await facebookLogin.logIn(['email']);
@@ -339,9 +340,10 @@ class LoginState extends State<Login>{
         // authenticated with facebook
         user = (await _auth.signInWithCredential(credential)).user;
         setState(() {
-          if (user != null)
+          if (user != null) {
             _loginMessage = "Successfully authenticated with Facebook";
-          else
+            Navigator.of(context).pushNamed('/navBar');
+          }else
             _loginMessage = "Failed to authenticate with Firebase";
         });
         break;
@@ -389,6 +391,7 @@ class LoginState extends State<Login>{
     }
     setState(() {
       _loginMessage = "Successfully authenticated with Google";
+      Navigator.of(context).pushNamed('/navBar');
     });
   }
 
