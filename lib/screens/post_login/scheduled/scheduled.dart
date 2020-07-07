@@ -7,27 +7,6 @@ class Scheduled extends StatefulWidget{
 }
 
 class _ScheduledState extends State<Scheduled> {
-////  Future<String> createAlertDialog(BuildContext context) {
-////    TextEditingController customController = TextEditingController();
-////    return showDialog(context: context, builder:(context) {
-////      return AlertDialog(
-////        title: Text("Add New Event"),
-////        content: TextField(
-////          controller: customController,
-////        ),
-////        actions: <Widget>[
-////          MaterialButton(
-////            elevation: 5.0,
-////            child: Text('Save'),
-////            onPressed:(){
-////              Navigator.of(context).pop(customController.text.toString());
-////            },
-////          )
-////        ]
-////      );
-////    });
-//  }
-
   List<dynamic> _selectedEvents;
   final list = new List.generate(3, (i) => "Item ${i + 1}");
 
@@ -48,24 +27,31 @@ class _ScheduledState extends State<Scheduled> {
           itemCount: _selectedEvents.length,
           itemBuilder: (context, index) =>
               ExpansionTile(
-                title: Text(_selectedEvents[index]),
-                children: list
-                    .map((val) =>
-                new ListTile(
-                  title: new Text(val),
-                ))
-                    .toList(),
+                title: Text(
+                    _selectedEvents[index].month.toString() +
+                    '/' +
+                    _selectedEvents[index].day.toString() +
+                    '/' +
+                    _selectedEvents[index].year.toString()
+                ),
+                children: <Widget>[
+                  new ListTile(
+                    title: Text(_selectedEvents[index].name),
+                  ),
+                  new ListTile(
+                    title: Text(_selectedEvents[index].location),
+                  )
+                ]
               ),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: (){
-//            createAlertDialog(context).then((onValue) {
-//              setState(() {
-//                _selectedEvents.add(onValue);
-//              });
-//            });
-            Navigator.of(context).pushNamed('/addEvent');
+            Navigator.of(context).pushNamed('/addEvent').then((onValue){
+              setState((){
+                _selectedEvents.add(onValue);
+              });
+            });
           },
      ),
     );
