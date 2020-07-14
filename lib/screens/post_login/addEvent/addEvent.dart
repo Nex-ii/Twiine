@@ -15,6 +15,7 @@ class _addEventState extends State<addEvent> {
   @override
   Widget build(BuildContext context) {
     final thirdMediaWidth = MediaQuery.of(context).size.width/3.0;
+    final halfMediaWidth = MediaQuery.of(context).size.width/2.0;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +60,7 @@ class _addEventState extends State<addEvent> {
                   child: MyTextFormField(
                     hintText: 'Day',
                     validator: (String value){
-                      if(value.isEmpty || int.parse(value)<1 || int.parse(value) > 31){
+                      if(value.isEmpty || int.parse(value)<1 || int.parse(value) > 31 || int.parse(value) is! int){
                         return '1-31';
                       }
                       return null;
@@ -74,7 +75,7 @@ class _addEventState extends State<addEvent> {
                   child: MyTextFormField(
                     hintText: 'Month',
                     validator: (String value){
-                      if(value.isEmpty || int.parse(value)>12 || int.parse(value) < 1){
+                      if(value.isEmpty || int.parse(value)>12 || int.parse(value) < 1 || int.parse(value) is! int){
                         return '1-12';
                       }
                       return null;
@@ -89,13 +90,62 @@ class _addEventState extends State<addEvent> {
                   child: MyTextFormField(
                     hintText: 'Year',
                     validator: (String value){
-                      if(value.isEmpty){
+                      if(value.isEmpty || int.parse(value) is! int){
                         return 'Enter Year';
                       }
                       return null;
                     },
                     onSaved: (String value){
                       temp.year = int.parse(value);
+                    },
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: <Widget>[
+                Container(
+                  width: thirdMediaWidth,
+                  child: Text(
+                    'Time: ',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                    ),
+                  ),
+                ),
+                Container(
+                  width: thirdMediaWidth/1.15,
+                  child: MyTextFormField(
+                    hintText: '0-23',
+                    validator: (String value){
+                      if(value.isEmpty || int.parse(value)<0 || int.parse(value)>23 || int.parse(value) is! int){
+                        return '0-23';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value){
+                      temp.hour = int.parse(value);
+                    },
+                  ),
+                ),
+                Container(
+                  width: halfMediaWidth/16.0,
+                  child: Text(' : '),
+                ),
+                Container(
+                  width: thirdMediaWidth/1.15,
+                  child: MyTextFormField(
+                    hintText: '0-59',
+                    validator: (String value){
+                      if(value.isEmpty || int.parse(value)<0 || int.parse(value)>59 || int.parse(value) is! int){
+                        return '0-59';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value){
+                      temp.minute = int.parse(value);
                     },
                   ),
                 ),
