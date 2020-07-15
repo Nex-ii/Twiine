@@ -162,7 +162,8 @@ class _addEventState extends State<addEvent> {
               onPressed: (){
                 if(_formKey.currentState.validate()){
                   _formKey.currentState.save();
-
+                  var returnVar = new DateTime(temp.year, temp.month, temp.day, temp.hour, temp.minute);
+                  temp.dateInfo = returnVar;
                   Navigator.of(context).pop(temp);
                 }
               },

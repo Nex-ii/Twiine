@@ -8,54 +8,99 @@ class Scheduled extends StatefulWidget{
 
 class _ScheduledState extends State<Scheduled> {
   List<dynamic> _selectedEvents;
+  List<dynamic> _pastEvents;
 
-  void sort(){
-    for(int a=0; a<_selectedEvents.length; a++){
-      int tempIntYear = _selectedEvents[a].year;
-      int tempIntMonth = _selectedEvents[a].month;
-      int tempIntDay = _selectedEvents[a].day;
-      int tempIntHour = _selectedEvents[a].hour;
-      int tempIntMinute = _selectedEvents[a].minute;
+  int partitionSelected(int low, int high)
+  {
+    PlannedDates pivot = _selectedEvents[high];
+    int i = (low-1); // index of smaller element
+    for (int j=low; j<high; j++)
+    {
+      // If current element is smaller than the pivot
+      if (pivot.dateInfo.isAfter(_selectedEvents[j].dateInfo))
+      {
+        i++;
 
-      PlannedDates swap;
-      for(int i = a+1; i<_selectedEvents.length; i++){
-        int tempIntYear2 = _selectedEvents[i].year;
-        int tempIntMonth2 = _selectedEvents[i].month;
-        int tempIntDay2 = _selectedEvents[i].day;
-        int tempIntHour2 = _selectedEvents[i].hour;
-        int tempIntMinute2 = _selectedEvents[i].minute;
-
-
-        if(tempIntYear == tempIntYear2){
-          if(tempIntMonth == tempIntMonth2){
-            if(tempIntDay == tempIntDay2){
-              if(tempIntHour == tempIntHour2){
-                if(tempIntMinute > tempIntMinute2){
-                  swap = _selectedEvents[a];
-                  _selectedEvents[a] = _selectedEvents[i];
-                  _selectedEvents[i] = swap;
-                }
-              }else if(tempIntHour > tempIntHour2){
-                swap = _selectedEvents[a];
-                _selectedEvents[a] = _selectedEvents[i];
-                _selectedEvents[i] = swap;
-              }
-            }else if(tempIntDay > tempIntDay2){
-              swap = _selectedEvents[a];
-              _selectedEvents[a] = _selectedEvents[i];
-              _selectedEvents[i] = swap;
-            }
-          }else if(tempIntMonth > tempIntMonth2){
-            swap = _selectedEvents[a];
-            _selectedEvents[a] = _selectedEvents[i];
-            _selectedEvents[i] = swap;
-          }
-        }else if(tempIntYear > tempIntYear2){
-          swap = _selectedEvents[a];
-          _selectedEvents[a] = _selectedEvents[i];
-          _selectedEvents[i] = swap;
-        }
+        // swap arr[i] and arr[j]
+        PlannedDates temp = _selectedEvents[i];
+        _selectedEvents[i] = _selectedEvents[j];
+        _selectedEvents[j] = temp;
       }
+    }
+
+    // swap arr[i+1] and arr[high] (or pivot)
+    PlannedDates temp = _selectedEvents[i+1];
+    _selectedEvents[i+1] = _selectedEvents[high];
+    _selectedEvents[high] = temp;
+
+    return i+1;
+  }
+
+
+  /* The main function that implements QuickSort()
+    arr[] --> Array to be sorted,
+    low  --> Starting index,
+    high  --> Ending index */
+
+  void sortSelected(int low, int high)
+  {
+    if (low < high)
+    {
+      /* pi is partitioning index, arr[pi] is
+            now at right place */
+      int pi = partitionSelected(low, high);
+
+      // Recursively sort elements before
+      // partition and after partition
+      sortSelected(low, pi-1);
+      sortSelected(pi+1, high);
+    }
+  }
+
+  int partitionPast(int low, int high)
+  {
+    PlannedDates pivot = _pastEvents[high];
+    int i = (low-1); // index of smaller element
+    for (int j=low; j<high; j++)
+    {
+      // If current element is smaller than the pivot
+      if (pivot.dateInfo.isAfter(_pastEvents[j].dateInfo))
+      {
+        i++;
+
+        // swap arr[i] and arr[j]
+        PlannedDates temp = _pastEvents[i];
+        _pastEvents[i] = _pastEvents[j];
+        _pastEvents[j] = temp;
+      }
+    }
+
+    // swap arr[i+1] and arr[high] (or pivot)
+    PlannedDates temp = _pastEvents[i+1];
+    _pastEvents[i+1] = _pastEvents[high];
+    _pastEvents[high] = temp;
+
+    return i+1;
+  }
+
+
+  /* The main function that implements QuickSort()
+    arr[] --> Array to be sorted,
+    low  --> Starting index,
+    high  --> Ending index */
+
+  void sortPast(int low, int high)
+  {
+    if (low < high)
+    {
+      /* pi is partitioning index, arr[pi] is
+            now at right place */
+      int pi = partitionPast(low, high);
+
+      // Recursively sort elements before
+      // partition and after partition
+      sortPast(low, pi-1);
+      sortPast(pi+1, high);
     }
   }
 
@@ -63,7 +108,9 @@ class _ScheduledState extends State<Scheduled> {
   void initState(){
     super.initState();
     _selectedEvents = [];
+    _pastEvents = [];
   }
+
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,38 +119,99 @@ class _ScheduledState extends State<Scheduled> {
           centerTitle: true,
           automaticallyImplyLeading: false,
         ),
-        body: ListView.builder(
-          itemCount: _selectedEvents.length,
-          itemBuilder: (context, index) =>
-              ExpansionTile(
-                title: Text(
-                    _selectedEvents[index].month.toString() +
-                    '/' +
-                    _selectedEvents[index].day.toString() +
-                    '/' +
-                    _selectedEvents[index].year.toString() +
-                    '      ' +
-                    _selectedEvents[index].hour.toString() +
-                    ':' +
-                    _selectedEvents[index].minute.toString()
-                ),
-                children: <Widget>[
-                  new ListTile(
-                    title: Text(_selectedEvents[index].name),
-                  ),
-                  new ListTile(
-                    title: Text(_selectedEvents[index].location),
+        body: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                  child: Text(
+                      "Upcoming Events",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold
+                      )
                   )
-                ]
               ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _selectedEvents.length,
+                  itemBuilder: (context, index) =>
+                      ExpansionTile(
+                          title: Text(
+                              _selectedEvents[index].month.toString() +
+                                  '/' +
+                                  _selectedEvents[index].day.toString() +
+                                  '/' +
+                                  _selectedEvents[index].year.toString() +
+                                  '      ' +
+                                  _selectedEvents[index].hour.toString() +
+                                  ':' +
+                                  _selectedEvents[index].minute.toString()
+                          ),
+                          children: <Widget>[
+                            new ListTile(
+                              title: Text(_selectedEvents[index].name),
+                            ),
+                            new ListTile(
+                              title: Text(_selectedEvents[index].location),
+                            )
+                          ]
+                      ),
+                ),
+              ),
+              Padding(
+                  padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
+                  child: Text(
+                      "Previous Events",
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold
+                      )
+                  )
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _pastEvents.length,
+                  itemBuilder: (context, index) =>
+                      ExpansionTile(
+                          title: Text(
+                              _pastEvents[index].month.toString() +
+                                  '/' +
+                                  _pastEvents[index].day.toString() +
+                                  '/' +
+                                  _pastEvents[index].year.toString() +
+                                  '      ' +
+                                  _pastEvents[index].hour.toString() +
+                                  ':' +
+                                  _pastEvents[index].minute.toString()
+                          ),
+                          children: <Widget>[
+                            new ListTile(
+                              title: Text(_pastEvents[index].name),
+                            ),
+                            new ListTile(
+                              title: Text(_pastEvents[index].location),
+                            )
+                          ]
+                      ),
+                ),
+              ),
+            ],
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: (){
             Navigator.of(context).pushNamed('/addEvent').then((onValue){
               setState((){
-                _selectedEvents.add(onValue);
-                sort();
+                PlannedDates testing = onValue;
+                if(testing.dateInfo.isAfter(DateTime.now())){
+                  _selectedEvents.add(onValue);
+                  sortSelected(0, _selectedEvents.length-1);
+                }else {
+                  _pastEvents.add(onValue);
+                  sortPast(0, _pastEvents.length-1);
+                }
               });
             });
           },

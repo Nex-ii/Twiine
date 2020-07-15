@@ -4,6 +4,7 @@ class PlannedDates {
   int year;
   int hour;
   int minute;
+  DateTime dateInfo;
   String name;
   String location;
 
