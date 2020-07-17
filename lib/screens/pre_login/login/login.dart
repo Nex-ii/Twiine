@@ -4,10 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
-FirebaseUser user;
+import 'package:twiine/auth.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -337,9 +334,9 @@ class LoginState extends State<Login>{
 
         // TODO: figure out what to do with this, but for now, we're
         // authenticated with facebook
-        user = (await _auth.signInWithCredential(credential)).user;
+        Auth.user = (await Auth.firebaseAuth.signInWithCredential(credential)).user;
         setState(() {
-          if (user != null)
+          if (Auth.user != null)
             _loginMessage = "Successfully authenticated with Facebook";
           else
             _loginMessage = "Failed to authenticate with Firebase";
@@ -380,9 +377,9 @@ class LoginState extends State<Login>{
           accessToken: auth.idToken
       );
 
-      user = (await _auth.signInWithCredential(credential)).user;
+      Auth.user = (await Auth.firebaseAuth.signInWithCredential(credential)).user;
     }
-    on PlatformException catch (error) {
+    on PlatformException {
       setState(() {
         _loginMessage = "Failed to authenticate with Google: ";
       });
