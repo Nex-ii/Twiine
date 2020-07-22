@@ -151,7 +151,7 @@ class LoginBasicState extends State<LoginBasic> {
     );
   }
   navigate_to_home() {
-    Navigator.of(context).pushNamed('/Navbar');
+    Navigator.of(context).pushNamed('/navBar');
   }
 
   navigate_to_forgot_password() {
@@ -169,10 +169,7 @@ class LoginBasicState extends State<LoginBasic> {
         password: passwordController.text,
       )).user;
       if (Auth.user != null) {
-        Auth.userRecord = (await TwiineApi.userExists.call(<String, String> {
-          "left_database_field": "email",
-          "right_userdata_field": Auth.user.email
-        })).data;
+        Auth.userRecord = TwiineApi.getUser("email", Auth.user.email);
       }
     }
     catch (error) {
@@ -180,7 +177,8 @@ class LoginBasicState extends State<LoginBasic> {
     }
     setState(() {
       if (Auth.user != null) {
-        _loginMessage = "Successfully authenticated with email";
+        // _loginMessage = "Successfully authenticated with email";
+        // _loginMessage = "asdf " + Auth.userRecord.toString();
         navigate_to_home();
       }
       else {
