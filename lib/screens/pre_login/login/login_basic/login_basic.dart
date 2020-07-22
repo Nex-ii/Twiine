@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:twiine/auth.dart';
+import 'package:twiine/TwiineApi.dart';
 
 class LoginBasic extends StatefulWidget{
   @override
@@ -161,77 +163,8 @@ class LoginBasicState extends State<LoginBasic> {
         )
     );
   }
-
-  /// Posts the username and password for credential validation
-  Future<bool> post_credentials() async {
-    Navigator.of(context).pushNamed('/navBar'); //<-- Remove to test
-    final form = formKey.currentState;
-    if (form.validate()) {
-      try {
-        await _auth.sendSignInWithEmailLink(
-          email: email_controller.text,
-          url: "https://twiine.firebaseio.com",
-          handleCodeInApp: true,
-          androidInstallIfNotAvailable: true,
-          androidMinimumVersion: '21',
-          androidPackageName: 'com.example.twiine',
-          iOSBundleID: 'com.example.twiine',
-        );
-      } catch (e) {
-        print(e);
-      }
-      return true;
-    }
-    return false;
-  }
-
-//  Future<bool> post_credentials() async{
-//    final form = formKey.currentState;
-//    if(form.validate()) {
-//      try {
-//        PhoneVerificationFailed verificationFailed = (AuthException authException) {};
-//        PhoneVerificationCompleted verificationCompleted = (AuthCredential phoneAuthCredential) {
-//          _auth.signInWithCredential(phoneAuthCredential);
-//        };
-//        PhoneCodeSent codeSent =
-//            (String verificationId, [int forceResendingToken]) async {
-//        };
-//        PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout =
-//            (String verificationId) {
-//        };
-//        await verifyPhoneNumber(email_controller.text,
-//                                codeAutoRetrievalTimeout,
-//                                codeSent,
-//                                Duration(seconds: 5),
-//                                verificationCompleted,
-//                                verificationFailed);
-//      }catch(e){
-//        print(e);
-//      }
-//      return true;
-//    }
-//    return false;
-//  }
-//
-//  Future<void> verifyPhoneNumber(
-//      String phone,
-//      PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout,
-//      PhoneCodeSent codeSent,
-//      Duration duration,
-//      PhoneVerificationCompleted verificationCompleted,
-//      PhoneVerificationFailed verificationFailed) async {
-//    print(phone);
-//    return _auth.verifyPhoneNumber(
-//        phoneNumber: phone,
-//        codeAutoRetrievalTimeout: codeAutoRetrievalTimeout,
-//        codeSent: codeSent,
-//        timeout: duration,
-//        verificationCompleted: verificationCompleted,
-//        verificationFailed: verificationFailed);
-//  }
-
   navigate_to_home() {
-    post_credentials(); //.then((value) => Navigator.of(context).pushNamed('/navBar'));
+    Navigator.of(context).pushNamed('/Navbar');
   }
 
   navigate_to_forgot_password() {
@@ -243,19 +176,25 @@ class LoginBasicState extends State<LoginBasic> {
   }
 
   _signInWithEmail() async {
-    FirebaseUser user = null;
     try {
-      user = (await _auth.signInWithEmailAndPassword(
+      Auth.user = (await _auth.signInWithEmailAndPassword(
         email: email_controller.text,
         password: password_controller.text,
       )).user;
+      if (Auth.user != null) {
+        Auth.userRecord = (await TwiineApi.userExists.call(<String, String> {
+          "left_database_field": "email",
+          "right_userdata_field": Auth.user.email
+        })).data;
+      }
     }
     catch (error) {
 
     }
     setState(() {
-      if (user != null) {
+      if (Auth.user != null) {
         _loginMessage = "Successfully authenticated with email";
+        navigate_to_home();
       }
       else {
         _loginMessage = "Unable to authenticate with email";
