@@ -23,7 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  google_maps_flutter: ^0.5.27+3
+  google_maps_flutter: ^0.5.28+1
   font_awesome_flutter: ^8.8.1
 
 
@@ -40,6 +40,9 @@ dependencies:
 
   #For the search bar
   flappy_search_bar: 1.4.1
+
+  #validation for forms
+  validators: ^2.0.1
 
 dev_dependencies:
   flutter_test:
