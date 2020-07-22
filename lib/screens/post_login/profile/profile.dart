@@ -64,6 +64,7 @@ class ProfileState extends State<Profile> {
       )
     );
   }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
