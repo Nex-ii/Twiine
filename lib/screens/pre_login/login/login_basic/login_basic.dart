@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:twiine/colors.dart';
 
 class LoginBasic extends StatefulWidget{
   @override
@@ -113,7 +114,7 @@ class LoginBasicState extends State<LoginBasic> {
                             child: Text(
                               _loginMessage,
                               style: TextStyle(
-                                  color: Colors.red,
+                                  color: TwiineColors.red,
                                   fontSize: 12
                               ),
                             )
@@ -132,7 +133,7 @@ class LoginBasicState extends State<LoginBasic> {
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                             _buttonRadius),
-                                        color: Colors.red,
+                                        color: TwiineColors.red,
                                         boxShadow: [ _dropShadow]
                                     ),
                                     padding: EdgeInsets.all(10),

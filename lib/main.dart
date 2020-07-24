@@ -12,6 +12,7 @@ import 'package:twiine/components/Navbar.dart';
 import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/home/home.dart';
 import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
+import 'package:twiine/colors.dart';
 
 void main() => runApp(App());
 
@@ -20,7 +21,11 @@ class App extends StatelessWidget{
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Twiine',
-      theme: ThemeData(fontFamily: 'Acumin Pro'),
+      theme: ThemeData(
+        fontFamily: 'Acumin Pro',
+        primaryColor: TwiineColors.red,
+        accentColor: TwiineColors.orange,
+      ),
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {

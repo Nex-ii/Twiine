@@ -5,6 +5,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:twiine/auth.dart';
+import 'package:twiine/colors.dart';
 
 class Login extends StatefulWidget {
   Login({Key key}) : super(key: key);
@@ -87,7 +88,7 @@ class LoginState extends State<Login>{
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(
                                             _buttonRadius),
-                                        color: Colors.red,
+                                        color: TwiineColors.red,
                                         boxShadow: [ _dropShadow]
                                     ),
                                     padding: EdgeInsets.all(10),
@@ -120,7 +121,7 @@ class LoginState extends State<Login>{
                             child: Text(
                               _loginMessage,
                               style: TextStyle(
-                                  color: Colors.red,
+                                  color: TwiineColors.red,
                                   fontSize: 12
                               ),
                             )
