@@ -1,110 +1,65 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:twiine/colors.dart';
+import 'package:twiine/components/HangoutCard.dart';
 
 
 class Home extends StatefulWidget{
   @override
-  HomeState createState() =>HomeState();
+  HomeState createState() => HomeState();
 }
 
 class HomeState extends State<Home> {
-  GoogleMapController mapController;
-
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
-  void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
-  }
-
   @override
   Widget build(BuildContext context) {
+    // Styling
+    TextStyle headerStyle = TextStyle(
+      fontWeight: FontWeight.bold,
+      color: TwiineColors.red,
+      fontSize: 18
+    );
+    TextStyle headerStyleInactive = TextStyle(
+      fontWeight: FontWeight.bold,
+      color: TwiineColors.grey,
+      fontSize: 18
+    );
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Text("Map Screen"),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed:() {
-            showSearch(context: context, delegate: DataSearch());
-          })
-        ],
-      ),
-      body: GoogleMap(
-        onMapCreated: _onMapCreated,
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 11.0,
-        ),
-      ),
-    );
-  }
-}
-
-class DataSearch extends SearchDelegate<String>{
-  final searchResults = [
-    "this",
-    "is",
-    "a",
-    "temporary",
-    "list",
-    "for",
-    "testing"
-  ];
-
-  final recentSearch = [
-    "temporary",
-    "list"
-  ];
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [IconButton(icon: Icon(Icons.clear), onPressed: () {
-      query = "";
-    })];
-  }
-
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
-      ),
-        onPressed: () {
-          close(context, null);
-        });
-  }
-
-  @override
-  Widget buildResults(BuildContext context) {
-    return Card(
-      //Put something here if you want something to happen upon clicking result
-    );
-  }
-
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final suggestionList = query.isEmpty
-        ? recentSearch
-        : searchResults.where((p) => p.startsWith(query)).toList();
-
-    return ListView.builder(
-      itemBuilder: (context, index)=>ListTile(
-        onTap: (){
-          showResults(context);
-        },
-          title: RichText(
-            text: TextSpan(
-              text: suggestionList[index].substring(0, query.length),
-              style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
-                  text: suggestionList[index].substring(query.length),
-                  style: TextStyle(color: Colors.grey))
-            ]),
+      body: ListView(
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.fromLTRB(15, 39, 15, 0),
+                child: Center(
+                  child: Text(
+                    "My Hangouts",
+                    style: headerStyle,
+                  )
+                )
+              ),
+              Padding(
+                padding: EdgeInsets.fromLTRB(15, 39, 15, 0),
+                child: Center(
+                  child: Text(
+                    "Requests",
+                    style: headerStyleInactive,
+                  )
+                )
+              )
+            ]
           ),
-        ),
-      itemCount: suggestionList.length,
+          Container(
+            padding: EdgeInsets.fromLTRB(40, 26, 0, 0),
+            child: Text(
+              "Current Hangout",
+              style: Theme.of(context).textTheme.headline1,
+            ),
+          ),
+          HangoutCard()
+        ]
+      )
     );
   }
 }
