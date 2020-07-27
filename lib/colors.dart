@@ -1,7 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 class TwiineColors {
-  static final red = Color.fromRGBO(190, 0, 10, 1);
-  static final orange = Color.fromRGBO(250, 76, 53, 1);
-  static final grey = Color.fromRGBO(120, 102, 102, 1);
+  static final red = Color(0xFFD32F2F);
+  static final orange = Color(0xFFFF8A80);
+  static final grey = Color(0xFF786666);
+  static final lightGrey = Color(0xFFE0E0E0);
 }
