@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/colors.dart';
 import 'package:twiine/components/TimeDifference.dart';
 
-class HangoutCard extends StatefulWidget {
+class HangoutCard extends StatelessWidget {
   String _place = "Crater Disaster Site";
   String _thumbnail =
       "https://resi.ze-robot.com/dl/ki/kimi-no-na-wa-3-1280%C3%971024.jpg";
   @override
-  _HangoutCardState createState() => _HangoutCardState();
-}
-
-class _HangoutCardState extends State<HangoutCard> {
-  @override
   Widget build(BuildContext context) {
     return Container(
-      // padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
       height: 330,
       child: Card(
         shape: RoundedRectangleBorder(
@@ -26,7 +19,7 @@ class _HangoutCardState extends State<HangoutCard> {
               height: 219,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: Image.network(widget._thumbnail).image,
+                  image: Image.network(_thumbnail).image,
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.only(
@@ -48,7 +41,7 @@ class _HangoutCardState extends State<HangoutCard> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                         child: Text(
-                          widget._place,
+                          _place,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                       ),
