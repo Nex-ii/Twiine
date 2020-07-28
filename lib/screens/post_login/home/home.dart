@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/components/HangoutCard.dart';
+import 'package:twiine/components/UpcomingHangoutCard.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -75,7 +76,27 @@ class HomeState extends State<Home> {
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-              child: HangoutCard(),
+              child: UpcomingHangoutCard(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: UpcomingHangoutCard(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: UpcomingHangoutCard(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: UpcomingHangoutCard(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: UpcomingHangoutCard(),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: UpcomingHangoutCard(),
             ),
           ],
         ),
