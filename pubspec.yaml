@@ -44,6 +44,9 @@ dependencies:
   #validation for forms
   validators: ^2.0.1
 
+  # svgs
+  flutter_svg: ^0.17.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
