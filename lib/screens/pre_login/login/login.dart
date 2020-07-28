@@ -255,11 +255,12 @@ class LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    if (isPhoneLogin) if (codeSent)
-      return getSMSCodeLoginWidget(context);
-    else
-      return getPhoneLoginWidget(context);
-    else
+    if (isPhoneLogin) {
+      if (codeSent)
+        return getSMSCodeLoginWidget(context);
+      else
+        return getPhoneLoginWidget(context);
+    } else
       return getLoginWidget(context);
   }
 
@@ -291,7 +292,6 @@ class LoginState extends State<Login> {
 
     final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
       this.verificationId = verId;
-      print("timeout!!!");
       codeSent = false;
     };
 
@@ -302,7 +302,6 @@ class LoginState extends State<Login> {
         verificationFailed: verificationfailed,
         codeSent: smsSent,
         codeAutoRetrievalTimeout: autoTimeout);
-
   }
 
   _loginWithFacebook() async {
@@ -368,6 +367,7 @@ class LoginState extends State<Login> {
   }
 
   _successfulLogin() {
+    isPhoneLogin = false;
     codeSent = false;
     Navigator.of(context).pushNamed('/navBar');
   }
