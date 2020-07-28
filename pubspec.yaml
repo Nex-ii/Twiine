@@ -102,7 +102,7 @@ flutter:
       fonts:
         - asset: lib/fonts/facebook.ttf
     - family: Karla
-      fonts: 
+      fonts:
         - asset: lib/fonts/Karla-Regular.ttf
         - asset: lib/fonts/Karla-Bold.ttf
         - asset: lib/fonts/Karla-Italic.ttf
