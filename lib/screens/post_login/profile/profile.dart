@@ -15,25 +15,35 @@ class ProfileState extends State<Profile> {
 	double _cardHeight = 290.0;
 	double _cardWidth = 190.0;
 	File _image;
+	var _imageURL = 'https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/folderName%2FimageName?alt=media&token=33c5f413-555d-4a2e-bbd4-16a6e129ff13';
 
-	Future getImage() async{
-	  var image = await ImagePicker.pickImage(source:ImageSource.gallery);
+	Future getImage(BuildContext context) async{
+	  File image = await ImagePicker.pickImage(source:ImageSource.gallery);
 
 	  setState((){
 	    _image=image;
 	    print('Image Path $_image');
     });
+
+	  uploadPic(context);
   }
 
   //TODO: Get the pic uploaded on firebase
   Future uploadPic(BuildContext context) async{
-    String filName = basename(_image.path);
-    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(filName);
-    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
-	  StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    final _storage = FirebaseStorage.instance;
+    var snapshot = await _storage.ref()
+        .child('ImageStorage/ProfilePicture')
+        .putFile(_image)
+        .onComplete;
+
+    var downloadUrl = await snapshot.ref.getDownloadURL();
+
+
 	  setState((){
 	    print("Profile Picture uploaded");
 	    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+      _imageURL = downloadUrl;
+      print(_imageURL);
     });
 	}
 
@@ -147,7 +157,7 @@ class ProfileState extends State<Profile> {
                             child: SizedBox(
                               width: 100.0,
                               height: 100.0,
-                              child: (_image!=null) ? Image.file(_image, fit:BoxFit.fill)
+                              child: (_imageURL!=null) ? Image.network(_imageURL, fit:BoxFit.fill)
                                 : Image.network(
                                 'https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4',
                                 fit: BoxFit.fill,
@@ -163,8 +173,7 @@ class ProfileState extends State<Profile> {
                             size:30.0,
                           ),
                           onPressed: (){
-                            getImage();
-                            uploadPic(context);
+                            getImage(context);
                           },
                         ),
                       ),
