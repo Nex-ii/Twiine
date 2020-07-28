@@ -334,8 +334,6 @@ class LoginState extends State<Login>{
           accessToken: result.accessToken.token,
         );
 
-        // TODO: figure out what to do with this, but for now, we're
-        // authenticated with facebook
         Auth.user = (await Auth.firebaseAuth.signInWithCredential(credential)).user;
         setState(() {
           if (Auth.user != null) {
