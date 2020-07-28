@@ -27,13 +27,12 @@ class App extends StatelessWidget{
         accentColor: TwiineColors.orange,
         textTheme: TextTheme(
           headline1: TextStyle(
-            fontSize: 16,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.black
           ),
           headline2: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
+            fontSize: 24,
             color: Colors.black
           ),
           bodyText1: TextStyle(
