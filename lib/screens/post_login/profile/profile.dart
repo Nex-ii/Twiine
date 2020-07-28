@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path/path.dart';
+import 'dart:io';
 
 class Profile extends StatefulWidget {
   @override
@@ -9,6 +14,28 @@ class ProfileState extends State<Profile> {
   double _cardRadius = 20.0;
 	double _cardHeight = 290.0;
 	double _cardWidth = 190.0;
+	File _image;
+
+	Future getImage() async{
+	  var image = await ImagePicker.pickImage(source:ImageSource.gallery);
+
+	  setState((){
+	    _image=image;
+	    print('Image Path $_image');
+    });
+  }
+
+  //TODO: Get the pic uploaded on firebase
+  Future uploadPic(BuildContext context) async{
+    String filName = basename(_image.path);
+    StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child(filName);
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+	  StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+	  setState((){
+	    print("Profile Picture uploaded");
+	    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+    });
+	}
 
   // TODO: we probably don't want to leave this as a url
   // Returns a card with the name of the place and the image url as the background
@@ -65,6 +92,8 @@ class ProfileState extends State<Profile> {
     );
   }
 
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView(
@@ -108,29 +137,59 @@ class ProfileState extends State<Profile> {
                       )
                     )
                   ),
-                  CircleAvatar(
-                    backgroundImage: NetworkImage("https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4"),
-                    radius: 60,
-                    backgroundColor: Colors.brown
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: TextFormField(
-                      initialValue: "@realwayson",
-                      decoration: InputDecoration(
-                        border: InputBorder.none
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      CircleAvatar(
+                          radius: 50, //Increase to have color ring around profile
+                          backgroundColor: Colors.brown,
+                          child: ClipOval(
+                            child: SizedBox(
+                              width: 100.0,
+                              height: 100.0,
+                              child: (_image!=null) ? Image.file(_image, fit:BoxFit.fill)
+                                : Image.network(
+                                'https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4',
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
                       ),
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white
+                      Padding(
+                        padding: EdgeInsets.only(top:40.0),
+                        child: IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.camera,
+                            size:30.0,
+                          ),
+                          onPressed: (){
+                            getImage();
+                            uploadPic(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  //TODO: Make it more clear you can edit username somehow by clicking the name
+                  Padding(
+                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: TextFormField(
+                          initialValue: "@realwayson",
+                          decoration: InputDecoration(
+                              border: InputBorder.none
+                          ),
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.white
+                          )
                       )
-                    )
                   )
-                ]
+                ],
               )
-            )
+            ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
