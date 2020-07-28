@@ -21,10 +21,11 @@ class LoginBasicState extends State<LoginBasic> {
       passwordController = TextEditingController();
 
   BoxShadow _dropShadow = BoxShadow(
-      color: Colors.grey.withOpacity(0.9),
-      spreadRadius: -2,
-      blurRadius: 6,
-      offset: Offset(0, 4));
+    color: Colors.grey.withOpacity(0.9),
+    spreadRadius: -2,
+    blurRadius: 6,
+    offset: Offset(0, 4),
+  );
   double _dividerThickness = 2;
   double _buttonHeight = 50;
   double _buttonRadius = 15;
@@ -151,18 +152,6 @@ class LoginBasicState extends State<LoginBasic> {
     );
   }
 
-  navigate_to_home() {
-    Navigator.of(context).pushNamed('/navBar');
-  }
-
-  navigate_to_forgot_password() {
-    Navigator.of(context).pushNamed('/forgot_password');
-  }
-
-  navigate_to_create_account() {
-    Navigator.of(context).pushNamed('/create_account');
-  }
-
   _signInWithEmail() async {
     try {
       Auth.user = (await _auth.signInWithEmailAndPassword(
@@ -176,9 +165,7 @@ class LoginBasicState extends State<LoginBasic> {
     } catch (error) {}
     setState(() {
       if (Auth.user != null) {
-        // _loginMessage = "Successfully authenticated with email";
-        // _loginMessage = "asdf " + Auth.userRecord.toString();
-        navigate_to_home();
+        Navigator.of(context).pushNamed('/navBar');
       } else {
         _loginMessage = "Unable to authenticate with email";
       }
