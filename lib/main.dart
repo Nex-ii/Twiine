@@ -11,12 +11,12 @@ import 'package:twiine/screens/pre_login/register/register_phone/register_phone.
 import 'package:twiine/components/Navbar.dart';
 import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/home/home.dart';
-import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
+import 'package:twiine/screens/post_login/addEvent/AddEvent.dart';
 import 'package:twiine/colors.dart';
 
 void main() => runApp(App());
 
-class App extends StatelessWidget{
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -52,18 +52,18 @@ class App extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/' : (context) => LandingPage(),
-        '/login' : (context) => Login(),
-        '/login_basic' : (context) => LoginBasic(),
-        '/login_facebook' : (context) => LoginFacebook(),
-        '/register_email' : (context) => RegisterEmail(),
-        '/register_phone' : (context) => RegisterPhone(),
-        '/forgot_password' : (context) => ForgotPassword(),
-        '/create_account' : (context) => CreateAccount(),
-        '/home' : (context) => Home(),
-        '/profile' : (context) => Profile(),
-        '/navBar' : (context) => Navbar(),
-        '/addEvent' : (context) => addEvent(),
+        '/': (context) => LandingPage(),
+        '/login': (context) => Login(),
+        '/login_basic': (context) => LoginBasic(),
+        '/login_facebook': (context) => LoginFacebook(),
+        '/register_email': (context) => RegisterEmail(),
+        '/register_phone': (context) => RegisterPhone(),
+        '/forgot_password': (context) => ForgotPassword(),
+        '/create_account': (context) => CreateAccount(),
+        '/home': (context) => Home(),
+        '/profile': (context) => Profile(),
+        '/navBar': (context) => Navbar(),
+        '/addEvent': (context) => AddEvent(),
       },
     );
   }

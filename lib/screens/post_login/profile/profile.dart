@@ -7,8 +7,8 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   double _cardRadius = 20.0;
-	double _cardHeight = 290.0;
-	double _cardWidth = 190.0;
+  double _cardHeight = 290.0;
+  double _cardWidth = 190.0;
 
   // TODO: we probably don't want to leave this as a url
   // Returns a card with the name of the place and the image url as the background
@@ -23,9 +23,9 @@ class ProfileState extends State<Profile> {
               color: Colors.grey.withOpacity(0.9),
               spreadRadius: -2,
               blurRadius: 6,
-              offset: Offset(0, 4)
-            )
-          ]
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: Card(
           shape: RoundedRectangleBorder(
@@ -39,8 +39,8 @@ class ProfileState extends State<Profile> {
               image: DecorationImage(
                 image: NetworkImage(url),
                 fit: BoxFit.cover,
-                alignment: Alignment.topCenter
-              )
+                alignment: Alignment.topCenter,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,15 +53,15 @@ class ProfileState extends State<Profile> {
                     name,
                     style: TextStyle(
                       fontSize: 30,
-                      color: Colors.white
-                    )
-                  )
-                )
-              ]
-            )
-          )
-        )
-      )
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -77,21 +77,21 @@ class ProfileState extends State<Profile> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(this._cardRadius),
-                  bottomLeft: Radius.circular(this._cardRadius)
+                  bottomLeft: Radius.circular(this._cardRadius),
                 ),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Colors.purpleAccent, Colors.cyan]
+                  colors: [Colors.purpleAccent, Colors.cyan],
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.9),
                     spreadRadius: 3,
                     blurRadius: 7,
-                    offset: Offset(0, 3)
-                  )
-                ]
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Column(
                 children: <Widget>[
@@ -104,33 +104,32 @@ class ProfileState extends State<Profile> {
                         color: Colors.white,
                         onPressed: () {
                           // TODO: settings page
-                        }
-                      )
-                    )
+                        },
+                      ),
+                    ),
                   ),
                   CircleAvatar(
-                    backgroundImage: NetworkImage("https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4"),
+                    backgroundImage: NetworkImage(
+                        "https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4"),
                     radius: 60,
-                    backgroundColor: Colors.brown
+                    backgroundColor: Colors.brown,
                   ),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: TextFormField(
                       initialValue: "@realwayson",
-                      decoration: InputDecoration(
-                        border: InputBorder.none
-                      ),
+                      decoration: InputDecoration(border: InputBorder.none),
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Colors.white
-                      )
-                    )
-                  )
-                ]
-              )
-            )
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(10, 20, 0, 0),
@@ -138,9 +137,9 @@ class ProfileState extends State<Profile> {
               "Recent Places",
               style: TextStyle(
                 fontSize: 30,
-                fontWeight: FontWeight.bold
-              )
-            )
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: this._cardRadius),
@@ -148,21 +147,21 @@ class ProfileState extends State<Profile> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-                createPlaceCard("Ding Tea", "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-              ]
-            )
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+                createPlaceCard("Ding Tea",
+                    "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+              ],
+            ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
             child: Text(
               "Placeholder section",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold
-              )
-            )
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: this._cardRadius),
@@ -170,13 +169,16 @@ class ProfileState extends State<Profile> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                createPlaceCard("Ding Tea", "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-              ]
-            )
-          )
-        ]
+                createPlaceCard("Ding Tea",
+                    "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

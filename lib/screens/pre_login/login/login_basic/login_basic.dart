@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twiine/auth.dart';
+<<<<<<< HEAD
 import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/colors.dart';
+=======
+import 'package:twiine/colors.dart';
+import 'package:twiine/TwiineApi.dart';
+>>>>>>> dev
 
-class LoginBasic extends StatefulWidget{
+class LoginBasic extends StatefulWidget {
   @override
   LoginBasic({Key key}) : super(key: key);
   LoginBasicState createState() => LoginBasicState();
 }
 
 class LoginBasicState extends State<LoginBasic> {
-
   String _loginMessage = "";
 
   final formKey = new GlobalKey<FormState>();
@@ -22,10 +26,10 @@ class LoginBasicState extends State<LoginBasic> {
       passwordController = TextEditingController();
 
   BoxShadow _dropShadow = BoxShadow(
-      color: Colors.grey.withOpacity(0.9),
-      spreadRadius: -2,
-      blurRadius: 6,
-      offset: Offset(0, 4)
+    color: Colors.grey.withOpacity(0.9),
+    spreadRadius: -2,
+    blurRadius: 6,
+    offset: Offset(0, 4),
   );
   double _dividerThickness = 2;
   double _buttonHeight = 50;
@@ -48,8 +52,8 @@ class LoginBasicState extends State<LoginBasic> {
                     style: TextStyle(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
-                    )
-                  )
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 50, 10, 0),
@@ -57,9 +61,9 @@ class LoginBasicState extends State<LoginBasic> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.grey,
-                        width: 2
+                        width: 2,
                       ),
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     child: Column(
                       children: [
@@ -69,13 +73,14 @@ class LoginBasicState extends State<LoginBasic> {
                             decoration: new InputDecoration(
                               labelText: "Email",
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.transparent),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
                               ),
-                              border: InputBorder.none
+                              border: InputBorder.none,
                             ),
                             keyboardType: TextInputType.text,
                             controller: emailController,
-                          )
+                          ),
                         ),
                         Row(
                           children: [
@@ -83,9 +88,9 @@ class LoginBasicState extends State<LoginBasic> {
                               child: Divider(
                                 thickness: _dividerThickness,
                                 color: Colors.grey,
-                              )
-                            )
-                          ]
+                              ),
+                            ),
+                          ],
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
@@ -94,16 +99,17 @@ class LoginBasicState extends State<LoginBasic> {
                             decoration: new InputDecoration(
                               labelText: "Password",
                               focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(color: Colors.transparent),
+                                borderSide:
+                                    BorderSide(color: Colors.transparent),
                               ),
-                              border: InputBorder.none
+                              border: InputBorder.none,
                             ),
                             controller: passwordController,
-                          )
-                        )
-                      ]
-                    )
-                  )
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -111,9 +117,9 @@ class LoginBasicState extends State<LoginBasic> {
                     _loginMessage,
                     style: TextStyle(
                       color: TwiineColors.red,
-                      fontSize: 12
+                      fontSize: 12,
                     ),
-                  )
+                  ),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 50, 10, 10),
@@ -123,10 +129,9 @@ class LoginBasicState extends State<LoginBasic> {
                       width: MediaQuery.of(context).size.width,
                       height: _buttonHeight,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          _buttonRadius),
+                        borderRadius: BorderRadius.circular(_buttonRadius),
                         color: TwiineColors.red,
-                        boxShadow: [ _dropShadow]
+                        boxShadow: [_dropShadow],
                       ),
                       padding: EdgeInsets.all(10),
                       child: Center(
@@ -136,31 +141,20 @@ class LoginBasicState extends State<LoginBasic> {
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
-                            fontWeight: FontWeight.bold
-                          )
-                        )
-                      )
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
                     ),
-                    onTap: () => { _signInWithEmail() }
-                  )
-                )
-              ]
-            )
-          )
-        ]
-      )
+                    onTap: () => {_signInWithEmail()},
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
-  }
-  navigate_to_home() {
-    Navigator.of(context).pushNamed('/navBar');
-  }
-
-  navigate_to_forgot_password() {
-    Navigator.of(context).pushNamed('/forgot_password');
-  }
-
-  navigate_to_create_account() {
-    Navigator.of(context).pushNamed('/create_account');
   }
 
   _signInWithEmail() async {
@@ -168,21 +162,16 @@ class LoginBasicState extends State<LoginBasic> {
       Auth.user = (await _auth.signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
-      )).user;
+      ))
+          .user;
       if (Auth.user != null) {
         Auth.userRecord = TwiineApi.getUser("email", Auth.user.email);
       }
-    }
-    catch (error) {
-      
-    }
+    } catch (error) {}
     setState(() {
       if (Auth.user != null) {
-        // _loginMessage = "Successfully authenticated with email";
-        // _loginMessage = "asdf " + Auth.userRecord.toString();
-        navigate_to_home();
-      }
-      else {
+        Navigator.of(context).pushNamed('/navBar');
+      } else {
         _loginMessage = "Unable to authenticate with email";
       }
     });
