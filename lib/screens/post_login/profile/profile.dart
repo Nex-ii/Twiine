@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:path/path.dart';
 import 'dart:io';
+import 'package:permission_handler/permission_handler.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -15,20 +15,20 @@ class ProfileState extends State<Profile> {
 	double _cardHeight = 290.0;
 	double _cardWidth = 190.0;
 	File _image;
-	var _imageURL = 'https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/folderName%2FimageName?alt=media&token=33c5f413-555d-4a2e-bbd4-16a6e129ff13';
+	var _imageURL = 'https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/ImageStorage%2FProfilePicture?alt=media&token=9958176c-3b7f-457f-935c-04ff166ffe15';
 
+	//TODO: Ask for permission to access the gallery
 	Future getImage(BuildContext context) async{
-	  File image = await ImagePicker.pickImage(source:ImageSource.gallery);
+      File image = await ImagePicker.pickImage(source:ImageSource.gallery);
 
-	  setState((){
-	    _image=image;
-	    print('Image Path $_image');
-    });
+      setState((){
+        _image=image;
+        print('Image Path $_image');
+      });
 
-	  uploadPic(context);
+      uploadPic(context);
   }
 
-  //TODO: Get the pic uploaded on firebase
   Future uploadPic(BuildContext context) async{
     final _storage = FirebaseStorage.instance;
     var snapshot = await _storage.ref()
@@ -142,7 +142,7 @@ class ProfileState extends State<Profile> {
                         icon: Icon(Icons.settings),
                         color: Colors.white,
                         onPressed: () {
-                          // TODO: settings page
+                          Navigator.of(context).pushNamed('/settings');
                         }
                       )
                     )

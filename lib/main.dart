@@ -13,6 +13,7 @@ import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/home/home.dart';
 import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/screens/post_login/profile/settings.dart';
 
 void main() => runApp(App());
 
@@ -41,6 +42,7 @@ class App extends StatelessWidget{
         '/profile' : (context) => Profile(),
         '/navBar' : (context) => Navbar(),
         '/addEvent' : (context) => addEvent(),
+        '/settings' : (context) => Settings(),
       },
     );
   }
