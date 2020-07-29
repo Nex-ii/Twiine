@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twiine/components/TimeDifference.dart';
 
 class HangoutCard extends StatelessWidget {
+  double _borderRadius = 10;
   String _place = "Crater Disaster Site";
   String _thumbnail =
       "https://resi.ze-robot.com/dl/ki/kimi-no-na-wa-3-1280%C3%971024.jpg";
@@ -11,7 +12,7 @@ class HangoutCard extends StatelessWidget {
       height: 330,
       child: Card(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(_borderRadius),
         ),
         child: Column(
           children: <Widget>[
@@ -23,8 +24,8 @@ class HangoutCard extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15),
-                  topRight: Radius.circular(15),
+                  topLeft: Radius.circular(_borderRadius),
+                  topRight: Radius.circular(_borderRadius),
                 ),
               ),
             ),

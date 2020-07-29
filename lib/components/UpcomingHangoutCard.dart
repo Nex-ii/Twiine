@@ -12,6 +12,9 @@ class UpcomingHangoutCard extends StatelessWidget {
     return Container(
       height: 125,
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(_borderRadius),
+        ),
         child: Row(
           children: <Widget>[
             Container(
