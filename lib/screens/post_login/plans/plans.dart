@@ -3,12 +3,12 @@ import 'package:twiine/colors.dart';
 import 'package:twiine/components/HangoutCard.dart';
 import 'package:twiine/components/UpcomingHangoutCard.dart';
 
-class Home extends StatefulWidget {
+class PlansPage extends StatefulWidget {
   @override
-  HomeState createState() => HomeState();
+  PlansPageState createState() => PlansPageState();
 }
 
-class HomeState extends State<Home> {
+class PlansPageState extends State<PlansPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;

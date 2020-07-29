@@ -10,7 +10,7 @@ import 'package:twiine/screens/pre_login/register/register_email/register_email.
 import 'package:twiine/screens/pre_login/register/register_phone/register_phone.dart';
 import 'package:twiine/components/Navbar.dart';
 import 'package:twiine/screens/post_login/profile/profile.dart';
-import 'package:twiine/screens/post_login/home/home.dart';
+import 'package:twiine/screens/post_login/plans/plans.dart';
 import 'package:twiine/screens/post_login/addEvent/AddEvent.dart';
 import 'package:twiine/colors.dart';
 
@@ -60,7 +60,7 @@ class App extends StatelessWidget {
         '/register_phone': (context) => RegisterPhone(),
         '/forgot_password': (context) => ForgotPassword(),
         '/create_account': (context) => CreateAccount(),
-        '/home': (context) => Home(),
+        '/plans': (context) => PlansPage(),
         '/profile': (context) => Profile(),
         '/navBar': (context) => Navbar(),
         '/addEvent': (context) => AddEvent(),
