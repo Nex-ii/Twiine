@@ -28,7 +28,7 @@ class HomeState extends State<Home> {
             onPressed: () {
               showSearch(context: context, delegate: DataSearch());
             },
-          )
+          ),
         ],
       ),
       body: GoogleMap(
