@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
-class Home extends StatefulWidget{
+class Home extends StatefulWidget {
   @override
-  HomeState createState() =>HomeState();
+  HomeState createState() => HomeState();
 }
 
 class HomeState extends State<Home> {
@@ -24,9 +23,12 @@ class HomeState extends State<Home> {
         automaticallyImplyLeading: false,
         title: Text("Map Screen"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed:() {
-            showSearch(context: context, delegate: DataSearch());
-          })
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(context: context, delegate: DataSearch());
+            },
+          ),
         ],
       ),
       body: GoogleMap(
@@ -40,7 +42,7 @@ class HomeState extends State<Home> {
   }
 }
 
-class DataSearch extends SearchDelegate<String>{
+class DataSearch extends SearchDelegate<String> {
   final searchResults = [
     "this",
     "is",
@@ -51,34 +53,37 @@ class DataSearch extends SearchDelegate<String>{
     "testing"
   ];
 
-  final recentSearch = [
-    "temporary",
-    "list"
-  ];
+  final recentSearch = ["temporary", "list"];
   @override
   List<Widget> buildActions(BuildContext context) {
-    return [IconButton(icon: Icon(Icons.clear), onPressed: () {
-      query = "";
-    })];
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () {
+          query = "";
+        },
+      ),
+    ];
   }
 
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
       icon: AnimatedIcon(
-          icon: AnimatedIcons.menu_arrow,
-          progress: transitionAnimation,
+        icon: AnimatedIcons.menu_arrow,
+        progress: transitionAnimation,
       ),
-        onPressed: () {
-          close(context, null);
-        });
+      onPressed: () {
+        close(context, null);
+      },
+    );
   }
 
   @override
   Widget buildResults(BuildContext context) {
     return Card(
-      //Put something here if you want something to happen upon clicking result
-    );
+        //Put something here if you want something to happen upon clicking result
+        );
   }
 
   @override
@@ -88,22 +93,22 @@ class DataSearch extends SearchDelegate<String>{
         : searchResults.where((p) => p.startsWith(query)).toList();
 
     return ListView.builder(
-      itemBuilder: (context, index)=>ListTile(
-        onTap: (){
+      itemBuilder: (context, index) => ListTile(
+        onTap: () {
           showResults(context);
         },
-          title: RichText(
-            text: TextSpan(
-              text: suggestionList[index].substring(0, query.length),
-              style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold),
-              children: [
-                TextSpan(
+        title: RichText(
+          text: TextSpan(
+            text: suggestionList[index].substring(0, query.length),
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+            children: [
+              TextSpan(
                   text: suggestionList[index].substring(query.length),
-                  style: TextStyle(color: Colors.grey))
-            ]),
+                  style: TextStyle(color: Colors.grey)),
+            ],
           ),
         ),
+      ),
       itemCount: suggestionList.length,
     );
   }

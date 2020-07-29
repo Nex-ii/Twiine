@@ -18,26 +18,27 @@ class _FavoritesState extends State<Favorites> {
         automaticallyImplyLeading: false,
       ),
       body: ListView.builder(
-          itemCount: list.length,
-          itemBuilder: (context, index){
-            return ListTile(
-              title: Text(list[index]),
-              trailing: new Icon(
-                  _isFavorited ? Icons.favorite : Icons.favorite_border,
-                  color: _isFavorited ? Colors.red : null,
-              ),
-              onTap: () {      // Add 9 lines from here...
-                setState(() {
-                  if (_isFavorited) {
-                    _isFavorited = false;
-                  } else {
-                    _isFavorited = true;
-                  }
-                });
-              },
-              );
-          }
-      )
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(list[index]),
+            trailing: new Icon(
+              _isFavorited ? Icons.favorite : Icons.favorite_border,
+              color: _isFavorited ? Colors.red : null,
+            ),
+            onTap: () {
+              // Add 9 lines from here...
+              setState(() {
+                if (_isFavorited) {
+                  _isFavorited = false;
+                } else {
+                  _isFavorited = true;
+                }
+              });
+            },
+          );
+        },
+      ),
     );
   }
 }
