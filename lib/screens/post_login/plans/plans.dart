@@ -27,22 +27,16 @@ class PlansPageState extends State<PlansPage> with TickerProviderStateMixin {
           return [
             SliverAppBar(
               pinned: false,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.transparent,
               bottom: TabBar(
                 indicatorColor: TwiineColors.red,
                 indicatorSize: TabBarIndicatorSize.label,
                 labelColor: TwiineColors.red,
                 unselectedLabelColor: TwiineColors.grey,
-                labelStyle: TextStyle(
-                  fontSize: 18,
-                ),
+                labelStyle: TextStyle(fontSize: 18),
                 tabs: [
-                  Tab(
-                    text: "My Hangouts",
-                  ),
-                  Tab(
-                    text: "Requests",
-                  ),
+                  Tab(text: "My Hangouts"),
+                  Tab(text: "Requests"),
                 ],
                 controller: controller,
               ),
