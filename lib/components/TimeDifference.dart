@@ -44,7 +44,11 @@ class _TimeDifferenceState extends State<TimeDifference> {
   }
 
   void _updateDateTimer() {
-    Future.delayed(Duration(seconds: 10)).then((value) => {_updateDate()});
+    Future.delayed(Duration(seconds: 10)).then(
+      (value) => {
+        if (this.mounted) _updateDate(),
+      },
+    );
   }
 
   void _updateDate() {
