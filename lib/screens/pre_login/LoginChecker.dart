@@ -13,7 +13,7 @@ class LoginCheckerState extends State<LoginChecker>{
   Widget build(BuildContext context) {
     _checkForLoggedIn().then((value) => {
       if (value) {
-        Auth.userRecord = TwiineApi.getUser("email", Auth.user.email);
+        Auth.userRecord = TwiineApi.getUser("email", Auth.user.email),
         Navigator.of(context).pushNamed('/navBar')
       }
       else
