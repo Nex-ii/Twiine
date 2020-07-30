@@ -2,27 +2,60 @@ import 'package:flutter/material.dart';
 import 'package:twiine/components/PlansRequestsIndicator.dart';
 import 'package:twiine/screens/post_login/plans/MyHangouts.dart';
 
+import '../../../colors.dart';
+
 class PlansPage extends StatefulWidget {
   @override
   PlansPageState createState() => PlansPageState();
 }
 
-class PlansPageState extends State<PlansPage> {
+class PlansPageState extends State<PlansPage> with TickerProviderStateMixin {
+  TabController controller;
+  @override
+  void initState() {
+    super.initState();
+    controller = TabController(length: 2, vsync: this);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double sideSpacing = screenWidth * 0.03;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(sideSpacing, 60, sideSpacing, 0),
-          child: Column(
-            children: <Widget>[
-              PlansRequestsIndicator(),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                child: MyHangouts(),
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              pinned: false,
+              backgroundColor: Colors.white,
+              bottom: TabBar(
+                indicatorColor: TwiineColors.red,
+                indicatorSize: TabBarIndicatorSize.label,
+                labelColor: TwiineColors.red,
+                unselectedLabelColor: TwiineColors.grey,
+                labelStyle: TextStyle(
+                  fontSize: 18,
+                ),
+                tabs: [
+                  Tab(
+                    text: "My Hangouts",
+                  ),
+                  Tab(
+                    text: "Requests",
+                  ),
+                ],
+                controller: controller,
               ),
+            ),
+          ];
+        },
+        body: Padding(
+          padding: EdgeInsets.fromLTRB(sideSpacing, 60, sideSpacing, 0),
+          child: TabBarView(
+            controller: controller,
+            children: <Widget>[
+              MyHangouts(),
+              MyHangouts(),
             ],
           ),
         ),

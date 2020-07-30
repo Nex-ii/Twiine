@@ -11,7 +11,7 @@ class _MyHangoutsState extends State<MyHangouts> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Align(
             alignment: Alignment.centerLeft,
