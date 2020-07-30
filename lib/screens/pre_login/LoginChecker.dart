@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -11,8 +12,10 @@ class LoginCheckerState extends State<LoginChecker>{
   @override
   Widget build(BuildContext context) {
     _checkForLoggedIn().then((value) => {
-      if (value)
+      if (value) {
+        Auth.userRecord = TwiineApi.getUser("email", Auth.user.email);
         Navigator.of(context).pushNamed('/navBar')
+      }
       else
         Navigator.of(context).pushNamed('/landing')
     });
