@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:twiine/screens/pre_login/LoginChecker.dart';
 import 'package:twiine/screens/pre_login/register/create_account/create_account.dart';
 import 'package:twiine/screens/pre_login/register/forgot_password/forgot_password.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
@@ -29,7 +29,8 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => LandingPage(),
+        '/': (context) => LoginChecker(),
+        '/landing': (context) => LandingPage(),
         '/login': (context) => Login(),
         '/login_basic': (context) => LoginBasic(),
         '/login_facebook': (context) => LoginFacebook(),
