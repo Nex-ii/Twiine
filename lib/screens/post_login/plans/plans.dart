@@ -50,7 +50,7 @@ class PlansPageState extends State<PlansPage> with TickerProviderStateMixin {
           ];
         },
         body: Padding(
-          padding: EdgeInsets.fromLTRB(sideSpacing, 60, sideSpacing, 0),
+          padding: EdgeInsets.fromLTRB(sideSpacing, 0, sideSpacing, 0),
           child: TabBarView(
             controller: controller,
             children: <Widget>[
