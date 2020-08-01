@@ -23,7 +23,7 @@ class LoginCheckerState extends State<LoginChecker>{
   }
 
   Future<bool> _checkForLoggedIn() async {
-    FirebaseUser currentUser = await Auth.firebaseAuth.onAuthStateChanged.first;
-    return (currentUser != null);
+    Auth.user = await Auth.firebaseAuth.onAuthStateChanged.first;
+    return (Auth.user != null);
   }
 }

@@ -240,8 +240,9 @@ class LoginState extends State<Login> {
                         ],
                       ),
                     ),
-                    onTap: () =>
-                        {Navigator.of(context).pushNamed('/login_basic')},
+                    onTap: () => {
+                      Navigator.of(context).pushNamed('/login_basic'),
+                    },
                   ),
                 ),
               ],
