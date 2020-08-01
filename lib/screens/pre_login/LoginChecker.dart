@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
