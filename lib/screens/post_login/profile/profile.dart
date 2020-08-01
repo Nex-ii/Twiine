@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twiine/auth.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -117,7 +118,7 @@ class ProfileState extends State<Profile> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: TextFormField(
-                      initialValue: "@realwayson",
+                      initialValue: Auth.user.email,
                       decoration: InputDecoration(border: InputBorder.none),
                       textAlign: TextAlign.center,
                       style: TextStyle(
