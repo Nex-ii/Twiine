@@ -32,6 +32,7 @@ class LoginState extends State<Login> {
       spreadRadius: -2,
       blurRadius: 6,
       offset: Offset(0, 4));
+  );
   double _dividerThickness = 2;
   double _buttonHeight = 50;
   double _buttonRadius = 15;
@@ -326,7 +327,7 @@ class LoginState extends State<Login> {
           _successfulLogin();
         } else
           updateLoginMessage("Failed to authenticate with Firebase");
-
+        
         break;
       case FacebookLoginStatus.cancelledByUser:
         break;
