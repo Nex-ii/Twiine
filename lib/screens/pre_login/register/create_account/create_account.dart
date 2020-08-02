@@ -10,8 +10,8 @@ class CreateAccount extends StatefulWidget {
   }
 }
 
-class CreateAccountState extends State<CreateAccount>{
-
+class CreateAccountState extends State<CreateAccount> {
+  // sign up form inputs
   String _firstName;
   String _lastName;
   String _birthday;
@@ -19,18 +19,22 @@ class CreateAccountState extends State<CreateAccount>{
   String _password;
   String _confirmPassword;
 
-  DateTime _date = new DateTime.now();
-  TimeOfDay _time = new TimeOfDay.now();
+  // styling design variables
+  Color inputBoxColor = Colors.grey;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future _selectDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(context: context, initialDate: new DateTime.now(), firstDate: new DateTime(2016), lastDate: new DateTime(2021));
+    DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime(2016),
+        lastDate: new DateTime(2021));
     if (picked != null) setState(() => _birthday = picked.toString());
   }
 
   // Title Widget
-  Widget _buildTitle(){
+  Widget _buildTitle() {
     return Text(
       "Join the Twiine Community",
       style: TextStyle(height: 4, fontSize: 25, fontWeight: FontWeight.bold),
@@ -39,27 +43,23 @@ class CreateAccountState extends State<CreateAccount>{
 
   // TextFormField Widgets
   Widget _buildFirstName() {
-    return Container(
-      margin: const EdgeInsets.only(
-          bottom: 10.0
-      ),
-      padding: const EdgeInsets.only(
-          bottom: 5.0,
-          left: 5.0,
-          right: 5.0),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black)
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
         decoration: InputDecoration(
-            labelText: 'First Name'
-        ),
-        validator: (String value){
-          if(value.isEmpty){
+            labelText: 'First Name',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(25.0))),
+
+        validator: (String value) {
+          if (value.isEmpty) {
             return 'First Name is Required';
           }
         },
-        onSaved: (String value){
+        onSaved: (String value) {
           _firstName = value;
         },
       ),
@@ -67,30 +67,22 @@ class CreateAccountState extends State<CreateAccount>{
   }
 
   Widget _buildLastName() {
-    return Container(
-      margin: const EdgeInsets.only(
-          bottom: 10.0
-      ),
-      padding: const EdgeInsets.only(
-          bottom: 5.0,
-          left: 5.0,
-          right: 5.0
-      ),
-      decoration: BoxDecoration(
-          border: Border.all(
-              color: Colors.black
-          )
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
         decoration: InputDecoration(
-            labelText: 'Last name'
-        ),
-        validator: (String value){
-          if(value.isEmpty){
+            labelText: 'Last Name',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(25.0))),
+        validator: (String value) {
+          if (value.isEmpty) {
             return 'Last Name is Required';
           }
         },
-        onSaved: (String value){
+        onSaved: (String value) {
           _lastName = value;
         },
       ),
@@ -98,66 +90,53 @@ class CreateAccountState extends State<CreateAccount>{
   }
 
   Widget _buildBirthday() {
-    return Container(
-      margin: const EdgeInsets.only(
-          bottom: 10.0
-      ),
-      padding: const EdgeInsets.only(
-          bottom: 5.0,
-          left: 5.0,
-          right: 5.0
-      ),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black)
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
         decoration: InputDecoration(
             labelText: 'Birthday (MM/DD/YYYY)',
-            hintText: "Example: 01/01/1990"
-        ),
+            hintText: "Example: 01/01/1990",
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(25.0))),
         keyboardType: TextInputType.datetime,
-        validator: (String value){
-          if(value.isEmpty){
+        validator: (String value) {
+          if (value.isEmpty) {
             return 'Birthday is Required';
           }
-          if(!isValidDate(value)){
+          if (!isValidDate(value)) {
             return 'Valid Input is Required';
           }
         },
-        onSaved: (String value){
+        onSaved: (String value) {
           _birthday = value;
         },
       ),
     );
-
   }
 
   Widget _buildEmail() {
-    return Container(
-      margin: const EdgeInsets.only(
-          bottom: 10.0
-      ),
-      padding: const EdgeInsets.only(
-          bottom: 5.0,
-          left: 5.0,
-          right: 5.0
-      ),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.black)
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
         decoration: InputDecoration(
-            labelText: 'Email'
-        ),
-        validator: (String value){
-          if(value.isEmpty){
+            labelText: 'Email',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(25.0))),
+        validator: (String value) {
+          if (value.isEmpty) {
             return 'Valid Email is Required';
           }
-          if(!isValidEmail(value)){
+          if (!isValidEmail(value)) {
             return 'Valid Email Address Required';
           }
         },
-        onSaved: (String value){
+        onSaved: (String value) {
           _email = value;
         },
       ),
@@ -165,31 +144,23 @@ class CreateAccountState extends State<CreateAccount>{
   }
 
   Widget _buildPassword() {
-    return Container(
-          margin: const EdgeInsets.only(
-              bottom: 10.0
-          ),
-          padding: const EdgeInsets.only(
-              bottom: 5.0,
-              left: 5.0,
-              right: 5.0
-          ),
-          decoration: BoxDecoration(
-            border: Border.all(
-                color: Colors.black
-            )
-      ),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
       child: TextFormField(
         decoration: InputDecoration(
-            labelText: 'Password'
-        ),
+            labelText: 'Password',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(25.0))),
         obscureText: true,
-        validator: (String value){
-          if(value.isEmpty){
+        validator: (String value) {
+          if (value.isEmpty) {
             return 'Password is Required';
           }
         },
-        onSaved: (String value){
+        onSaved: (String value) {
           _password = value;
         },
       ),
@@ -197,24 +168,27 @@ class CreateAccountState extends State<CreateAccount>{
   }
 
   Widget _buildConfirmPassword() {
-    return Container(
-        padding: const EdgeInsets.only(bottom: 5.0, left: 5.0, right: 5.0),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black)
-        ),
-        child: TextFormField(
-        decoration: InputDecoration(labelText: 'Confirm Password'),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: 'Confirm Password',
+            border:
+                OutlineInputBorder(borderRadius: BorderRadius.circular(25.0)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.green),
+                borderRadius: BorderRadius.circular(25.0))),
         obscureText: true,
-        validator: (String value){
-          if(value.isEmpty){
+        validator: (String value) {
+          if (value.isEmpty) {
             return 'Password Confirmation is Required';
           }
-          if(value != _password){
+          if (value != _password) {
             return 'Passwords Do Not Match';
           }
         },
-        onSaved: (String value){
-            _confirmPassword = value;
+        onSaved: (String value) {
+          _confirmPassword = value;
         },
       ),
     );
@@ -222,18 +196,20 @@ class CreateAccountState extends State<CreateAccount>{
 
   Widget _buildTermsAndServices() {
     return InkWell(
-        child: Text('[terms and conditions statement]'),
+        child: Text('[terms and conditions statement]',
+            style: TextStyle(color: inputBoxColor)),
         onTap: () {
           // add terms and services page here
-        }
-    );
+        });
   }
 
   // validation functions
   bool isValidDate(String input) {
     try {
       List<String> partitionedBirthday = input.split("/");
-      String reformattedBirthday = partitionedBirthday[2] + partitionedBirthday[0] + partitionedBirthday [1];
+      String reformattedBirthday = partitionedBirthday[2] +
+          partitionedBirthday[0] +
+          partitionedBirthday[1];
       final date = DateTime.parse(reformattedBirthday);
       final originalFormatString = toOriginalFormatString(date);
       return reformattedBirthday == originalFormatString;
@@ -250,11 +226,12 @@ class CreateAccountState extends State<CreateAccount>{
   }
 
   bool isValidEmail(String input) {
-    if(RegExp(r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(input)){
+    if (RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(input)) {
       return true;
     }
-    else{
+    else {
       return false;
     }
   }
@@ -262,12 +239,8 @@ class CreateAccountState extends State<CreateAccount>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
         body: Container(
-            margin: EdgeInsets.only(
-                left: 24,
-                right: 24
-            ),
+            margin: EdgeInsets.only(left: 24, right: 24),
             child: SingleChildScrollView(
               child: Form(
                   key: _formKey,
@@ -284,23 +257,21 @@ class CreateAccountState extends State<CreateAccount>{
                         Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(
-                            padding: EdgeInsets.only(
-                                top: 30.0,
-                                bottom: 30.0
-                            ),
-                            child: _buildTermsAndServices()
-                          ),
+                              padding: EdgeInsets.only(top: 30.0, bottom: 30.0),
+                              child: _buildTermsAndServices()),
                         ),
-
-                        //SizedBox(height: 25),
                         ButtonTheme(
                           minWidth: 300.0,
                           height: 50.0,
                           buttonColor: Colors.red,
                           child: RaisedButton(
-                            child: Text('Continue', style: TextStyle(color: Colors.white, fontSize: 16),),
+                            child: Text(
+                              'Continue',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
                             onPressed: () {
-                              if(!_formKey.currentState.validate()){
+                              if (!_formKey.currentState.validate()) {
                                 return;
                               }
 
@@ -311,14 +282,10 @@ class CreateAccountState extends State<CreateAccount>{
                               print(_email);
                               print(_password);
                               print(_confirmPassword);
-
                             },
                           ),
                         )
-                      ]
-                  )),
-            )
-        )
-    );
+                      ])),
+            )));
   }
 }
