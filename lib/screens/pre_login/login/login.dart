@@ -20,8 +20,10 @@ class Login extends StatefulWidget {
 }
 
 class LoginState extends State<Login> {
+  ///switches for build() to rebuild form
   bool isPhoneLogin = false;
   bool codeSent = false;
+
   String phoneNumber;
   String verificationId;
 
@@ -36,156 +38,112 @@ class LoginState extends State<Login> {
   double _buttonHeight = 50;
   double _buttonRadius = 15;
 
-  Widget getLoginWidget(BuildContext context) {
-    return Scaffold(
-        body: ListView(children: <Widget>[
-      Padding(
-          padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
-          child: Column(children: <Widget>[
-            Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Welcome to twiine",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.bold,
-                    ))),
-            Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
-                child: Text(
-                  _loginMessage,
-                  style: TextStyle(color: TwiineColors.red, fontSize: 12),
-                )),
-            Padding(
-                padding: EdgeInsets.fromLTRB(10, 30, 10, 20),
-                child: InkWell(
+  ///create a button within a padding for authProvider
+  Widget createLoginButton(AuthProvider authProvider) {
+    return Padding(
+        padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+        child: InkWell(
+            borderRadius: BorderRadius.circular(_buttonRadius),
+            child: Container(
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
+                height: _buttonHeight,
+                decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(_buttonRadius),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: _buttonHeight,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(_buttonRadius),
-                            color: Colors.white,
-                            boxShadow: [_dropShadow]),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              IconButton(
-                                icon: FaIcon(Icons.phone),
-                                padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                                onPressed: null,
-                              ),
-                              Text("Continue with phone",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold))
-                            ])),
-                    onTap: () => {
-                          setState(() {
-                            isPhoneLogin = true;
-                          })
-                        })),
-            Row(children: <Widget>[
-              Expanded(child: Divider(thickness: _dividerThickness)),
-              Text(
-                " or ",
-                style: TextStyle(fontSize: 20, color: Colors.grey),
-              ),
-              Expanded(child: Divider(thickness: _dividerThickness))
-            ]),
-            Padding(
-                padding: EdgeInsets.fromLTRB(10, 30, 10, 20),
-                child: InkWell(
-                    borderRadius: BorderRadius.circular(_buttonRadius),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: _buttonHeight,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(_buttonRadius),
-                            color: Colors.white,
-                            boxShadow: [_dropShadow]),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              IconButton(
-                                icon: FaIcon(FontAwesomeIcons.facebook),
-                                padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                                onPressed: null,
-                              ),
-                              Text("Continue with Facebook",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold))
-                            ])),
-                    onTap: () => {_loginWithFacebook()})),
-            Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
-                child: InkWell(
-                    borderRadius: BorderRadius.circular(_buttonRadius),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: _buttonHeight,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(_buttonRadius),
-                            color: Colors.white,
-                            boxShadow: [_dropShadow]),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              IconButton(
-                                icon: FaIcon(FontAwesomeIcons.google),
-                                padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                                onPressed: null,
-                              ),
-                              Text("Continue with Google",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold))
-                            ])),
-                    onTap: () => {_loginWithGoogle()})),
-            Padding(
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
-                child: InkWell(
-                    borderRadius: BorderRadius.circular(_buttonRadius),
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: _buttonHeight,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(_buttonRadius),
-                            color: Colors.white,
-                            boxShadow: [_dropShadow]),
-                        padding: EdgeInsets.all(10),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              IconButton(
-                                icon: FaIcon(FontAwesomeIcons.envelope),
-                                padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                                onPressed: null,
-                              ),
-                              Text("Continue with Email",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold))
-                            ])),
-                    onTap: () =>
-                        {Navigator.of(context).pushNamed('/login_basic')})),
-            Padding(
-                padding: EdgeInsets.all(50),
-                child: Text("[Terms and conditions statement]",
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 15, color: Colors.grey))),
-          ]))
-    ]));
+                    color: Colors.white,
+                    boxShadow: [_dropShadow]),
+                padding: EdgeInsets.all(10),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      IconButton(
+                        icon: authProvider.icon,
+                        padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
+                        onPressed: null,
+                      ),
+                      Text("Continue with " + authProvider.name,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold))
+                    ])),
+            onTap: () => {authProvider.onTap()}));
   }
 
+  ///create the column of buttons
+  Widget createLoinButtonColumn(List<AuthProvider> primaryAuthProviders,
+      List<AuthProvider> secondaryAuthProviders) {
+    Column container = new Column(children: <Widget>[
+      Align(
+          alignment: Alignment.centerLeft,
+          child: Text("Welcome to twiine",
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ))),
+      Padding(
+          padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
+          child: Text(
+            _loginMessage,
+            style: TextStyle(color: TwiineColors.red, fontSize: 12),
+          )),
+    ]);
+
+    primaryAuthProviders.forEach((element) {
+      container.children.add(createLoginButton(element));
+    });
+
+    container.children.add(Row(children: <Widget>[
+      Expanded(child: Divider(thickness: _dividerThickness)),
+      Text(
+        " or ",
+        style: TextStyle(fontSize: 20, color: Colors.grey),
+      ),
+      Expanded(child: Divider(thickness: _dividerThickness))
+    ]));
+    container.children.add(Padding(
+      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+    ));
+
+    secondaryAuthProviders.forEach((element) {
+      container.children.add(createLoginButton(element));
+    });
+
+    container.children.add(Padding(
+        padding: EdgeInsets.all(50),
+        child: Text("[Terms and conditions statement]",
+            textAlign: TextAlign.left,
+            style: TextStyle(fontSize: 15, color: Colors.grey))));
+
+    return container;
+  }
+
+  ///create the login page, define AuthProviders in this function
+  Widget getLoginWidget() {
+    AuthProvider phoneAuth = new AuthProvider(
+        "phone", FaIcon(Icons.phone), _loginWithPhone);
+    AuthProvider facebookAuth = new AuthProvider(
+        "Facebook", FaIcon(FontAwesomeIcons.facebook), _loginWithFacebook);
+    AuthProvider googleAuth = new AuthProvider(
+        "Google", FaIcon(FontAwesomeIcons.google), _loginWithGoogle);
+    AuthProvider emailAuth = new AuthProvider(
+        "Email", FaIcon(FontAwesomeIcons.envelope), _loginWithEmail);
+
+    List<AuthProvider> primaryAuth = [phoneAuth];
+    List<AuthProvider> secondaryAuth = [facebookAuth, googleAuth, emailAuth];
+
+    return Scaffold(
+        body: ListView(children: <Widget>[
+          Padding(
+              padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+              child: createLoinButtonColumn(primaryAuth, secondaryAuth)
+          )
+        ]));
+  }
+
+  ///ui form for phone number input
   Widget getPhoneLoginWidget(BuildContext context) {
     return WillPopScope(
         onWillPop: () {
@@ -195,30 +153,31 @@ class LoginState extends State<Login> {
         },
         child: Scaffold(
             body: Container(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                InternationalPhoneNumberInput(
-                  onInputChanged: (PhoneNumber number) {
-                    phoneNumber = number.phoneNumber;
-                  },
-                  ignoreBlank: false,
-                  autoValidate: false,
-                  initialValue: PhoneNumber(isoCode: 'US'),
-                  selectorTextStyle: TextStyle(color: Colors.black),
-                  inputBorder: OutlineInputBorder(),
-                ),
-                RaisedButton(
-                  onPressed: () => {_logInWithPhone(phoneNumber)},
-                  child: Text('Submit'),
-                ),
-                Text(_loginMessage,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 15, color: Colors.black))
-              ]),
-        )));
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    InternationalPhoneNumberInput(
+                      onInputChanged: (PhoneNumber number) {
+                        phoneNumber = number.phoneNumber;
+                      },
+                      ignoreBlank: false,
+                      autoValidate: false,
+                      initialValue: PhoneNumber(isoCode: 'US'),
+                      selectorTextStyle: TextStyle(color: Colors.black),
+                      inputBorder: OutlineInputBorder(),
+                    ),
+                    RaisedButton(
+                      onPressed: () => {_logInWithPhone(phoneNumber)},
+                      child: Text('Submit'),
+                    ),
+                    Text(_loginMessage,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 15, color: Colors.black))
+                  ]),
+            )));
   }
 
+  ///ui form for SMS code input
   Widget getSMSCodeLoginWidget(BuildContext context) {
     return WillPopScope(
         onWillPop: () {
@@ -228,29 +187,29 @@ class LoginState extends State<Login> {
         },
         child: Scaffold(
             body: ListView(children: <Widget>[
-          Padding(
-              padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
-              child: Column(children: <Widget>[
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Welcome to twiine",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ))),
-                TextField(
-                  decoration:
+              Padding(
+                  padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+                  child: Column(children: <Widget>[
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Welcome to twiine",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ))),
+                    TextField(
+                      decoration:
                       new InputDecoration(labelText: "Verification Code"),
-                  keyboardType: TextInputType.phone,
-                  maxLength: 20,
-                ),
-                RaisedButton(
-                  onPressed: () => {_logInWithPhone(phoneNumber)},
-                  child: Text('Submit'),
-                ),
-              ]))
-        ])));
+                      keyboardType: TextInputType.phone,
+                      maxLength: 20,
+                    ),
+                    RaisedButton(
+                      onPressed: () => {_logInWithPhone(phoneNumber)},
+                      child: Text('Submit'),
+                    ),
+                  ]))
+            ])));
   }
 
   @override
@@ -261,7 +220,13 @@ class LoginState extends State<Login> {
       else
         return getPhoneLoginWidget(context);
     } else
-      return getLoginWidget(context);
+      return getLoginWidget();
+  }
+
+  _loginWithPhone() {
+    setState(() {
+      isPhoneLogin = true;
+    });
   }
 
   _logInWithPhone(String phoneNumber) async {
@@ -311,7 +276,7 @@ class LoginState extends State<Login> {
 
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
-        // Authenticate with Firebase
+      // Authenticate with Firebase
         AuthCredential credential = FacebookAuthProvider.getCredential(
           accessToken: result.accessToken.token,
         );
@@ -346,10 +311,11 @@ class LoginState extends State<Login> {
     try {
       // Authenticate with Google
       GoogleSignInAccount signIn = (await _googleSignIn.signIn().catchError(
-          (error) => {
-                updateLoginMessage(
-                    "Failed to authenticate with Google: " + error.toString())
-              }));
+              (error) =>
+          {
+            updateLoginMessage(
+                "Failed to authenticate with Google: " + error.toString())
+          }));
       GoogleSignInAuthentication auth = await signIn.authentication;
 
       // Authenticate with Firebase
@@ -366,6 +332,10 @@ class LoginState extends State<Login> {
     _successfulLogin();
   }
 
+  _loginWithEmail() {
+    Navigator.of(context).pushNamed('/login_basic');
+  }
+
   _successfulLogin() {
     isPhoneLogin = false;
     codeSent = false;
@@ -377,5 +347,18 @@ class LoginState extends State<Login> {
       _loginMessage = msg;
       print(msg);
     });
+  }
+}
+
+/// bundles provider name, icon, and onTap function
+class AuthProvider {
+  String name;
+  Widget icon;
+  Function onTap;
+
+  AuthProvider(String name, Widget icon, Function onTap) {
+    this.name = name;
+    this.icon = icon;
+    this.onTap = onTap;
   }
 }
