@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
 import 'package:twiine/screens/post_login/scheduled/plannedDates.dart';
 
-class testResult extends StatelessWidget {
+class TestResult extends StatelessWidget {
   PlannedDates temp;
 
-  testResult({this.temp});
+  TestResult({this.temp});
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +36,8 @@ class testResult extends StatelessWidget {
               temp.name,
               style: TextStyle(fontSize: 22),
             ),
-          ]
-        )
+          ],
+        ),
       ),
     );
   }
