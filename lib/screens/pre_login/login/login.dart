@@ -348,7 +348,7 @@ class LoginState extends State<Login> {
       GoogleSignInAccount signIn = (await _googleSignIn.signIn().catchError(
           (error) => {
                 updateLoginMessage(
-                    "Failed to authenticate with Google: " + error)
+                    "Failed to authenticate with Google: " + error.toString())
               }));
       GoogleSignInAuthentication auth = await signIn.authentication;
 
@@ -375,6 +375,7 @@ class LoginState extends State<Login> {
   updateLoginMessage(String msg) {
     setState(() {
       _loginMessage = msg;
+      print(msg);
     });
   }
 }
