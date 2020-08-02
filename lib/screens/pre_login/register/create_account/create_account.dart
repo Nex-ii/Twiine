@@ -33,103 +33,199 @@ class CreateAccountState extends State<CreateAccount>{
   Widget _buildTitle(){
     return Text(
       "Join the Twiine Community",
-      style: TextStyle(height: 5, fontSize: 25, fontWeight: FontWeight.bold),
+      style: TextStyle(height: 4, fontSize: 25, fontWeight: FontWeight.bold),
     );
   }
 
   // TextFormField Widgets
   Widget _buildFirstName() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'First Name'),
-      validator: (String value){
-        if(value.isEmpty){
-          return 'First Name is Required';
-        }
-      },
-      onSaved: (String value){
-        _firstName = value;
-      },
+    return Container(
+      margin: const EdgeInsets.only(
+          bottom: 10.0
+      ),
+      padding: const EdgeInsets.only(
+          bottom: 5.0,
+          left: 5.0,
+          right: 5.0),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black)
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: 'First Name'
+        ),
+        validator: (String value){
+          if(value.isEmpty){
+            return 'First Name is Required';
+          }
+        },
+        onSaved: (String value){
+          _firstName = value;
+        },
+      ),
     );
   }
 
   Widget _buildLastName() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Last name'),
-      validator: (String value){
-        if(value.isEmpty){
-          return 'Last Name is Required';
-        }
-      },
-      onSaved: (String value){
-        _lastName = value;
-      },
+    return Container(
+      margin: const EdgeInsets.only(
+          bottom: 10.0
+      ),
+      padding: const EdgeInsets.only(
+          bottom: 5.0,
+          left: 5.0,
+          right: 5.0
+      ),
+      decoration: BoxDecoration(
+          border: Border.all(
+              color: Colors.black
+          )
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: 'Last name'
+        ),
+        validator: (String value){
+          if(value.isEmpty){
+            return 'Last Name is Required';
+          }
+        },
+        onSaved: (String value){
+          _lastName = value;
+        },
+      ),
     );
   }
 
   Widget _buildBirthday() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Birthday (MM/DD/YYYY)', hintText: "Example: 01/01/1990"),
-      keyboardType: TextInputType.datetime,
-      validator: (String value){
-        if(value.isEmpty){
-          return 'Birthday is Required';
-        }
-
-        if(!isValidDate(value)){
-          return 'Valid Input is Required';
-        }
-      },
-      onSaved: (String value){
-        _lastName = value;
-      },
+    return Container(
+      margin: const EdgeInsets.only(
+          bottom: 10.0
+      ),
+      padding: const EdgeInsets.only(
+          bottom: 5.0,
+          left: 5.0,
+          right: 5.0
+      ),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black)
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: 'Birthday (MM/DD/YYYY)',
+            hintText: "Example: 01/01/1990"
+        ),
+        keyboardType: TextInputType.datetime,
+        validator: (String value){
+          if(value.isEmpty){
+            return 'Birthday is Required';
+          }
+          if(!isValidDate(value)){
+            return 'Valid Input is Required';
+          }
+        },
+        onSaved: (String value){
+          _birthday = value;
+        },
+      ),
     );
 
   }
 
   Widget _buildEmail() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Email'),
-      validator: (String value){
-        if(value.isEmpty){
-          return 'Valid Email is Required';
-        }
-        if(!isValidEmail(value)){
-          return 'Valid Email Address Required';
-        }
-      },
-      onSaved: (String value){
-        _lastName = value;
-      },
+    return Container(
+      margin: const EdgeInsets.only(
+          bottom: 10.0
+      ),
+      padding: const EdgeInsets.only(
+          bottom: 5.0,
+          left: 5.0,
+          right: 5.0
+      ),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black)
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: 'Email'
+        ),
+        validator: (String value){
+          if(value.isEmpty){
+            return 'Valid Email is Required';
+          }
+          if(!isValidEmail(value)){
+            return 'Valid Email Address Required';
+          }
+        },
+        onSaved: (String value){
+          _email = value;
+        },
+      ),
     );
   }
 
   Widget _buildPassword() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Password'),
-      obscureText: true,
-      validator: (String value){
-        if(value.isEmpty){
-          return 'Password is Required';
-        }
-      },
-      onSaved: (String value){
-        _password = value;
-      },
+    return Container(
+          margin: const EdgeInsets.only(
+              bottom: 10.0
+          ),
+          padding: const EdgeInsets.only(
+              bottom: 5.0,
+              left: 5.0,
+              right: 5.0
+          ),
+          decoration: BoxDecoration(
+            border: Border.all(
+                color: Colors.black
+            )
+      ),
+      child: TextFormField(
+        decoration: InputDecoration(
+            labelText: 'Password'
+        ),
+        obscureText: true,
+        validator: (String value){
+          if(value.isEmpty){
+            return 'Password is Required';
+          }
+        },
+        onSaved: (String value){
+          _password = value;
+        },
+      ),
     );
   }
 
   Widget _buildConfirmPassword() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: 'Confirm Password'),
-      obscureText: true,
-      validator: (String value){
-        if(value.isEmpty){
-          return 'Password Confirmation is Required';
+    return Container(
+        padding: const EdgeInsets.only(bottom: 5.0, left: 5.0, right: 5.0),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.black)
+        ),
+        child: TextFormField(
+        decoration: InputDecoration(labelText: 'Confirm Password'),
+        obscureText: true,
+        validator: (String value){
+          if(value.isEmpty){
+            return 'Password Confirmation is Required';
+          }
+          if(value != _password){
+            return 'Passwords Do Not Match';
+          }
+        },
+        onSaved: (String value){
+            _confirmPassword = value;
+        },
+      ),
+    );
+  }
+
+  Widget _buildTermsAndServices() {
+    return InkWell(
+        child: Text('[terms and conditions statement]'),
+        onTap: () {
+          // add terms and services page here
         }
-      },
-      onSaved: (String value){
-        _confirmPassword = value;
-      },
     );
   }
 
@@ -168,7 +264,10 @@ class CreateAccountState extends State<CreateAccount>{
     return Scaffold(
 
         body: Container(
-            margin: EdgeInsets.all(24),
+            margin: EdgeInsets.only(
+                left: 24,
+                right: 24
+            ),
             child: SingleChildScrollView(
               child: Form(
                   key: _formKey,
@@ -182,8 +281,18 @@ class CreateAccountState extends State<CreateAccount>{
                         _buildEmail(),
                         _buildPassword(),
                         _buildConfirmPassword(),
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                                top: 30.0,
+                                bottom: 30.0
+                            ),
+                            child: _buildTermsAndServices()
+                          ),
+                        ),
 
-                        SizedBox(height: 100),
+                        //SizedBox(height: 25),
                         ButtonTheme(
                           minWidth: 300.0,
                           height: 50.0,
