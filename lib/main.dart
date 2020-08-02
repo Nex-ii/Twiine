@@ -32,7 +32,7 @@ class App extends StatelessWidget {
         '/home' : (context) => Home(),
         '/profile' : (context) => Profile(),
         '/navBar' : (context) => Navbar(),
-        '/addEvent' : (context) => addEvent(),
+        '/addEvent' : (context) => AddEvent(),
       },
     );
   }
