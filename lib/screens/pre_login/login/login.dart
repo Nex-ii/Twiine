@@ -351,12 +351,14 @@ class LoginState extends State<Login> {
 
   _loginWithPhone() {
     final PhoneVerificationCompleted verified = (AuthCredential credeitial) {
-      Auth.firebaseAuth.signInWithCredential(credeitial).then((result) {
+      Auth.firebaseAuth.signInWithCredential(credeitial).catchError((error) {
+        updateLoginMessage("Failed to verified phone number");
+      }).then((result) {
         updateLoginMessage("Successfully verified phone number");
         Auth.user = result.user;
-      });
       _successfulLogin(
           LoginMethods.phone, SigninStatus.phoneNumber, SigninStatus.SMScode);
+      });
     };
 
     final PhoneVerificationFailed verificationfailed =
