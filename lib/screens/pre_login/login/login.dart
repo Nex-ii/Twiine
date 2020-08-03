@@ -66,7 +66,7 @@ class LoginState extends State<Login> {
   }
 
   ///create the column of buttons
-  Widget createLoinButtonColumn(List<AuthProvider> primaryAuthProviders,
+  Widget createLoginButtonColumn(List<AuthProvider> primaryAuthProviders,
       List<AuthProvider> secondaryAuthProviders) {
     Column container = new Column(children: <Widget>[
       Align(
@@ -132,7 +132,7 @@ class LoginState extends State<Login> {
         body: ListView(children: <Widget>[
       Padding(
           padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
-          child: createLoinButtonColumn(primaryAuth, secondaryAuth))
+          child: createLoginButtonColumn(primaryAuth, secondaryAuth))
     ]));
   }
 
