@@ -17,4 +17,9 @@ class TwiineApi {
     ))
         .data['found'];
   }
+
+  static Future<void> createNewUser(Map<String, String> data) async{
+    await TwiineApi._createNewUser.call(data);
+  }
+
 }

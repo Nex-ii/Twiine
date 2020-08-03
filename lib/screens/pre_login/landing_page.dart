@@ -23,16 +23,9 @@ class LandingPageState extends State<LandingPage> {
 
   rememberLogin() async{
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    bool hasLoggedIn = prefs.getBool("hasLoggedIn");
-    String loginMethod = prefs.getString("loginMethod");
-    String username = prefs.getString("username");
-    String password = prefs.getString("password");
-
-    if (hasLoggedIn == true) {
+    if (LoginMethodsUtils.hasLoggedIn() == true) {
       switch (
-      LoginMethodsUtils.stringToEnum(loginMethod)) {
+      LoginMethodsUtils.stringToEnum(LoginMethodsUtils.loginMethod())) {
         case LoginMethods.phone:
           _failedLogin(context);
           break;
@@ -72,8 +65,8 @@ class LandingPageState extends State<LandingPage> {
         case LoginMethods.email:
           FirebaseAuth.instance
               .signInWithEmailAndPassword(
-            email: username,
-            password: password,
+            email: LoginMethodsUtils.username(),
+            password: LoginMethodsUtils.password(),
           ).catchError((error) {
             _failedLogin(context);
           }).then((result) {
@@ -152,7 +145,7 @@ class LandingPageState extends State<LandingPage> {
                         ),
                       ),
                     ),
-                    onTap: () => {},
+                    onTap: () => {Navigator.of(context).pushNamed('/signup')},
                   ),
                 ),
                 Padding(

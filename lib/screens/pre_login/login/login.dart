@@ -356,8 +356,8 @@ class LoginState extends State<Login> {
       }).then((result) {
         updateLoginMessage("Successfully verified phone number");
         Auth.user = result.user;
-      _successfulLogin(
-          LoginMethods.phone, SigninStatus.phoneNumber, SigninStatus.SMScode);
+        _successfulLogin(
+            LoginMethods.phone, SigninStatus.phoneNumber, SigninStatus.SMScode);
       });
     };
 
@@ -437,7 +437,6 @@ class LoginState extends State<Login> {
     });
   }
 
-  // refer to: https://stackoverflow.com/questions/54557479/flutter-and-google-sign-in-plugin-platformexceptionsign-in-failed-com-google
   _loginWithGoogle() {
     try {
       // Authenticate with Google
@@ -489,11 +488,12 @@ class LoginState extends State<Login> {
 
   _successfulLogin(
       LoginMethods loginMethod, String username, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("hasLoggedIn", true);
-    prefs.setString("loginMethod", loginMethod.toString().split('.')[1]);
-    prefs.setString("username", username);
-    prefs.setString("password", password);
+
+    LoginMethodsUtils.setPreferences(
+        hasLoggedIn: true,
+        loginMehtod: loginMethod.toString().split('.')[1],
+        username: username,
+        password: password);
 
     SigninStatus.isPhoneLogin = false;
     SigninStatus.codeSent = false;
