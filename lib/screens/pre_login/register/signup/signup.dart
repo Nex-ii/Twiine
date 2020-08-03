@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/TwiineApi.dart';
-import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
 import 'package:twiine/screens/pre_login/login/login_methods.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -15,7 +15,8 @@ class SignUp extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUp> {
-  String _firstName ;
+  String _firstName;
+
   String _lastName;
   String _birthday;
   String _email;
@@ -29,10 +30,10 @@ class SignUpState extends State<SignUp> {
 
   _selectDate(BuildContext context) {
     showDatePicker(
-        context: context,
-        initialDate: new DateTime.now(),
-        firstDate: new DateTime(2016),
-        lastDate: new DateTime(2021))
+            context: context,
+            initialDate: new DateTime.now(),
+            firstDate: new DateTime(2016),
+            lastDate: new DateTime(2021))
         .then((date) {
       if (date != null) setState(() => _birthday = date.toString());
     });
@@ -172,7 +173,7 @@ class SignUpState extends State<SignUp> {
 
   bool isValidEmail(String input) {
     if (RegExp(
-        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(input)) {
       return true;
     } else {
@@ -230,11 +231,15 @@ class SignUpState extends State<SignUp> {
                             .createUserWithEmailAndPassword(
                           email: _email,
                           password: _password,
-                        ).catchError((error) {
-                          print("Unable to create account with email" + error.toString());
+                        )
+                            .catchError((error) {
+                          print("Unable to create account with email" +
+                              error.toString());
                         }).then((credential) {
-                          if(credential != null){
+                          if (credential != null) {
                             Auth.user = credential.user;
+                            setEmailLoginPreferences(
+                                true, "email", _email, _password);
                             Navigator.of(context).pushNamed('/navBar');
                           }
                         });
@@ -248,5 +253,14 @@ class SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  setEmailLoginPreferences(bool hasLoggedIn, String loginMethod,
+      String username, String password) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("hasLoggedIn", hasLoggedIn);
+    prefs.setString("loginMethod", loginMethod);
+    prefs.setString("username", username);
+    prefs.setString("password", password);
   }
 }

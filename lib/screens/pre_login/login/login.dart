@@ -42,7 +42,10 @@ class LoginState extends State<Login> {
         child: InkWell(
             borderRadius: BorderRadius.circular(_buttonRadius),
             child: Container(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 height: _buttonHeight,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(_buttonRadius),
@@ -117,7 +120,7 @@ class LoginState extends State<Login> {
   ///create the login page, define AuthProviders in this function
   Widget getLoginWidget() {
     AuthProvider phoneAuth =
-        new AuthProvider("phone", FaIcon(Icons.phone), _loginWithPhone);
+    new AuthProvider("phone", FaIcon(Icons.phone), _loginWithPhone);
     AuthProvider facebookAuth = new AuthProvider(
         "Facebook", FaIcon(FontAwesomeIcons.facebook), _loginWithFacebook);
     AuthProvider googleAuth = new AuthProvider(
@@ -130,10 +133,10 @@ class LoginState extends State<Login> {
 
     return Scaffold(
         body: ListView(children: <Widget>[
-      Padding(
-          padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
-          child: createLoginButtonColumn(primaryAuth, secondaryAuth))
-    ]));
+          Padding(
+              padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+              child: createLoginButtonColumn(primaryAuth, secondaryAuth))
+        ]));
   }
 
   ///ui form for phone number input
@@ -146,28 +149,28 @@ class LoginState extends State<Login> {
         },
         child: Scaffold(
             body: Container(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                InternationalPhoneNumberInput(
-                  onInputChanged: (PhoneNumber number) {
-                    SigninStatus.phoneNumber = number.phoneNumber;
-                  },
-                  ignoreBlank: false,
-                  autoValidate: false,
-                  initialValue: PhoneNumber(isoCode: 'US'),
-                  selectorTextStyle: TextStyle(color: Colors.black),
-                  inputBorder: OutlineInputBorder(),
-                ),
-                RaisedButton(
-                  onPressed: _loginWithPhone,
-                  child: Text('Submit'),
-                ),
-                Text(SigninStatus.loginMessage,
-                    textAlign: TextAlign.left,
-                    style: TextStyle(fontSize: 15, color: Colors.black))
-              ]),
-        )));
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    InternationalPhoneNumberInput(
+                      onInputChanged: (PhoneNumber number) {
+                        SigninStatus.phoneNumber = number.phoneNumber;
+                      },
+                      ignoreBlank: false,
+                      autoValidate: false,
+                      initialValue: PhoneNumber(isoCode: 'US'),
+                      selectorTextStyle: TextStyle(color: Colors.black),
+                      inputBorder: OutlineInputBorder(),
+                    ),
+                    RaisedButton(
+                      onPressed: _loginWithPhone,
+                      child: Text('Submit'),
+                    ),
+                    Text(SigninStatus.loginMessage,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(fontSize: 15, color: Colors.black))
+                  ]),
+            )));
   }
 
   ///ui form for SMS code input
@@ -180,31 +183,31 @@ class LoginState extends State<Login> {
         },
         child: Scaffold(
             body: ListView(children: <Widget>[
-          Padding(
-              padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
-              child: Column(children: <Widget>[
-                Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text("Welcome to twiine",
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                        ))),
-                TextField(
-                  decoration:
+              Padding(
+                  padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+                  child: Column(children: <Widget>[
+                    Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text("Welcome to twiine",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              fontSize: 25,
+                              fontWeight: FontWeight.bold,
+                            ))),
+                    TextField(
+                      decoration:
                       new InputDecoration(labelText: "Verification Code"),
-                  keyboardType: TextInputType.phone,
-                  maxLength: 20,
-                  onChanged: (t) => {SigninStatus.SMScode = t},
-                ),
-                RaisedButton(
-                  onPressed: _loginWithPhone,
-                  child: Text('Submit'),
-                ),
-                Text(SigninStatus.loginMessage),
-              ]))
-        ])));
+                      keyboardType: TextInputType.phone,
+                      maxLength: 20,
+                      onChanged: (t) => {SigninStatus.SMScode = t},
+                    ),
+                    RaisedButton(
+                      onPressed: _loginWithPhone,
+                      child: Text('Submit'),
+                    ),
+                    Text(SigninStatus.loginMessage),
+                  ]))
+            ])));
   }
 
   Widget getEmailLoginWidget(BuildContext context) {
@@ -251,7 +254,7 @@ class LoginState extends State<Login> {
                                 labelText: "Email",
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: Colors.transparent),
+                                  BorderSide(color: Colors.transparent),
                                 ),
                                 border: InputBorder.none,
                               ),
@@ -277,7 +280,7 @@ class LoginState extends State<Login> {
                                 labelText: "Password",
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
-                                      BorderSide(color: Colors.transparent),
+                                  BorderSide(color: Colors.transparent),
                                 ),
                                 border: InputBorder.none,
                               ),
@@ -303,7 +306,10 @@ class LoginState extends State<Login> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(_buttonRadius),
                       child: Container(
-                        width: MediaQuery.of(context).size.width,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width,
                         height: _buttonHeight,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(_buttonRadius),
@@ -325,6 +331,12 @@ class LoginState extends State<Login> {
                       ),
                       onTap: _loginWithEmail,
                     ),
+                  ),
+                  FlatButton(
+                    child: Text('Forgot password?',
+                        style: TextStyle(
+                            fontSize: 15.0, fontWeight: FontWeight.w300)),
+                    onPressed: _forgotPasword,
                   ),
                 ],
               ),
@@ -383,8 +395,8 @@ class LoginState extends State<Login> {
       if (SigninStatus.codeSent) {
         Auth.firebaseAuth
             .signInWithCredential(PhoneAuthProvider.getCredential(
-                verificationId: SigninStatus.verificationId,
-                smsCode: SigninStatus.SMScode))
+            verificationId: SigninStatus.verificationId,
+            smsCode: SigninStatus.SMScode))
             .catchError((error) {
           updateLoginMessage("Failed to verify phone number");
         }).then((result) {
@@ -446,8 +458,8 @@ class LoginState extends State<Login> {
         account.authentication.then((authentication) {
           Auth.firebaseAuth
               .signInWithCredential(GoogleAuthProvider.getCredential(
-                  idToken: authentication.idToken,
-                  accessToken: authentication.idToken))
+              idToken: authentication.idToken,
+              accessToken: authentication.idToken))
               .then((result) {
             if (result != null) {
               updateLoginMessage("Successfully authenticated with Google");
@@ -486,14 +498,18 @@ class LoginState extends State<Login> {
     }
   }
 
-  _successfulLogin(
-      LoginMethods loginMethod, String username, String password) async {
+  _forgotPasword(){
+    Navigator.of(context).pushNamed('/forgotPassword');
+  }
 
-    LoginMethodsUtils.setPreferences(
-        hasLoggedIn: true,
-        loginMehtod: loginMethod.toString().split('.')[1],
-        username: username,
-        password: password);
+  _successfulLogin(LoginMethods loginMethod, String username,
+      String password) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("hasLoggedIn", true);
+    prefs.setString("loginMethod", loginMethod.toString().split('.')[1]);
+    prefs.setString("username", username);
+    prefs.setString("password", password);
 
     SigninStatus.isPhoneLogin = false;
     SigninStatus.codeSent = false;

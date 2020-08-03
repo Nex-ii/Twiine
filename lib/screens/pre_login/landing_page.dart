@@ -4,7 +4,6 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/screens/pre_login/login/login.dart';
 
 import 'login/login_methods.dart';
 
@@ -23,9 +22,14 @@ class LandingPageState extends State<LandingPage> {
 
   rememberLogin() async{
 
-    if (LoginMethodsUtils.hasLoggedIn() == true) {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    print(prefs.getBool("hasLoggedIn"));
+    print(prefs.getString("loginMethod"));
+
+    if (prefs.getBool("hasLoggedIn") == true) {
       switch (
-      LoginMethodsUtils.stringToEnum(LoginMethodsUtils.loginMethod())) {
+      LoginMethodsUtils.stringToEnum(prefs.getString("loginMethod"))) {
         case LoginMethods.phone:
           _failedLogin(context);
           break;
@@ -65,8 +69,8 @@ class LandingPageState extends State<LandingPage> {
         case LoginMethods.email:
           FirebaseAuth.instance
               .signInWithEmailAndPassword(
-            email: LoginMethodsUtils.username(),
-            password: LoginMethodsUtils.password(),
+            email: prefs.getString("username"),
+            password: prefs.getString("password"),
           ).catchError((error) {
             _failedLogin(context);
           }).then((result) {
