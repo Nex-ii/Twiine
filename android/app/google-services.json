@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "713139087186",
+    "firebase_url": "https://twiine.firebaseio.com",
+    "project_id": "twiine",
+    "storage_bucket": "twiine.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:713139087186:android:3f63231b4581372fdc3c8b",
+        "android_client_info": {
+          "package_name": "com.example.twiine"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "713139087186-0d24qmli0u4itsoa6077pf982m6jjfcr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twiine",
+            "certificate_hash": "f2eed00a8c3138cf0c35be1a881fde52fbe4c179"
+          }
+        },
+        {
+          "client_id": "713139087186-i7rhnbn29dhc0kl9bne6atffu7np0efv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHLQ3HJUV6AALcCkbcrHq1oWnYdwh_BG8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "713139087186-i7rhnbn29dhc0kl9bne6atffu7np0efv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "713139087186-4t9apgenoc2r28gh1815p1f7h91hmf5j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.nexii.twiine"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
