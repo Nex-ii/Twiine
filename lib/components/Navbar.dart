@@ -128,12 +128,7 @@ class NavbarState extends State<Navbar> {
   }
 
   _logout() async{
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("hasLoggedIn", false);
-    prefs.setString("loginMethod", null);
-    prefs.setString("username", null);
-    prefs.setString("password", null);
-    Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+    Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);
   }
   _settings(){
 

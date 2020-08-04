@@ -1,9 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:twiine/auth.dart';
 
 import 'login/login_methods.dart';
 
@@ -13,86 +8,6 @@ class LandingPage extends StatefulWidget {
 }
 
 class LandingPageState extends State<LandingPage> {
-
-  @override
-  void initState(){
-    super.initState();
-    rememberLogin();
-  }
-
-  rememberLogin() async{
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    print(prefs.getBool("hasLoggedIn"));
-    print(prefs.getString("loginMethod"));
-
-    if (prefs.getBool("hasLoggedIn") == true) {
-      switch (
-      LoginMethodsUtils.stringToEnum(prefs.getString("loginMethod"))) {
-        case LoginMethods.phone:
-          _failedLogin(context);
-          break;
-        case LoginMethods.facebook:
-          FacebookLogin().logIn(['email']).then((facebookResult) {
-                Auth.firebaseAuth
-                    .signInWithCredential(FacebookAuthProvider.getCredential(
-                  accessToken: facebookResult.accessToken.token,
-                )).catchError((error) {
-                  _failedLogin(context);
-                }).then((firebaseResult) {
-                  if (firebaseResult != null) {
-                    Auth.user = firebaseResult.user;
-                    _successfulLogin(context);
-                  }
-                });
-          });
-          break;
-        case LoginMethods.google:
-          GoogleSignIn(scopes: ['email']).signIn().catchError((error) {
-            _failedLogin(context);
-          }).then((account) {
-            account.authentication.then((authentication) {
-              Auth.firebaseAuth
-                  .signInWithCredential(GoogleAuthProvider.getCredential(
-                  idToken: authentication.idToken,
-                  accessToken: authentication.idToken))
-                  .then((result) {
-                if (result != null) {
-                  _successfulLogin(context);
-                  Auth.user = result.user;
-                }
-              });
-            });
-          });
-          break;
-        case LoginMethods.email:
-          FirebaseAuth.instance
-              .signInWithEmailAndPassword(
-            email: prefs.getString("username"),
-            password: prefs.getString("password"),
-          ).catchError((error) {
-            print(error.toString());
-            _failedLogin(context);
-          }).then((result) {
-            if (result != null) {
-              _successfulLogin(context);
-              Auth.user = result.user;
-            }
-          });
-          break;
-        default:
-          break;
-      }
-    }
-  }
-
-  _failedLogin(BuildContext context) {
-  }
-
-  _successfulLogin(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, "/navBar", (route) => false);
-  }
 
   @override
   Widget build(BuildContext context) {

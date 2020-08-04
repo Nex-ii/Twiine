@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twiine/screens/pre_login/LoginChecker.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 import 'package:twiine/screens/pre_login/login/login.dart';
 import 'package:twiine/components/Navbar.dart';
@@ -24,7 +25,8 @@ class App extends StatelessWidget{
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => LandingPage(),
+        '/': (context) => LoginChecker(),
+        '/landing': (context) => LandingPage(),
         '/login': (context) => Login(),
         '/signup': (context) => SignUp(),
         '/home': (context) => Home(),
