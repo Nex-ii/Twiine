@@ -56,12 +56,12 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/addIcon.svg
-    - assets/icons/calendarIcon.svg
-    - assets/icons/mapIcon.svg
-    - assets/icons/personIcon.svg
-    - assets/icons/searchIcon.svg
-    - assets/icons/settings.svg
+    - assets/icons/add_icon.svg
+    - assets/icons/calendar_icon.svg
+    - assets/icons/map_icon.svg
+    - assets/icons/person_icon.svg
+    - assets/icons/search_icon.svg
+    - assets/icons/settings_icon.svg
   fonts:
     - family: Acumin Pro
       fonts: 
