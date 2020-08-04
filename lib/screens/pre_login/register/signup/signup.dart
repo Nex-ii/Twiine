@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/screens/pre_login/login/login_methods.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -238,8 +235,6 @@ class SignUpState extends State<SignUp> {
                         }).then((credential) {
                           if (credential != null) {
                             Auth.user = credential.user;
-                            setEmailLoginPreferences(
-                                true, "email", _email, _password);
                             Navigator.of(context).pushNamed('/navBar');
                           }
                         });
@@ -253,14 +248,5 @@ class SignUpState extends State<SignUp> {
         ),
       ),
     );
-  }
-
-  setEmailLoginPreferences(bool hasLoggedIn, String loginMethod,
-      String username, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("hasLoggedIn", hasLoggedIn);
-    prefs.setString("loginMethod", loginMethod);
-    prefs.setString("username", username);
-    prefs.setString("password", password);
   }
 }

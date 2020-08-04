@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/home/home.dart';
 
@@ -130,7 +129,5 @@ class NavbarState extends State<Navbar> {
   _logout() async{
     Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);
   }
-  _settings(){
 
-  }
 }
