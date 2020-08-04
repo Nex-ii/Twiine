@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twiine/colors.dart';
 
 //authentication
@@ -527,6 +528,9 @@ class LoginState extends State<Login> {
 
   _successfulLogin(
       LoginMethods loginMethod, String username, String password) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("hasLoggedIn", true);
 
     SigninStatus.isPhoneLogin = false;
     SigninStatus.codeSent = false;

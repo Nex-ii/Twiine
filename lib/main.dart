@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/screens/post_login/profile/settings.dart';
-import 'package:twiine/screens/pre_login/LoginChecker.dart';
+import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/login/LoginChecker.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 import 'package:twiine/screens/pre_login/login/login.dart';
 import 'package:twiine/components/Navbar.dart';
@@ -37,7 +37,6 @@ class App extends StatelessWidget{
         '/navBar': (context) => Navbar(),
         '/addEvent': (context) => AddEvent(),
         '/settings': (context) => Settings(),
-        '/' : (context) => LandingPage(),
       },
     );
   }

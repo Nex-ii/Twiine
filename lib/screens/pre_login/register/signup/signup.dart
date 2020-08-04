@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
 
@@ -235,6 +236,7 @@ class SignUpState extends State<SignUp> {
                         }).then((credential) {
                           if (credential != null) {
                             Auth.user = credential.user;
+                            setPreference();
                             Navigator.of(context).pushNamed('/navBar');
                           }
                         });
@@ -248,5 +250,10 @@ class SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  void setPreference() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool("hasLoggedIn", true);
   }
 }

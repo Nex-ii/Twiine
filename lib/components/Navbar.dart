@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/home/home.dart';
 
@@ -64,25 +65,6 @@ class NavbarState extends State<Navbar> {
         },
         child: new Scaffold(
           body: _children[_currentIndex],
-          appBar: AppBar(
-            title: Text("twiine"),
-            actions: <Widget>[PopupMenuButton(
-                onSelected: (r) => r(),
-                initialValue: null,
-                itemBuilder: (BuildContext context) =>
-                <PopupMenuEntry<Function>>[
-                  PopupMenuItem<Function>(
-                    value: _settings,
-                    child: Text("Settings"),
-                  ),
-                  PopupMenuItem<Function>(
-                    value: _logout,
-                    child: Text("Log out"),
-                  ),
-                ]
-            )
-            ],
-          ),
           bottomNavigationBar: BottomNavigationBar(
             showSelectedLabels: false,
             showUnselectedLabels: false,
@@ -125,12 +107,4 @@ class NavbarState extends State<Navbar> {
           ),
         ));
   }
-
-  _logout() async{
-    Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);
-  }
-
-  _settings(){
-  }
-
 }
