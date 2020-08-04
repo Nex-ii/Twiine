@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twiine/screens/post_login/profile/settings.dart';
 import 'package:twiine/screens/pre_login/LoginChecker.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 import 'package:twiine/screens/pre_login/login/login.dart';
@@ -35,6 +36,8 @@ class App extends StatelessWidget{
         '/forgotPassword' : (context) => ForgotPassword(),
         '/navBar': (context) => Navbar(),
         '/addEvent': (context) => AddEvent(),
+        '/settings': (context) => Settings(),
+        '/' : (context) => LandingPage(),
       },
     );
   }
