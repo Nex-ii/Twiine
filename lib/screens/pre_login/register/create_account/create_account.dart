@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
 
 class CreateAccount extends StatefulWidget {
   @override
