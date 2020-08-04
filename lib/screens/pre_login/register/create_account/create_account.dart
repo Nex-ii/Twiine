@@ -54,6 +54,7 @@ class CreateAccountState extends State<CreateAccount> {
                 borderSide: const BorderSide(color: Colors.green),
                 borderRadius: BorderRadius.circular(25.0))),
 
+        // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
             return 'First Name is Required';
@@ -77,6 +78,7 @@ class CreateAccountState extends State<CreateAccount> {
             focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.green),
                 borderRadius: BorderRadius.circular(25.0))),
+        // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
             return 'Last Name is Required';
@@ -102,6 +104,7 @@ class CreateAccountState extends State<CreateAccount> {
                 borderSide: const BorderSide(color: Colors.green),
                 borderRadius: BorderRadius.circular(25.0))),
         keyboardType: TextInputType.datetime,
+        // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
             return 'Birthday is Required';
@@ -128,6 +131,7 @@ class CreateAccountState extends State<CreateAccount> {
             focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(color: Colors.green),
                 borderRadius: BorderRadius.circular(25.0))),
+        // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
             return 'Valid Email is Required';
@@ -155,6 +159,7 @@ class CreateAccountState extends State<CreateAccount> {
                 borderSide: const BorderSide(color: Colors.green),
                 borderRadius: BorderRadius.circular(25.0))),
         obscureText: true,
+        // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
             return 'Password is Required';
@@ -179,6 +184,7 @@ class CreateAccountState extends State<CreateAccount> {
                 borderSide: const BorderSide(color: Colors.green),
                 borderRadius: BorderRadius.circular(25.0))),
         obscureText: true,
+        // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
             return 'Password Confirmation is Required';
