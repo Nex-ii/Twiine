@@ -9,6 +9,9 @@ import 'package:twiine/screens/post_login/requests/requests.dart';
 import 'package:twiine/screens/post_login/scheduled/scheduled.dart';
 import 'package:twiine/screens/post_login/favorites/favorites.dart';
 
+import 'package:twiine/auth.dart';
+
+
 class Navbar extends StatefulWidget {
   @override
   NavbarState createState() => NavbarState();
@@ -129,6 +132,7 @@ class NavbarState extends State<Navbar> {
     prefs.setString("loginMethod", null);
     prefs.setString("username", null);
     prefs.setString("password", null);
+    Auth.user = null;
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
   _settings(){
