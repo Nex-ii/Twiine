@@ -32,6 +32,7 @@ class App extends StatelessWidget{
         '/profile': (context) => Profile(),
         '/navBar': (context) => Navbar(),
         '/addEvent': (context) => AddEvent(),
+        '/settings': (context) => Settings(),
         '/' : (context) => LandingPage(),
       },
     );

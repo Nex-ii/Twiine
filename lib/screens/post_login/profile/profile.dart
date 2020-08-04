@@ -143,7 +143,7 @@ class ProfileState extends State<Profile> {
                         icon: Icon(Icons.settings),
                         color: Colors.white,
                         onPressed: () {
-                          // TODO: settings page
+                          Navigator.pushNamed(context, '/settings');
                         },
                       ),
                     ),

@@ -69,10 +69,10 @@ flutter:
         - asset: assets/fonts/facebook.ttf
     - family: Karla
       fonts:
-        - asset: lib/fonts/Karla-Regular.ttf
-        - asset: lib/fonts/Karla-Bold.ttf
-        - asset: lib/fonts/Karla-Italic.ttf
-        - asset: lib/fonts/Karla-BoldItalic.ttf
+        - asset: assets/fonts/Karla-Regular.ttf
+        - asset: assets/fonts/Karla-Bold.ttf
+        - asset: assets/fonts/Karla-Italic.ttf
+        - asset: assets/fonts/Karla-BoldItalic.ttf
     - family: Acumin Pro
       fonts: 
         - asset: assets/fonts/Acumin-BdItPro.otf
