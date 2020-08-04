@@ -97,7 +97,7 @@ class _SettingsState extends State<Settings> {
                 const SizedBox(height: 10.0),
                 Card(
                   elevation: 4.0,
-                  margin: const EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 16.0),
+                  margin: const EdgeInsets.all(16.0),
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
                   child: createCardColumn([
