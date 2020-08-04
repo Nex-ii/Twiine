@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:twiine/auth.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -60,9 +61,9 @@ class ProfileState extends State<Profile> {
               color: Colors.grey.withOpacity(0.9),
               spreadRadius: -2,
               blurRadius: 6,
-              offset: Offset(0, 4)
-            )
-          ]
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
         child: Card(
           shape: RoundedRectangleBorder(
@@ -76,8 +77,8 @@ class ProfileState extends State<Profile> {
               image: DecorationImage(
                 image: NetworkImage(url),
                 fit: BoxFit.cover,
-                alignment: Alignment.topCenter
-              )
+                alignment: Alignment.topCenter,
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,15 +91,15 @@ class ProfileState extends State<Profile> {
                     name,
                     style: TextStyle(
                       fontSize: 30,
-                      color: Colors.white
-                    )
-                  )
-                )
-              ]
-            )
-          )
-        )
-      )
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -116,21 +117,21 @@ class ProfileState extends State<Profile> {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(this._cardRadius),
-                  bottomLeft: Radius.circular(this._cardRadius)
+                  bottomLeft: Radius.circular(this._cardRadius),
                 ),
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
-                  colors: [Colors.purpleAccent, Colors.cyan]
+                  colors: [Colors.purpleAccent, Colors.cyan],
                 ),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.9),
                     spreadRadius: 3,
                     blurRadius: 7,
-                    offset: Offset(0, 3)
-                  )
-                ]
+                    offset: Offset(0, 3),
+                  ),
+                ],
               ),
               child: Column(
                 children: <Widget>[
@@ -182,22 +183,20 @@ class ProfileState extends State<Profile> {
 
                   //TODO: Make it more clear you can edit username somehow by clicking the name
                   Padding(
-                      padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: TextFormField(
-                          initialValue: "@realwayson",
-                          decoration: InputDecoration(
-                              border: InputBorder.none
-                          ),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              color: Colors.white
-                          )
-                      )
-                  )
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: TextFormField(
+                      initialValue: Auth.user.email,
+                      decoration: InputDecoration(border: InputBorder.none),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
                 ],
-              )
+              ),
             ),
           ),
           Padding(
@@ -206,9 +205,9 @@ class ProfileState extends State<Profile> {
               "Recent Places",
               style: TextStyle(
                 fontSize: 30,
-                fontWeight: FontWeight.bold
-              )
-            )
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: this._cardRadius),
@@ -216,21 +215,21 @@ class ProfileState extends State<Profile> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-                createPlaceCard("Ding Tea", "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-              ]
-            )
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+                createPlaceCard("Ding Tea",
+                    "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+              ],
+            ),
           ),
           Padding(
             padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
             child: Text(
               "Placeholder section",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold
-              )
-            )
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
           ),
           Container(
             margin: EdgeInsets.symmetric(vertical: this._cardRadius),
@@ -238,13 +237,16 @@ class ProfileState extends State<Profile> {
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: <Widget>[
-                createPlaceCard("Ding Tea", "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-                createPlaceCard("7 Leaves", "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-              ]
-            )
-          )
-        ]
+                createPlaceCard("Ding Tea",
+                    "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+                createPlaceCard("7 Leaves",
+                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

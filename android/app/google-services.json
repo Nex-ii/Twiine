@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "713139087186-0d24qmli0u4itsoa6077pf982m6jjfcr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.twiine",
+            "certificate_hash": "f2eed00a8c3138cf0c35be1a881fde52fbe4c179"
+          }
+        },
+        {
           "client_id": "713139087186-i7rhnbn29dhc0kl9bne6atffu7np0efv.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -30,6 +38,13 @@
             {
               "client_id": "713139087186-i7rhnbn29dhc0kl9bne6atffu7np0efv.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "713139087186-4t9apgenoc2r28gh1815p1f7h91hmf5j.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "co.nexii.twiine"
+              }
             }
           ]
         }

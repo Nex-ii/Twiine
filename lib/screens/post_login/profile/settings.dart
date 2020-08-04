@@ -17,6 +17,7 @@ class _SettingsState extends State<Settings> {
       color: Colors.grey.shade400,
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
