@@ -26,10 +26,11 @@ class LoginState extends State<Login> {
   ///switches for build() to rebuild form
 
   BoxShadow _dropShadow = BoxShadow(
-      color: Colors.grey.withOpacity(0.9),
-      spreadRadius: -2,
-      blurRadius: 6,
-      offset: Offset(0, 4));
+    color: Colors.grey.withOpacity(0.9),
+    spreadRadius: -2,
+    blurRadius: 6,
+    offset: Offset(0, 4),
+  );
 
   double _dividerThickness = 2;
   double _buttonHeight = 50;
@@ -38,81 +39,98 @@ class LoginState extends State<Login> {
   ///create a button within a padding for authProvider
   Widget createLoginButton(AuthProvider authProvider) {
     return Padding(
-        padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
-        child: InkWell(
-            borderRadius: BorderRadius.circular(_buttonRadius),
-            child: Container(
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
-                height: _buttonHeight,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(_buttonRadius),
-                    color: Colors.white,
-                    boxShadow: [_dropShadow]),
-                padding: EdgeInsets.all(10),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      IconButton(
-                        icon: authProvider.icon,
-                        padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
-                        onPressed: null,
-                      ),
-                      Text("Continue with " + authProvider.name,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold))
-                    ])),
-            onTap: () => {authProvider.onTap()}));
+      padding: EdgeInsets.fromLTRB(10, 0, 10, 20),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(_buttonRadius),
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: _buttonHeight,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(_buttonRadius),
+              color: Colors.white,
+              boxShadow: [_dropShadow]),
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              IconButton(
+                icon: authProvider.icon,
+                padding: EdgeInsets.fromLTRB(0, 0, 40, 0),
+                onPressed: null,
+              ),
+              Text("Continue with " + authProvider.name,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold))
+            ],
+          ),
+        ),
+        onTap: () => {authProvider.onTap()},
+      ),
+    );
   }
 
   ///create the column of buttons
   Widget createLoginButtonColumn(List<AuthProvider> primaryAuthProviders,
       List<AuthProvider> secondaryAuthProviders) {
-    Column container = new Column(children: <Widget>[
-      Align(
+    Column container = new Column(
+      children: <Widget>[
+        Align(
           alignment: Alignment.centerLeft,
-          child: Text("Welcome to twiine",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-              ))),
-      Padding(
+          child: Text(
+            "Welcome to twiine",
+            textAlign: TextAlign.left,
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Padding(
           padding: EdgeInsets.fromLTRB(0, 10, 0, 40),
           child: Text(
             SigninStatus.loginMessage,
             style: TextStyle(color: TwiineColors.red, fontSize: 12),
-          )),
-    ]);
+          ),
+        ),
+      ],
+    );
 
     primaryAuthProviders.forEach((element) {
       container.children.add(createLoginButton(element));
     });
 
-    container.children.add(Row(children: <Widget>[
-      Expanded(child: Divider(thickness: _dividerThickness)),
-      Text(
-        " or ",
-        style: TextStyle(fontSize: 20, color: Colors.grey),
+    container.children.add(
+      Row(
+        children: <Widget>[
+          Expanded(child: Divider(thickness: _dividerThickness)),
+          Text(
+            " or ",
+            style: TextStyle(fontSize: 20, color: Colors.grey),
+          ),
+          Expanded(child: Divider(thickness: _dividerThickness))
+        ],
       ),
-      Expanded(child: Divider(thickness: _dividerThickness))
-    ]));
-    container.children.add(Padding(
-      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-    ));
+    );
+    container.children.add(
+      Padding(
+        padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+      ),
+    );
 
     secondaryAuthProviders.forEach((element) {
       container.children.add(createLoginButton(element));
     });
 
-    container.children.add(Padding(
+    container.children.add(
+      Padding(
         padding: EdgeInsets.all(50),
-        child: Text("[Terms and conditions statement]",
-            textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15, color: Colors.grey))));
+        child: Text(
+          "[Terms and conditions statement]",
+          textAlign: TextAlign.left,
+          style: TextStyle(fontSize: 15, color: Colors.grey),
+        ),
+      ),
+    );
 
     return container;
   }
@@ -120,7 +138,7 @@ class LoginState extends State<Login> {
   ///create the login page, define AuthProviders in this function
   Widget getLoginWidget() {
     AuthProvider phoneAuth =
-    new AuthProvider("phone", FaIcon(Icons.phone), _loginWithPhone);
+        new AuthProvider("phone", FaIcon(Icons.phone), _loginWithPhone);
     AuthProvider facebookAuth = new AuthProvider(
         "Facebook", FaIcon(FontAwesomeIcons.facebook), _loginWithFacebook);
     AuthProvider googleAuth = new AuthProvider(
@@ -133,81 +151,91 @@ class LoginState extends State<Login> {
 
     return Scaffold(
         body: ListView(children: <Widget>[
-          Padding(
-              padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
-              child: createLoginButtonColumn(primaryAuth, secondaryAuth))
-        ]));
+      Padding(
+          padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+          child: createLoginButtonColumn(primaryAuth, secondaryAuth))
+    ]));
   }
 
   ///ui form for phone number input
   Widget getPhoneLoginWidget(BuildContext context) {
     return WillPopScope(
-        onWillPop: () {
-          setState(() {
-            SigninStatus.isPhoneLogin = false;
-          });
-        },
-        child: Scaffold(
-            body: Container(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    InternationalPhoneNumberInput(
-                      onInputChanged: (PhoneNumber number) {
-                        SigninStatus.phoneNumber = number.phoneNumber;
-                      },
-                      ignoreBlank: false,
-                      autoValidate: false,
-                      initialValue: PhoneNumber(isoCode: 'US'),
-                      selectorTextStyle: TextStyle(color: Colors.black),
-                      inputBorder: OutlineInputBorder(),
-                    ),
-                    RaisedButton(
-                      onPressed: _loginWithPhone,
-                      child: Text('Submit'),
-                    ),
-                    Text(SigninStatus.loginMessage,
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 15, color: Colors.black))
-                  ]),
-            )));
+      onWillPop: () {
+        setState(() {
+          SigninStatus.isPhoneLogin = false;
+        });
+      },
+      child: Scaffold(
+        body: Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              InternationalPhoneNumberInput(
+                onInputChanged: (PhoneNumber number) {
+                  SigninStatus.phoneNumber = number.phoneNumber;
+                },
+                ignoreBlank: false,
+                autoValidate: false,
+                initialValue: PhoneNumber(isoCode: 'US'),
+                selectorTextStyle: TextStyle(color: Colors.black),
+                inputBorder: OutlineInputBorder(),
+              ),
+              RaisedButton(
+                onPressed: _loginWithPhone,
+                child: Text('Submit'),
+              ),
+              Text(SigninStatus.loginMessage,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontSize: 15, color: Colors.black))
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   ///ui form for SMS code input
   Widget getSMSCodeLoginWidget(BuildContext context) {
     return WillPopScope(
-        onWillPop: () {
-          setState(() {
-            SigninStatus.isPhoneLogin = false;
-          });
-        },
-        child: Scaffold(
-            body: ListView(children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
-                  child: Column(children: <Widget>[
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("Welcome to twiine",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                              fontSize: 25,
-                              fontWeight: FontWeight.bold,
-                            ))),
-                    TextField(
-                      decoration:
-                      new InputDecoration(labelText: "Verification Code"),
-                      keyboardType: TextInputType.phone,
-                      maxLength: 20,
-                      onChanged: (t) => {SigninStatus.SMScode = t},
-                    ),
-                    RaisedButton(
-                      onPressed: _loginWithPhone,
-                      child: Text('Submit'),
-                    ),
-                    Text(SigninStatus.loginMessage),
-                  ]))
-            ])));
+      onWillPop: () {
+        setState(() {
+          SigninStatus.isPhoneLogin = false;
+        });
+      },
+      child: Scaffold(
+        body: ListView(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.fromLTRB(20, 120, 10, 0),
+              child: Column(
+                children: <Widget>[
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text("Welcome to twiine",
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 25,
+                            fontWeight: FontWeight.bold,
+                          ))),
+                  TextField(
+                    decoration:
+                        new InputDecoration(labelText: "Verification Code"),
+                    keyboardType: TextInputType.phone,
+                    maxLength: 20,
+                    onChanged: (t) => {SigninStatus.SMScode = t},
+                  ),
+                  RaisedButton(
+                    onPressed: _loginWithPhone,
+                    child: Text('Submit'),
+                  ),
+                  Text(SigninStatus.loginMessage),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget getEmailLoginWidget(BuildContext context) {
@@ -254,7 +282,7 @@ class LoginState extends State<Login> {
                                 labelText: "Email",
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
-                                  BorderSide(color: Colors.transparent),
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 border: InputBorder.none,
                               ),
@@ -280,7 +308,7 @@ class LoginState extends State<Login> {
                                 labelText: "Password",
                                 focusedBorder: UnderlineInputBorder(
                                   borderSide:
-                                  BorderSide(color: Colors.transparent),
+                                      BorderSide(color: Colors.transparent),
                                 ),
                                 border: InputBorder.none,
                               ),
@@ -306,10 +334,7 @@ class LoginState extends State<Login> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(_buttonRadius),
                       child: Container(
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
+                        width: MediaQuery.of(context).size.width,
                         height: _buttonHeight,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(_buttonRadius),
@@ -395,8 +420,8 @@ class LoginState extends State<Login> {
       if (SigninStatus.codeSent) {
         Auth.firebaseAuth
             .signInWithCredential(PhoneAuthProvider.getCredential(
-            verificationId: SigninStatus.verificationId,
-            smsCode: SigninStatus.SMScode))
+                verificationId: SigninStatus.verificationId,
+                smsCode: SigninStatus.SMScode))
             .catchError((error) {
           updateLoginMessage("Failed to verify phone number");
         }).then((result) {
@@ -458,8 +483,8 @@ class LoginState extends State<Login> {
         account.authentication.then((authentication) {
           Auth.firebaseAuth
               .signInWithCredential(GoogleAuthProvider.getCredential(
-              idToken: authentication.idToken,
-              accessToken: authentication.idToken))
+                  idToken: authentication.idToken,
+                  accessToken: authentication.idToken))
               .then((result) {
             if (result != null) {
               updateLoginMessage("Successfully authenticated with Google");
@@ -498,13 +523,12 @@ class LoginState extends State<Login> {
     }
   }
 
-  _forgotPasword(){
+  _forgotPasword() {
     Navigator.of(context).pushNamed('/forgotPassword');
   }
 
-  _successfulLogin(LoginMethods loginMethod, String username,
-      String password) async {
-
+  _successfulLogin(
+      LoginMethods loginMethod, String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("hasLoggedIn", true);
     prefs.setString("loginMethod", loginMethod.toString().split('.')[1]);
