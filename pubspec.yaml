@@ -56,22 +56,13 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/addIcon.svg
-    - assets/icons/calendarIcon.svg
-    - assets/icons/mapIcon.svg
-    - assets/icons/personIcon.svg
-    - assets/icons/searchIcon.svg
-    - assets/icons/settings.svg
+    - assets/icons/add_icon.svg
+    - assets/icons/calendar_icon.svg
+    - assets/icons/map_icon.svg
+    - assets/icons/person_icon.svg
+    - assets/icons/search_icon.svg
+    - assets/icons/settings_icon.svg
   fonts:
-    - family: MyFlutterApp
-      fonts:
-        - asset: assets/fonts/facebook.ttf
-    - family: Karla
-      fonts:
-        - asset: assets/fonts/Karla-Regular.ttf
-        - asset: assets/fonts/Karla-Bold.ttf
-        - asset: assets/fonts/Karla-Italic.ttf
-        - asset: assets/fonts/Karla-BoldItalic.ttf
     - family: Acumin Pro
       fonts: 
         - asset: assets/fonts/Acumin-BdItPro.otf

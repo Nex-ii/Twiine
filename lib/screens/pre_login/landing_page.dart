@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'login/login_methods.dart';
-
 class LandingPage extends StatefulWidget {
   @override
   LandingPageState createState() => LandingPageState();

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:validators/validators.dart' as validator;
 import 'package:twiine/screens/post_login/scheduled/plannedDates.dart';
-import 'package:twiine/screens/post_login/addEvent/testResult.dart';
 
 class AddEvent extends StatefulWidget {
   @override

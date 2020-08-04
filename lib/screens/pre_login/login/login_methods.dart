@@ -18,7 +18,7 @@ class LoginMethodsUtils{
       case "google":
         return LoginMethods.google;
         break;
-      case "email":
+      default:
         return LoginMethods.email;
         break;
     }
