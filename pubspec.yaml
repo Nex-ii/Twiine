@@ -63,15 +63,6 @@ flutter:
     - assets/icons/searchIcon.svg
     - assets/icons/settings.svg
   fonts:
-    - family: MyFlutterApp
-      fonts:
-        - asset: assets/fonts/facebook.ttf
-    - family: Karla
-      fonts:
-        - asset: assets/fonts/Karla-Regular.ttf
-        - asset: assets/fonts/Karla-Bold.ttf
-        - asset: assets/fonts/Karla-Italic.ttf
-        - asset: assets/fonts/Karla-BoldItalic.ttf
     - family: Acumin Pro
       fonts: 
         - asset: assets/fonts/Acumin-BdItPro.otf
