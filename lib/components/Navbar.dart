@@ -130,4 +130,7 @@ class NavbarState extends State<Navbar> {
     Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);
   }
 
+  _settings(){
+  }
+
 }
