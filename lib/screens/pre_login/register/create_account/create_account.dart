@@ -25,10 +25,11 @@ class CreateAccountState extends State<CreateAccount> {
 
   Future _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: new DateTime.now(),
-        firstDate: new DateTime(2016),
-        lastDate: new DateTime(2021));
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime(2016),
+      lastDate: new DateTime(2021),
+    );
     if (picked != null) setState(() => _birthday = picked.toString());
   }
 
@@ -235,8 +236,7 @@ class CreateAccountState extends State<CreateAccount> {
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(input)) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
