@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/post_login/home/home_page.dart';
-import 'package:twiine/screens/post_login/profile/profile_page.dart';
+import 'package:twiine/screens/post_login/home/home.dart';
+import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/requests/requests.dart';
-import 'package:twiine/screens/post_login/scheduled/scheduled_page.dart';
-import 'package:twiine/screens/post_login/favorites/favorites_page.dart';
+import 'package:twiine/screens/post_login/scheduled/scheduled.dart';
+import 'package:twiine/screens/post_login/favorites/favorites.dart';
 
 class Navbar extends StatefulWidget {
   @override
