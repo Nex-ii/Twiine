@@ -72,10 +72,13 @@ class LandingPageState extends State<LandingPage> {
             email: prefs.getString("username"),
             password: prefs.getString("password"),
           ).catchError((error) {
+            print(error.toString());
             _failedLogin(context);
           }).then((result) {
-            if (result != null) _successfulLogin(context);
-            Auth.user = result.user;
+            if (result != null) {
+              _successfulLogin(context);
+              Auth.user = result.user;
+            }
           });
           break;
         default:
@@ -85,7 +88,6 @@ class LandingPageState extends State<LandingPage> {
   }
 
   _failedLogin(BuildContext context) {
-    Navigator.pushNamed(context, "/");
   }
 
   _successfulLogin(BuildContext context) {
