@@ -7,6 +7,7 @@ import 'package:twiine/TwiineApi.dart';
 class LoginBasic extends StatefulWidget {
   @override
   LoginBasic({Key key}) : super(key: key);
+
   LoginBasicState createState() => LoginBasicState();
 }
 
@@ -69,7 +70,7 @@ class LoginBasicState extends State<LoginBasic> {
                               labelText: "Email",
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                BorderSide(color: Colors.transparent),
                               ),
                               border: InputBorder.none,
                             ),
@@ -95,7 +96,7 @@ class LoginBasicState extends State<LoginBasic> {
                               labelText: "Password",
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
-                                    BorderSide(color: Colors.transparent),
+                                BorderSide(color: Colors.transparent),
                               ),
                               border: InputBorder.none,
                             ),

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'login/login_methods.dart';
+
 class LandingPage extends StatefulWidget {
   @override
   LandingPageState createState() => LandingPageState();
 }
 
 class LandingPageState extends State<LandingPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,7 +66,7 @@ class LandingPageState extends State<LandingPage> {
                         ),
                       ),
                     ),
-                    onTap: () => {},
+                    onTap: () => {Navigator.of(context).pushNamed('/signup')},
                   ),
                 ),
                 Padding(

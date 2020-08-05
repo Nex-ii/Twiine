@@ -7,14 +7,19 @@ class TwiineApi {
   static HttpsCallable _userExists =
       CloudFunctions.instance.getHttpsCallable(functionName: 'getUser');
 
-  static Future<LinkedHashMap> getUser(
-      String authType, String authField) async {
+  static Future<LinkedHashMap> getUser(String authType, String authField) async {
     return (await TwiineApi._userExists.call(
       <dynamic, dynamic>{
-        'authType': authType,
-        'authField': authField,
+        "collection": "Users",
+        "authType": authType,
+        "authField": authField,
       },
     ))
         .data['found'];
   }
+
+  static Future<void> createNewUser(Map<String, String> data) async{
+    await TwiineApi._createNewUser.call(data);
+  }
+
 }
