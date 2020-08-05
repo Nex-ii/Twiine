@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/screens/pre_login/login/login_methods.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twiine/screens/pre_login/register/signup/date_picker.dart';
@@ -176,7 +175,7 @@ class SignUpState extends State<SignUp> {
                         'firstname': _firstNameController.text,
                         'lastname': _lastNameController.text,
                         'birthday': _birthdayController.text,
-                        'email': "${_emailController.text}",
+                        'email': _emailController.text,
                       };
                       _registerUser(data).then(
                         (value) => {
