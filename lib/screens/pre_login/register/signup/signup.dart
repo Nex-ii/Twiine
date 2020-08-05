@@ -5,6 +5,7 @@ import 'package:twiine/auth.dart';
 import 'package:twiine/screens/pre_login/login/login_methods.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twiine/screens/pre_login/register/signup/date_picker.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -15,29 +16,14 @@ class SignUp extends StatefulWidget {
 }
 
 class SignUpState extends State<SignUp> {
-  String _firstName;
-
-  String _lastName;
-  String _birthday;
-  String _email;
-  String _password;
-  String _confirmPassword;
-
-  DateTime _date = new DateTime.now();
-  TimeOfDay _time = new TimeOfDay.now();
+  TextEditingController _firstNameController = TextEditingController();
+  TextEditingController _lastNameController = TextEditingController();
+  TextEditingController _birthdayController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _confirmPasswordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  _selectDate(BuildContext context) {
-    showDatePicker(
-            context: context,
-            initialDate: new DateTime.now(),
-            firstDate: new DateTime(2016),
-            lastDate: new DateTime(2021))
-        .then((date) {
-      if (date != null) setState(() => _birthday = date.toString());
-    });
-  }
 
   // Title Widget
   Widget _buildTitle() {
@@ -50,58 +36,37 @@ class SignUpState extends State<SignUp> {
   // TextFormField Widgets
   Widget _buildFirstName() {
     return TextFormField(
-      initialValue: _firstName,
+      controller: _firstNameController,
       decoration: InputDecoration(labelText: 'First Name'),
       validator: (String value) {
         if (value.isEmpty) {
           return 'First Name is Required';
-        }
-      },
-      onSaved: (String value) {
-        _firstName = value;
+        } else
+          return null;
       },
     );
   }
 
   Widget _buildLastName() {
     return TextFormField(
-      initialValue: _lastName,
+      controller: _lastNameController,
       decoration: InputDecoration(labelText: 'Last name'),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Last Name is Required';
-        }
-      },
-      onSaved: (String value) {
-        _lastName = value;
+        } else
+          return null;
       },
     );
   }
 
   Widget _buildBirthday() {
-    return TextFormField(
-      initialValue: _birthday,
-      decoration: InputDecoration(
-          labelText: 'Birthday (MM/DD/YYYY)', hintText: "Example: 01/01/1990"),
-      keyboardType: TextInputType.datetime,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Birthday is Required';
-        }
-
-        if (!isValidDate(value)) {
-          return 'Valid Input is Required';
-        }
-      },
-      onSaved: (String value) {
-        _birthday = value;
-      },
-    );
+    return DatePickerField(controller: _birthdayController);
   }
 
   Widget _buildEmail() {
     return TextFormField(
-      initialValue: _email,
+      controller: _emailController,
       decoration: InputDecoration(labelText: 'Email'),
       validator: (String value) {
         if (value.isEmpty) {
@@ -109,42 +74,39 @@ class SignUpState extends State<SignUp> {
         }
         if (!isValidEmail(value)) {
           return 'Valid Email Address Required';
-        }
-      },
-      onSaved: (String value) {
-        _email = value;
+        } else
+          return null;
       },
     );
   }
 
   Widget _buildPassword() {
     return TextFormField(
-      initialValue: _password,
+      controller: _passwordController,
       decoration: InputDecoration(labelText: 'Password'),
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Password is Required';
-        }
-      },
-      onSaved: (String value) {
-        _password = value;
+        } else
+          return null;
       },
     );
   }
 
   Widget _buildConfirmPassword() {
     return TextFormField(
-      initialValue: _confirmPassword,
+      controller: _confirmPasswordController,
       decoration: InputDecoration(labelText: 'Confirm Password'),
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Password Confirmation is Required';
         }
-      },
-      onSaved: (String value) {
-        _confirmPassword = value;
+        if (_confirmPasswordController.text != _passwordController.text) {
+          return 'Passwords have to match';
+        } else
+          return null;
       },
     );
   }
@@ -172,13 +134,9 @@ class SignUpState extends State<SignUp> {
   }
 
   bool isValidEmail(String input) {
-    if (RegExp(
+    return RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(input)) {
-      return true;
-    } else {
-      return false;
-    }
+        .hasMatch(input);
   }
 
   @override
@@ -213,37 +171,27 @@ class SignUpState extends State<SignUp> {
                       if (!_formKey.currentState.validate()) {
                         return;
                       }
-
                       _formKey.currentState.save();
-
                       var data = {
-                        'firstname': _firstName,
-                        'lastname': _lastName,
-                        'birthday': _birthday,
-                        'email': "$_email",
-                        'collection': "Users",
+                        'firstname': _firstNameController.text,
+                        'lastname': _lastNameController.text,
+                        'birthday': _birthdayController.text,
+                        'email': "${_emailController.text}",
                       };
-
-                      TwiineApi.createNewUser(data).catchError((error) {
-                        print("API call error " + error.toString());
-                      }).then((value) {
-                        Auth.firebaseAuth
-                            .createUserWithEmailAndPassword(
-                          email: _email,
-                          password: _password,
-                        )
-                            .catchError((error) {
-                          print("Unable to create account with email" +
-                              error.toString());
-                        }).then((credential) {
-                          if (credential != null) {
-                            Auth.user = credential.user;
-                            setEmailLoginPreferences(
-                                true, "email", _email, _password);
-                            Navigator.of(context).pushNamed('/navBar');
-                          }
-                        });
-                      });
+                      _registerUser(data).then(
+                        (value) => {
+                          if (Auth.user != null)
+                            {
+                              setEmailLoginPreferences(
+                                true,
+                                "email",
+                                _emailController.text,
+                                _passwordController.text
+                              ),
+                              Navigator.of(context).pushNamed('/navBar')
+                            }
+                        },
+                      );
                     },
                   ),
                 )
@@ -253,6 +201,23 @@ class SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  Future<void> _registerUser(Map<String, String> data) async {
+    try {
+      var credential = await Auth.firebaseAuth.createUserWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      Auth.user = credential.user;
+    } catch (error) {
+      print("Unable to create account: ${error.toString()}");
+    }
+    try {
+      return TwiineApi.createNewUser(data);
+    } catch (error) {
+      print("API call error: ${error.toString()}");
+    }
   }
 
   setEmailLoginPreferences(bool hasLoggedIn, String loginMethod,
