@@ -55,6 +55,7 @@ class CreateAccountState extends State<CreateAccount> {
           if (value.isEmpty) {
             return 'First Name is Required';
           }
+          return null;
         },
         onSaved: (String value) {
           _firstName = value;
@@ -79,6 +80,7 @@ class CreateAccountState extends State<CreateAccount> {
           if (value.isEmpty) {
             return 'Last Name is Required';
           }
+          return null;
         },
         onSaved: (String value) {
           _lastName = value;
@@ -108,6 +110,7 @@ class CreateAccountState extends State<CreateAccount> {
           if (!isValidDate(value)) {
             return 'Valid Input is Required';
           }
+          return null;
         },
         onSaved: (String value) {
           _birthday = value;
@@ -130,11 +133,12 @@ class CreateAccountState extends State<CreateAccount> {
         // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
-            return 'Valid Email is Required';
+            return 'Email is Required';
           }
           if (!isValidEmail(value)) {
-            return 'Valid Email Address Required';
+            return 'Valid Email is Required';
           }
+          return null;
         },
         onSaved: (String value) {
           _email = value;
@@ -160,8 +164,12 @@ class CreateAccountState extends State<CreateAccount> {
           if (value.isEmpty) {
             return 'Password is Required';
           }
+          if (value.length < 6) {
+            return 'Password must be at least 6 characters long';
+          }
+          return null;
         },
-        onSaved: (String value) {
+        onChanged: (String value) {
           _password = value;
         },
       ),
@@ -185,9 +193,14 @@ class CreateAccountState extends State<CreateAccount> {
           if (value.isEmpty) {
             return 'Password Confirmation is Required';
           }
+          if (value.length < 6) {
+            return 'Password must be at least 6 characters long';
+          }
           if (value != _password) {
             return 'Passwords Do Not Match';
           }
+
+          return null;
         },
         onSaved: (String value) {
           _confirmPassword = value;
@@ -271,65 +284,68 @@ class CreateAccountState extends State<CreateAccount> {
                                 padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
                                 child: _buildTermsAndServices()),
                           ),
-                          ButtonTheme(
-                            minWidth: 300.0,
-                            height: 50.0,
-                            buttonColor: Colors.red,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 1.0,
-                                    offset: Offset(4.0, 2.0),
-                                  )
-                                ]
-                              ),
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10.0),
+                            child: ButtonTheme(
+                              minWidth: 300.0,
+                              height: 50.0,
+                              buttonColor: Colors.red,
+                              child: Container(
+                                decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                child: Text(
-                                  'Continue',
-                                  style: TextStyle(color: Colors.white, fontSize: 16),
-                                ),
-                                onPressed: () {
-                                  if (!_formKey.currentState.validate()) {
-                                    return;
-                                  }
-
-                                  _formKey.currentState.save();
-
-                                  var data = {
-                                    'firstname': _firstName,
-                                    'lastname': _lastName,
-                                    'birthday': _birthday,
-                                    'email': "$_email",
-                                    'collection': "Users",
-                                  };
-
-                                  TwiineApi.createNewUser(data).catchError((error) {
-                                    print("API call error " + error.toString());
-                                  }).then((value) {
-                                    Auth.firebaseAuth
-                                        .createUserWithEmailAndPassword(
-                                      email: _email,
-                                      password: _password,
+                                  boxShadow: <BoxShadow>[
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.2),
+                                      blurRadius: 1.0,
+                                      offset: Offset(4.0, 2.0),
                                     )
-                                        .catchError((error) {
-                                      print("Unable to create account with email" +
-                                          error.toString());
-                                    }).then((credential) {
-                                      if (credential != null) {
-                                        Auth.user = credential.user;
-                                        setEmailLoginPreferences(
-                                            true, "email", _email, _password);
-                                        Navigator.of(context).pushNamed('/navBar');
-                                      }
+                                  ]
+                                ),
+                                child: RaisedButton(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                  ),
+                                  child: Text(
+                                    'Continue',
+                                    style: TextStyle(color: Colors.white, fontSize: 16),
+                                  ),
+                                  onPressed: () {
+                                    if (!_formKey.currentState.validate()) {
+                                      return;
+                                    }
+
+                                    _formKey.currentState.save();
+
+                                    var data = {
+                                      'firstname': _firstName,
+                                      'lastname': _lastName,
+                                      'birthday': _birthday,
+                                      'email': "$_email",
+                                      'collection': "Users",
+                                    };
+
+                                    TwiineApi.createNewUser(data).catchError((error) {
+                                      print("API call error " + error.toString());
+                                    }).then((value) {
+                                      Auth.firebaseAuth
+                                          .createUserWithEmailAndPassword(
+                                        email: _email,
+                                        password: _password,
+                                      )
+                                          .catchError((error) {
+                                        print("Unable to create account with email" +
+                                            error.toString());
+                                      }).then((credential) {
+                                        if (credential != null) {
+                                          Auth.user = credential.user;
+                                          setEmailLoginPreferences(
+                                              true, "email", _email, _password);
+                                          Navigator.of(context).pushNamed('/navBar');
+                                        }
+                                      });
                                     });
-                                  });
-                                },
+                                  },
+                                ),
                               ),
                             ),
                           )
