@@ -8,6 +8,8 @@ class AppTextField extends StatefulWidget {
   final String Function(String) onChanged;
   final String labelText;
   final String hintText;
+  final bool obscureText;
+  final TextInputType keyboardType;
 
   AppTextField({
     Key key,
@@ -17,6 +19,8 @@ class AppTextField extends StatefulWidget {
     this.onChanged,
     @required this.labelText,
     this.hintText,
+    this.obscureText,
+    this.keyboardType,
 
   }) :super(key: key);
 
@@ -44,6 +48,8 @@ class _AppTextField extends State<AppTextField> {
       },
       onSaved: widget.onSaved ?? null,
       onChanged: widget.onChanged ?? null,
+      obscureText: widget.obscureText ?? false,
+      keyboardType: widget.keyboardType ?? null,
     );
   }
 }
