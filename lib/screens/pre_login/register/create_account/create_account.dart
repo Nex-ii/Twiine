@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
+import 'package:twiine/common/app_text_field.dart';
 import 'package:twiine/screens/pre_login/login/login_methods.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,25 +44,12 @@ class CreateAccountState extends State<CreateAccount> {
   Widget _buildFirstName() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'First Name',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
-
-        // ignore: missing_return
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'First Name is Required';
-          }
-          return null;
-        },
+      child: AppTextField(
+        labelText: 'First Name',
         onSaved: (String value) {
           _firstName = value;
-        },
+          return;
+        }
       ),
     );
   }
@@ -69,23 +57,11 @@ class CreateAccountState extends State<CreateAccount> {
   Widget _buildLastName() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Last Name',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
-        // ignore: missing_return
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Last Name is Required';
-          }
-          return null;
-        },
+      child: AppTextField(
+        labelText: 'Last Name',
         onSaved: (String value) {
           _lastName = value;
+          return;
         },
       ),
     );
@@ -94,15 +70,9 @@ class CreateAccountState extends State<CreateAccount> {
   Widget _buildBirthday() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Birthday (MM/DD/YYYY)',
-            hintText: "Example: 01/01/1990",
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
+      child: AppTextField(
+        labelText: 'Birthday (MM/DD/YYYY)',
+        hintText: "Example: 01/01/1990",
         keyboardType: TextInputType.datetime,
         // ignore: missing_return
         validator: (String value) {
@@ -110,12 +80,13 @@ class CreateAccountState extends State<CreateAccount> {
             return 'Birthday is Required';
           }
           if (!isValidDate(value)) {
-            return 'Valid Input is Required';
+            return 'Valid Format is Required';
           }
           return null;
         },
         onSaved: (String value) {
           _birthday = value;
+          return;
         },
       ),
     );
@@ -124,14 +95,8 @@ class CreateAccountState extends State<CreateAccount> {
   Widget _buildEmail() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Email',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
+      child: AppTextField(
+        labelText: 'Email',
         // ignore: missing_return
         validator: (String value) {
           if (value.isEmpty) {
@@ -144,6 +109,7 @@ class CreateAccountState extends State<CreateAccount> {
         },
         onSaved: (String value) {
           _email = value;
+          return;
         },
       ),
     );
@@ -152,14 +118,8 @@ class CreateAccountState extends State<CreateAccount> {
   Widget _buildPassword() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Password',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
+      child: AppTextField(
+        labelText: 'Password',
         obscureText: true,
         // ignore: missing_return
         validator: (String value) {
@@ -173,6 +133,7 @@ class CreateAccountState extends State<CreateAccount> {
         },
         onChanged: (String value) {
           _password = value;
+          return;
         },
       ),
     );
@@ -181,14 +142,8 @@ class CreateAccountState extends State<CreateAccount> {
   Widget _buildConfirmPassword() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Confirm Password',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
+      child: AppTextField(
+        labelText: 'Confirm Password',
         obscureText: true,
         // ignore: missing_return
         validator: (String value) {
@@ -206,6 +161,7 @@ class CreateAccountState extends State<CreateAccount> {
         },
         onSaved: (String value) {
           _confirmPassword = value;
+          return;
         },
       ),
     );
