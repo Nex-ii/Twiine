@@ -388,7 +388,7 @@ class LoginState extends State<Login> {
   _loginWithPhone() {
     final PhoneVerificationCompleted verified = (AuthCredential credeitial) {
       Auth.firebaseAuth.signInWithCredential(credeitial).catchError((error) {
-        updateLoginMessage("Failed to verified phone number");
+        updateLoginMessage("Failed to verify phone number");
       }).then((result) {
         updateLoginMessage("Successfully verified phone number");
         Auth.user = result.user;
@@ -502,8 +502,8 @@ class LoginState extends State<Login> {
     if (SigninStatus.isEmailLogin) {
       Auth.firebaseAuth
           .signInWithEmailAndPassword(
-        email: SigninStatus.email,
-        password: SigninStatus.emailPassword,
+        email: SigninStatus.email.trim(),
+        password: SigninStatus.emailPassword.trim(),
       )
           .catchError((error) {
         updateLoginMessage("Unable to authenticate with email");

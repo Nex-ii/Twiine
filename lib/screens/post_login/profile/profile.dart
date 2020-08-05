@@ -24,7 +24,6 @@ class ProfileState extends State<Profile> {
 
       setState((){
         _image=image;
-        print('Image Path $_image');
       });
 
       uploadPic(context);
@@ -41,10 +40,8 @@ class ProfileState extends State<Profile> {
 
 
 	  setState((){
-	    print("Profile Picture uploaded");
 	    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
       _imageURL = downloadUrl;
-      print(_imageURL);
     });
 	}
 

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:twiine/TwiineApi.dart';
+import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/screens/pre_login/login/login_methods.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -163,7 +162,7 @@ class CreateAccountState extends State<CreateAccount> {
             return 'Password is Required';
           }
         },
-        onSaved: (String value) {
+        onChanged: (String value) {
           _password = value;
         },
       ),
@@ -191,7 +190,7 @@ class CreateAccountState extends State<CreateAccount> {
             return 'Passwords Do Not Match';
           }
         },
-        onSaved: (String value) {
+        onChanged: (String value) {
           _confirmPassword = value;
         },
       ),
@@ -234,8 +233,7 @@ class CreateAccountState extends State<CreateAccount> {
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
         .hasMatch(input)) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -250,103 +248,95 @@ class CreateAccountState extends State<CreateAccount> {
           leading: new IconButton(
               icon: new Icon(Icons.arrow_back_ios),
               color: Colors.black,
-              onPressed: () => Navigator.of(context).pop()
-          )
-      ),
-        body: Container(
-              margin: EdgeInsets.only(left: 24, right: 24),
-              child: SingleChildScrollView(
-                child: Form(
-                    key: _formKey,
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          _buildTitle(),
-                          _buildFirstName(),
-                          _buildLastName(),
-                          _buildBirthday(),
-                          _buildEmail(),
-                          _buildPassword(),
-                          _buildConfirmPassword(),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Padding(
-                                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                                child: _buildTermsAndServices()),
-                          ),
-                          ButtonTheme(
-                            minWidth: 300.0,
-                            height: 50.0,
-                            buttonColor: Colors.red,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15.0),
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.2),
-                                    blurRadius: 1.0,
-                                    offset: Offset(4.0, 2.0),
-                                  )
-                                ]
-                              ),
-                              child: RaisedButton(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                child: Text(
-                                  'Continue',
-                                  style: TextStyle(color: Colors.white, fontSize: 16),
-                                ),
-                                onPressed: () {
-                                  if (!_formKey.currentState.validate()) {
-                                    return;
-                                  }
-
-                                  _formKey.currentState.save();
-
-                                  var data = {
-                                    'firstname': _firstName,
-                                    'lastname': _lastName,
-                                    'birthday': _birthday,
-                                    'email': "$_email",
-                                    'collection': "Users",
-                                  };
-
-                                  TwiineApi.createNewUser(data).catchError((error) {
-                                    print("API call error " + error.toString());
-                                  }).then((value) {
-                                    Auth.firebaseAuth
-                                        .createUserWithEmailAndPassword(
-                                      email: _email,
-                                      password: _password,
-                                    )
-                                        .catchError((error) {
-                                      print("Unable to create account with email" +
-                                          error.toString());
-                                    }).then((credential) {
-                                      if (credential != null) {
-                                        Auth.user = credential.user;
-                                        setEmailLoginPreferences(
-                                            true, "email", _email, _password);
-                                        Navigator.of(context).pushNamed('/navBar');
-                                      }
-                                    });
-                                  });
-                                },
-                              ),
-                            ),
+              onPressed: () => Navigator.of(context).pop())),
+      body: Container(
+        margin: EdgeInsets.only(left: 24, right: 24),
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                _buildTitle(),
+                _buildFirstName(),
+                _buildLastName(),
+                _buildBirthday(),
+                _buildEmail(),
+                _buildPassword(),
+                _buildConfirmPassword(),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                      padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                      child: _buildTermsAndServices()),
+                ),
+                ButtonTheme(
+                  minWidth: 300.0,
+                  height: 50.0,
+                  buttonColor: Colors.red,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        boxShadow: <BoxShadow>[
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            blurRadius: 1.0,
+                            offset: Offset(4.0, 2.0),
                           )
-              ]),
-              )),
-        ));
+                        ]),
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      onPressed: () {
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        }
+
+                        _formKey.currentState.save();
+
+                        var data = {
+                          'firstname': _firstName,
+                          'lastname': _lastName,
+                          'birthday': _birthday,
+                          'email': _email,
+                          'collection': "Users",
+                        };
+
+                        TwiineApi.createNewUser(data).catchError((error) {
+                        }).then((value) {
+                          Auth.firebaseAuth
+                              .createUserWithEmailAndPassword(
+                            email: _email,
+                            password: _password,
+                          )
+                              .catchError((error) {
+                          }).then((credential) {
+                            if (credential != null) {
+                              Auth.user = credential.user;
+                              setPreference();
+                              Navigator.of(context).pushNamed('/navBar');
+                            }
+                          });
+                        });
+                      },
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
-  setEmailLoginPreferences(bool hasLoggedIn, String loginMethod,
-      String username, String password) async {
+  void setPreference() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("hasLoggedIn", hasLoggedIn);
-    prefs.setString("loginMethod", loginMethod);
-    prefs.setString("username", username);
-    prefs.setString("password", password);
+    prefs.setBool("hasLoggedIn", true);
   }
 }

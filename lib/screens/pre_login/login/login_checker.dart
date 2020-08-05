@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:twiine/TwiineApi.dart';
+import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +13,6 @@ class LoginCheckerState extends State<LoginChecker> {
   @override
   Widget build(BuildContext context) {
     getPreference().then((hasLoggedIn) {
-      print(hasLoggedIn);
       //do not change
       if (hasLoggedIn == true)
         _checkForLoggedIn().then((value) {
