@@ -1,5 +1,7 @@
 import 'dart:collection';
+import 'package:twiine/auth.dart';
 import 'package:cloud_functions/cloud_functions.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TwiineApi {
   static HttpsCallable _createNewUser =
@@ -7,7 +9,8 @@ class TwiineApi {
   static HttpsCallable _userExists =
       CloudFunctions.instance.getHttpsCallable(functionName: 'getUser');
 
-  static Future<LinkedHashMap> getUser(String authType, String authField) async {
+  static Future<LinkedHashMap> getUser(
+      String authType, String authField) async {
     return (await TwiineApi._userExists.call(
       <dynamic, dynamic>{
         "collection": "Users",
@@ -18,8 +21,10 @@ class TwiineApi {
         .data['found'];
   }
 
-  static Future<void> createNewUser(Map<String, String> data) async{
-    await TwiineApi._createNewUser.call(data);
+  static Future<void> createNewUser(Map<String, String> data) async {
+    return Firestore.instance
+        .collection("Users")
+        .document(Auth.user.uid)
+        .setData(data);
   }
-
 }
