@@ -21,13 +21,16 @@ class DatePickerFieldState extends State<DatePickerField> {
       showCupertinoModalPopup(
         context: context,
         builder: (BuildContext context) => SizedBox(
-          height: 400,
+          height: 300,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white
             ),
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
+              initialDateTime: DateTime.now(),
+              maximumDate: DateTime.now(),
+              minimumDate: DateTime(1900),
               onDateTimeChanged: (DateTime date) => {
                 setState(
                   () {
