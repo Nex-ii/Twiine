@@ -37,7 +37,7 @@ dependencies:
   validators: ^2.0.1
 
   # svgs
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
 
   #Google Maps
   google_maps_flutter: ^0.5.28+1
