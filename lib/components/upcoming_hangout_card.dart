@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/components/TimeDifference.dart';
+import 'package:twiine/components/time_difference.dart';
 
 class UpcomingHangoutCard extends StatelessWidget {
   final double _borderRadius = 10;
   final String _place = "Crater Disaster Site";
   final String _address = "Itomori, Gifu";
-  final String _thumbnail =
-      "https://resi.ze-robot.com/dl/ki/kimi-no-na-wa-3-1280%C3%971024.jpg";
+  final String _thumbnail = "https://i.imgur.com/oRt7Kcm.png";
   @override
   Widget build(BuildContext context) {
     return Container(

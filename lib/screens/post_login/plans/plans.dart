@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/components/PlansRequestsIndicator.dart';
-import 'package:twiine/screens/post_login/plans/MyHangouts.dart';
-
-import '../../../colors.dart';
+import 'package:twiine/screens/post_login/plans/my_hangouts.dart';
+import 'package:twiine/colors.dart';
 
 class PlansPage extends StatefulWidget {
   @override
@@ -26,6 +24,7 @@ class PlansPageState extends State<PlansPage> with TickerProviderStateMixin {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             SliverAppBar(
+              toolbarHeight: 10,
               pinned: false,
               backgroundColor: Colors.transparent,
               bottom: TabBar(

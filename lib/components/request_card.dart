@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/components/TimeDifference.dart';
+import 'package:twiine/components/time_difference.dart';
 
-class HangoutCard extends StatelessWidget {
+class RequestCard extends StatelessWidget {
   double _borderRadius = 10;
   String _place = "Crater Disaster Site";
   String _thumbnail = "https://i.imgur.com/oRt7Kcm.png";

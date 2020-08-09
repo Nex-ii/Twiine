@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/components/HangoutCard.dart';
-import 'package:twiine/components/UpcomingHangoutCard.dart';
+import 'package:twiine/components/hangout_card.dart';
+import 'package:twiine/components/upcoming_hangout_card.dart';
 
 class MyHangouts extends StatefulWidget {
   @override
