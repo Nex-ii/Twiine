@@ -157,7 +157,6 @@ class CreateAccountState extends State<CreateAccount> {
               key: _formKey,
               child: Expanded(
                 child: Column(
-                  // crossAxisAlignment: cross,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     _buildTitle(),
