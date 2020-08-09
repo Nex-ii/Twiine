@@ -4,8 +4,7 @@ import 'package:twiine/components/TimeDifference.dart';
 class HangoutCard extends StatelessWidget {
   double _borderRadius = 10;
   String _place = "Crater Disaster Site";
-  String _thumbnail =
-      "https://resi.ze-robot.com/dl/ki/kimi-no-na-wa-3-1280%C3%971024.jpg";
+  String _thumbnail = "https://i.imgur.com/oRt7Kcm.png";
   @override
   Widget build(BuildContext context) {
     return Container(
