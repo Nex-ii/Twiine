@@ -23,9 +23,7 @@ class DatePickerFieldState extends State<DatePickerField> {
         builder: (BuildContext context) => SizedBox(
           height: 300,
           child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white
-            ),
+            decoration: BoxDecoration(color: Colors.white),
             child: CupertinoDatePicker(
               mode: CupertinoDatePickerMode.date,
               initialDateTime: DateTime.now(),
@@ -58,11 +56,21 @@ class DatePickerFieldState extends State<DatePickerField> {
 
   @override
   Widget build(BuildContext context) {
+    var _border = OutlineInputBorder(borderRadius: BorderRadius.circular(15.0));
+    var _focusedBorder = OutlineInputBorder(
+      borderSide: const BorderSide(color: Colors.green),
+      borderRadius: BorderRadius.circular(25.0),
+    );
+
     return TextFormField(
       readOnly: true,
       controller: widget.controller,
       decoration: InputDecoration(
-          labelText: 'Birthday (MM/DD/YYYY)', hintText: "Example: 01/01/1990"),
+        labelText: 'Birthday (MM/DD/YYYY)',
+        hintText: "Example: 01/01/1990",
+        border: _border,
+        focusedBorder: _focusedBorder,
+      ),
       onTap: () {
         _showPlatformDatePicker();
       },

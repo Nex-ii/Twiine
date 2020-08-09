@@ -3,17 +3,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twiine/colors.dart';
 import 'package:twiine/screens/pre_login/register/signup/date_picker.dart';
 
-class SignUp extends StatefulWidget {
+class CreateAccount extends StatefulWidget {
   @override
-  // TODO: implement build
   State<StatefulWidget> createState() {
-    return SignUpState();
+    return CreateAccountState();
   }
 }
 
-class SignUpState extends State<SignUp> {
+class CreateAccountState extends State<CreateAccount> {
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _birthdayController = TextEditingController();
@@ -31,16 +31,26 @@ class SignUpState extends State<SignUp> {
     );
   }
 
+  var _border = OutlineInputBorder(borderRadius: BorderRadius.circular(15.0));
+  var _focusedBorder = OutlineInputBorder(
+    borderSide: BorderSide(color: TwiineColors.red),
+    borderRadius: BorderRadius.circular(25.0),
+  );
+
   // TextFormField Widgets
   Widget _buildFirstName() {
     return TextFormField(
       controller: _firstNameController,
-      decoration: InputDecoration(labelText: 'First Name'),
+      decoration: InputDecoration(
+        labelText: 'First Name',
+        border: _border,
+        focusedBorder: _focusedBorder,
+      ),
       validator: (String value) {
         if (value.isEmpty) {
           return 'First Name is Required';
-        } else
-          return null;
+        }
+        return null;
       },
     );
   }
@@ -48,12 +58,16 @@ class SignUpState extends State<SignUp> {
   Widget _buildLastName() {
     return TextFormField(
       controller: _lastNameController,
-      decoration: InputDecoration(labelText: 'Last name'),
+      decoration: InputDecoration(
+        labelText: 'Last name',
+        border: _border,
+        focusedBorder: _focusedBorder,
+      ),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Last Name is Required';
-        } else
-          return null;
+        }
+        return null;
       },
     );
   }
@@ -65,15 +79,19 @@ class SignUpState extends State<SignUp> {
   Widget _buildEmail() {
     return TextFormField(
       controller: _emailController,
-      decoration: InputDecoration(labelText: 'Email'),
+      decoration: InputDecoration(
+        labelText: 'Email',
+        border: _border,
+        focusedBorder: _focusedBorder,
+      ),
       validator: (String value) {
         if (value.isEmpty) {
           return 'Valid Email is Required';
         }
         if (!isValidEmail(value)) {
           return 'Valid Email Address Required';
-        } else
-          return null;
+        }
+        return null;
       },
     );
   }
@@ -81,13 +99,20 @@ class SignUpState extends State<SignUp> {
   Widget _buildPassword() {
     return TextFormField(
       controller: _passwordController,
-      decoration: InputDecoration(labelText: 'Password'),
+      decoration: InputDecoration(
+        labelText: 'Password',
+        border: _border,
+        focusedBorder: _focusedBorder,
+      ),
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
           return 'Password is Required';
-        } else
-          return null;
+        }
+        if (value.length < 6) {
+          return 'Password must be at least 6 characters long';
+        }
+        return null;
       },
     );
   }
@@ -95,7 +120,11 @@ class SignUpState extends State<SignUp> {
   Widget _buildConfirmPassword() {
     return TextFormField(
       controller: _confirmPasswordController,
-      decoration: InputDecoration(labelText: 'Confirm Password'),
+      decoration: InputDecoration(
+        labelText: 'Confirm Password',
+        border: _border,
+        focusedBorder: _focusedBorder,
+      ),
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
@@ -103,34 +132,13 @@ class SignUpState extends State<SignUp> {
         }
         if (_confirmPasswordController.text != _passwordController.text) {
           return 'Passwords have to match';
-        } else
-          return null;
+        }
+        return null;
       },
     );
   }
 
   // validation functions
-  bool isValidDate(String input) {
-    try {
-      List<String> partitionedBirthday = input.split("/");
-      String reformattedBirthday = partitionedBirthday[2] +
-          partitionedBirthday[0] +
-          partitionedBirthday[1];
-      final date = DateTime.parse(reformattedBirthday);
-      final originalFormatString = toOriginalFormatString(date);
-      return reformattedBirthday == originalFormatString;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  String toOriginalFormatString(DateTime dateTime) {
-    final y = dateTime.year.toString().padLeft(4, '0');
-    final m = dateTime.month.toString().padLeft(2, '0');
-    final d = dateTime.day.toString().padLeft(2, '0');
-    return "$y$m$d";
-  }
-
   bool isValidEmail(String input) {
     return RegExp(
             r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
@@ -145,55 +153,62 @@ class SignUpState extends State<SignUp> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildTitle(),
-                _buildFirstName(),
-                _buildLastName(),
-                _buildBirthday(),
-                _buildEmail(),
-                _buildPassword(),
-                _buildConfirmPassword(),
-                SizedBox(height: 100),
-                ButtonTheme(
-                  minWidth: 300.0,
-                  height: 50.0,
-                  buttonColor: Colors.red,
-                  child: RaisedButton(
-                    child: Text(
-                      'Continue',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
+            child: SizedBox(
+              height: 700,
+              child: Column(
+                // crossAxisAlignment: cross,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  _buildTitle(),
+                  _buildFirstName(),
+                  _buildLastName(),
+                  _buildBirthday(),
+                  _buildEmail(),
+                  _buildPassword(),
+                  _buildConfirmPassword(),
+                  SizedBox(height: 50),
+                  ButtonTheme(
+                    minWidth: 300.0,
+                    height: 50.0,
+                    buttonColor: Colors.red,
+                    child: RaisedButton(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      child: Text(
+                        'Continue',
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                      onPressed: () {
+                        if (!_formKey.currentState.validate()) {
+                          return;
+                        }
+                        _formKey.currentState.save();
+                        var data = {
+                          'firstname': _firstNameController.text,
+                          'lastname': _lastNameController.text,
+                          'birthday': _birthdayController.text,
+                          'email': _emailController.text,
+                        };
+                        _registerUser(data).then(
+                          (value) => {
+                            if (Auth.user != null)
+                              {
+                                setEmailLoginPreferences(
+                                  true,
+                                  "email",
+                                  _emailController.text,
+                                  _passwordController.text,
+                                ),
+                                Navigator.of(context).pushNamed('/navBar'),
+                              },
+                          },
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      if (!_formKey.currentState.validate()) {
-                        return;
-                      }
-                      _formKey.currentState.save();
-                      var data = {
-                        'firstname': _firstNameController.text,
-                        'lastname': _lastNameController.text,
-                        'birthday': _birthdayController.text,
-                        'email': _emailController.text,
-                      };
-                      _registerUser(data).then(
-                        (value) => {
-                          if (Auth.user != null)
-                            {
-                              setEmailLoginPreferences(
-                                true,
-                                "email",
-                                _emailController.text,
-                                _passwordController.text
-                              ),
-                              Navigator.of(context).pushNamed('/navBar')
-                            }
-                        },
-                      );
-                    },
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
