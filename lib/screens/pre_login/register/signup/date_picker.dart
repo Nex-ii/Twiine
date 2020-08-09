@@ -67,11 +67,16 @@ class DatePickerFieldState extends State<DatePickerField> {
       readOnly: true,
       controller: widget.controller,
       decoration: InputDecoration(
-        labelText: 'Birthday (MM/DD/YYYY)',
-        hintText: "Example: 01/01/1990",
+        labelText: 'Birthday',
         border: _border,
         focusedBorder: _focusedBorder,
       ),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Birthday is Required';
+        }
+        return null;
+      },
       onTap: () {
         _showPlatformDatePicker();
       },

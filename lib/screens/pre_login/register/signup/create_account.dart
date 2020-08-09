@@ -149,65 +149,67 @@ class CreateAccountState extends State<CreateAccount> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.all(24),
+        margin: EdgeInsets.symmetric(horizontal: 24),
         child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: SizedBox(
-              height: 700,
-              child: Column(
-                // crossAxisAlignment: cross,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  _buildTitle(),
-                  _buildFirstName(),
-                  _buildLastName(),
-                  _buildBirthday(),
-                  _buildEmail(),
-                  _buildPassword(),
-                  _buildConfirmPassword(),
-                  SizedBox(height: 50),
-                  ButtonTheme(
-                    minWidth: 300.0,
-                    height: 50.0,
-                    buttonColor: Colors.red,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: Form(
+              key: _formKey,
+              child: Expanded(
+                child: Column(
+                  // crossAxisAlignment: cross,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    _buildTitle(),
+                    _buildFirstName(),
+                    _buildLastName(),
+                    _buildBirthday(),
+                    _buildEmail(),
+                    _buildPassword(),
+                    _buildConfirmPassword(),
+                    SizedBox(height: 70),
+                    ButtonTheme(
+                      minWidth: 300.0,
+                      height: 50.0,
+                      buttonColor: Colors.red,
+                      child: RaisedButton(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        child: Text(
+                          'Continue',
+                          style: TextStyle(color: Colors.white, fontSize: 16),
+                        ),
+                        onPressed: () {
+                          if (!_formKey.currentState.validate()) {
+                            return;
+                          }
+                          _formKey.currentState.save();
+                          var data = {
+                            'firstname': _firstNameController.text,
+                            'lastname': _lastNameController.text,
+                            'birthday': _birthdayController.text,
+                            'email': _emailController.text,
+                          };
+                          _registerUser(data).then(
+                            (value) => {
+                              if (Auth.user != null)
+                                {
+                                  setEmailLoginPreferences(
+                                    true,
+                                    "email",
+                                    _emailController.text,
+                                    _passwordController.text,
+                                  ),
+                                  Navigator.of(context).pushNamed('/navBar'),
+                                },
+                            },
+                          );
+                        },
                       ),
-                      child: Text(
-                        'Continue',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                      onPressed: () {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
-                        _formKey.currentState.save();
-                        var data = {
-                          'firstname': _firstNameController.text,
-                          'lastname': _lastNameController.text,
-                          'birthday': _birthdayController.text,
-                          'email': _emailController.text,
-                        };
-                        _registerUser(data).then(
-                          (value) => {
-                            if (Auth.user != null)
-                              {
-                                setEmailLoginPreferences(
-                                  true,
-                                  "email",
-                                  _emailController.text,
-                                  _passwordController.text,
-                                ),
-                                Navigator.of(context).pushNamed('/navBar'),
-                              },
-                          },
-                        );
-                      },
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             ),
           ),
