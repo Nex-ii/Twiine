@@ -9,12 +9,11 @@ import 'package:twiine/screens/post_login/plans/plans.dart';
 import 'package:twiine/screens/post_login/addEvent/AddEvent.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/pre_login/register/forgot_password/forgot_password.dart';
-import 'package:twiine/screens/pre_login/register/signup/signup.dart';
+import 'package:twiine/screens/pre_login/register/signup/create_account.dart';
 
+void main() => runApp(App());
 
-void main() =>  runApp(App());
-
-class App extends StatelessWidget{
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -53,9 +52,10 @@ class App extends StatelessWidget{
         '/': (context) => LoginChecker(),
         '/landing': (context) => LandingPage(),
         '/login': (context) => Login(),
-        '/signup': (context) => SignUp(),
+        '/signup': (context) => CreateAccount(),
+        '/plans': (context) => PlansPage(),
         '/profile': (context) => Profile(),
-        '/forgotPassword' : (context) => ForgotPassword(),
+        '/forgotPassword': (context) => ForgotPassword(),
         '/navBar': (context) => Navbar(),
         '/addEvent': (context) => AddEvent(),
         '/settings': (context) => Settings(),
