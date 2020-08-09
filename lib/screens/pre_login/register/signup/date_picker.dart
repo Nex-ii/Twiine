@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:twiine/colors.dart';
 
 class DatePickerField extends StatefulWidget {
   final TextEditingController controller;
@@ -58,7 +59,7 @@ class DatePickerFieldState extends State<DatePickerField> {
   Widget build(BuildContext context) {
     var _border = OutlineInputBorder(borderRadius: BorderRadius.circular(15.0));
     var _focusedBorder = OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.green),
+      borderSide: BorderSide(color: TwiineColors.red),
       borderRadius: BorderRadius.circular(25.0),
     );
 
