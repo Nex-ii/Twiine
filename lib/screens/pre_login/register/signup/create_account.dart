@@ -150,14 +150,15 @@ class CreateAccountState extends State<CreateAccount> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          title: Text(''),
-          leading: new IconButton(
-            icon: new Icon(Icons.arrow_back_ios),
-            color: Colors.black,
-            onPressed: () => Navigator.of(context).pop(),
-          )),
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        title: Text(''),
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back_ios),
+          color: Colors.black,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 24),
         child: SingleChildScrollView(
