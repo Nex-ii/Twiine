@@ -14,6 +14,40 @@ class EventInfo extends StatefulWidget {
 // image, title, daysUntilEvent, participants, time, date, weather, location
 class _EventInfoState extends State<EventInfo> {
 
+  Widget _buildCountdown(){
+    return Container(
+        padding: const EdgeInsets.only(
+          top: 6.0,
+          bottom: 6.0,
+          left: 12.0,
+          right: 12.0,
+        ),
+        decoration: BoxDecoration(
+            color: Color(0xFFBE000A),
+            borderRadius: BorderRadius.circular(5.0)
+        ),
+        child: Text(
+          'in 2 days',
+          style: TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        )
+    );
+  }
+
+  Widget _buildTitle(){
+    return Container(
+      padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
+      child: Text(
+          'Title',
+          style: TextStyle(fontSize: 36.0)
+      ),
+    );
+  }
+
+  // test image to simulate an image from db
   Widget _getTestImage() {
     return Container(
         width: 30.0,
@@ -27,7 +61,9 @@ class _EventInfoState extends State<EventInfo> {
     );
   }
 
-  Widget _getRowOfProfilePics() {
+  // current: gets test image 5x and adds to list
+  // future update: gets profile pics from db and adds to list
+  Widget _buildRowOfProfilePics() {
     final profilePics = <Widget>[];
     for(int i = 0; i < 5; i++){
       profilePics.add(_getTestImage());
@@ -44,39 +80,68 @@ class _EventInfoState extends State<EventInfo> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                      top: 6.0,
-                      bottom: 6.0,
-                      left: 12.0,
-                      right: 12.0,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Color(0xFFBE000A),
-                    borderRadius: BorderRadius.circular(5.0)
-                  ),
-                  child: Text(
-                    'in 2 days',
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  )
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
-                  child: Text(
-                    'Title',
-                    style: TextStyle(fontSize: 36.0)
-                  ),
-                ),
-                _getRowOfProfilePics(),
+                _buildCountdown(),
+                _buildTitle(),
+                _buildRowOfProfilePics(),
               ],
             ),
           )
         ],
       )
+    );
+  }
+
+  Widget _buildTime(){
+    return Container(
+      padding: EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        children: [
+          Icon(Icons.alarm, size: 34.0,),
+          Padding(
+            padding: EdgeInsets.only(left: 11.0),
+            child: Text(
+              '1:00 PM',
+              style: TextStyle(fontSize: 16.0),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDate(){
+    return Container(
+      padding: EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        children: [
+          Icon(Icons.calendar_today, size: 34.0,),
+          Padding(
+            padding: EdgeInsets.only(left: 11.0),
+            child: Text(
+              'Wed, July 15',
+              style: TextStyle(fontSize: 16.0),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWeather() {
+    return Container(
+      padding: EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        children: [
+          Icon(Icons.brightness_5, size: 34.0,),
+          Padding(
+            padding: EdgeInsets.only(left: 11.0),
+            child: Text(
+              '80 °F, Sunny',
+              style: TextStyle(fontSize: 16.0),
+            ),
+          )
+        ],
+      ),
     );
   }
 
@@ -89,51 +154,9 @@ class _EventInfoState extends State<EventInfo> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: EdgeInsets.only(bottom: 16.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.alarm, size: 34.0,),
-                      Padding(
-                        padding: EdgeInsets.only(left: 11.0),
-                        child: Text(
-                            '1:00 PM',
-                            style: TextStyle(fontSize: 16.0),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(bottom: 16.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.calendar_today, size: 34.0,),
-                      Padding(
-                        padding: EdgeInsets.only(left: 11.0),
-                        child: Text(
-                          'Wed, July 15',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.only(bottom: 16.0),
-                  child: Row(
-                    children: [
-                      Icon(Icons.brightness_5, size: 34.0,),
-                      Padding(
-                        padding: EdgeInsets.only(left: 11.0),
-                        child: Text(
-                          '80 °F, Sunny',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                _buildTime(),
+                _buildDate(),
+                _buildWeather(),
               ],
             ),
           )
@@ -144,12 +167,15 @@ class _EventInfoState extends State<EventInfo> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Image.network('https://vignette.wikia.nocookie.net/kiminonawa/images/d/d9/Comet_Tiamat_by_Taki.png/revision/latest/scale-to-width-down/340?cb=20180718231515'),
-          EventTitle(),
-          EventSpecifications(),
-        ],
+      body: Container(
+        padding: EdgeInsets.only(top: 24.0),
+        child: Column(
+          children: [
+            Image.network('https://vignette.wikia.nocookie.net/kiminonawa/images/d/d9/Comet_Tiamat_by_Taki.png/revision/latest/scale-to-width-down/340?cb=20180718231515'),
+            EventTitle(),
+            EventSpecifications(),
+          ],
+        ),
       )
     );
   }
