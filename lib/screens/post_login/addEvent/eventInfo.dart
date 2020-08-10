@@ -79,12 +79,68 @@ class _EventInfoState extends State<EventInfo> {
       )
     );
   }
-//
-//  Widget EventSpecifications() {
-//    return Row(
-//
-//    )
-//  }
+
+  Widget EventSpecifications() {
+    return Container(
+      padding: EdgeInsets.all(32.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.alarm, size: 34.0,),
+                      Padding(
+                        padding: EdgeInsets.only(left: 11.0),
+                        child: Text(
+                            '1:00 PM',
+                            style: TextStyle(fontSize: 16.0),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.calendar_today, size: 34.0,),
+                      Padding(
+                        padding: EdgeInsets.only(left: 11.0),
+                        child: Text(
+                          'Wed, July 15',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 16.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.brightness_5, size: 34.0,),
+                      Padding(
+                        padding: EdgeInsets.only(left: 11.0),
+                        child: Text(
+                          '80 °F, Sunny',
+                          style: TextStyle(fontSize: 16.0),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,7 +148,7 @@ class _EventInfoState extends State<EventInfo> {
         children: [
           Image.network('https://vignette.wikia.nocookie.net/kiminonawa/images/d/d9/Comet_Tiamat_by_Taki.png/revision/latest/scale-to-width-down/340?cb=20180718231515'),
           EventTitle(),
-//          EventSpecifications(),
+          EventSpecifications(),
         ],
       )
     );
