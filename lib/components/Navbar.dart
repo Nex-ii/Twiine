@@ -136,6 +136,6 @@ class NavbarState extends State<Navbar> {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
   _settings(){
-
+    Navigator.pushNamed(context, '/settings');
   }
 }
