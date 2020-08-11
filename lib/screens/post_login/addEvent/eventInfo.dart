@@ -4,6 +4,7 @@ import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/common/app_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:twiine/components/time_difference.dart';
 
 class EventInfo extends StatefulWidget {
   @override
@@ -30,26 +31,27 @@ class _EventInfoState extends State<EventInfo> {
   }
 
   Widget _buildCountdown(){
-    return Container(
-        padding: const EdgeInsets.only(
-          top: 6.0,
-          bottom: 6.0,
-          left: 12.0,
-          right: 12.0,
-        ),
-        decoration: BoxDecoration(
-            color: Color(0xFFBE000A),
-            borderRadius: BorderRadius.circular(5.0)
-        ),
-        child: Text(
-          'in 2 days',
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        )
-    );
+    return TimeDifference();
+//    return Container(
+//        padding: const EdgeInsets.only(
+//          top: 6.0,
+//          bottom: 6.0,
+//          left: 12.0,
+//          right: 12.0,
+//        ),
+//        decoration: BoxDecoration(
+//            color: Color(0xFFBE000A),
+//            borderRadius: BorderRadius.circular(5.0)
+//        ),
+//        child: Text(
+//          'in 2 days',
+//          style: TextStyle(
+//            fontSize: 12,
+//            fontWeight: FontWeight.bold,
+//            color: Colors.white,
+//          ),
+//        )
+//    );
   }
 
   Widget _buildTitle(){

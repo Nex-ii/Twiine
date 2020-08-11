@@ -68,23 +68,6 @@ class App extends StatelessWidget {
           '/settings': (context) => Settings(),
         },
       ),
-<<<<<<< HEAD
-=======
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginChecker(),
-        '/landing': (context) => LandingPage(),
-        '/login': (context) => Login(),
-        '/signup': (context) => CreateAccount(),
-        '/home': (context) => Home(),
-        '/profile': (context) => Profile(),
-        '/forgotPassword': (context) => ForgotPassword(),
-        '/navBar': (context) => Navbar(),
-        '/addEvent': (context) => AddEvent(),
-        '/settings': (context) => Settings(),
-      },
->>>>>>> edit_hangout
     );
   }
 }
