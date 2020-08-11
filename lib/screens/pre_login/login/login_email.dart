@@ -1,25 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/TwiineApi.dart';
 
-class LoginBasic extends StatefulWidget {
+class LoginEmail extends StatefulWidget {
   @override
-  LoginBasic({Key key}) : super(key: key);
+  LoginEmail({Key key}) : super(key: key);
 
-  LoginBasicState createState() => LoginBasicState();
+  LoginEmailState createState() => LoginEmailState();
 }
 
-class LoginBasicState extends State<LoginBasic> {
+class LoginEmailState extends State<LoginEmail> {
   String _loginMessage = "";
 
-  final formKey = new GlobalKey<FormState>();
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  final emailController = TextEditingController(),
-      passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   BoxShadow _dropShadow = BoxShadow(
     color: Colors.grey.withOpacity(0.9),
@@ -70,12 +64,12 @@ class LoginBasicState extends State<LoginBasic> {
                               labelText: "Email",
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: Colors.transparent),
+                                    BorderSide(color: Colors.transparent),
                               ),
                               border: InputBorder.none,
                             ),
                             keyboardType: TextInputType.text,
-                            controller: emailController,
+                            controller: _emailController,
                           ),
                         ),
                         Row(
@@ -96,11 +90,11 @@ class LoginBasicState extends State<LoginBasic> {
                               labelText: "Password",
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: Colors.transparent),
+                                    BorderSide(color: Colors.transparent),
                               ),
                               border: InputBorder.none,
                             ),
-                            controller: passwordController,
+                            controller: _passwordController,
                           ),
                         ),
                       ],
@@ -154,22 +148,14 @@ class LoginBasicState extends State<LoginBasic> {
   }
 
   _signInWithEmail() async {
-    try {
-      Auth.user = (await _auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      ))
-          .user;
-      if (Auth.user != null) {
-        Auth.userRecord = TwiineApi.getUser("email", Auth.user.email);
-      }
-    } catch (error) {}
+    Auth.signInEmail(_emailController.text, _passwordController.text);
     setState(() {
-      if (Auth.user != null) {
-        Navigator.of(context).pushNamed('/navBar');
-      } else {
-        _loginMessage = "Unable to authenticate with email";
-      }
+      Auth.firebaseAuth.currentUser().then((value) => {
+            if (value != null)
+              Navigator.of(context).pushNamed('/navBar')
+            else
+              _loginMessage = "Unable to authenticate with email"
+          });
     });
   }
 }

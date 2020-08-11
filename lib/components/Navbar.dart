@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/post_login/home/home.dart';
+import 'package:twiine/screens/post_login/plans/plans.dart';
 import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/requests/requests.dart';
 import 'package:twiine/screens/post_login/scheduled/scheduled.dart';
@@ -27,7 +27,7 @@ class NavbarState extends State<Navbar> {
     Scheduled(),
     Profile(),
     Requests(),
-    Home(),
+    PlansPage(),
     Favorites(),
   ];
 
