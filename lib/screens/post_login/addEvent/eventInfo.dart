@@ -14,6 +14,21 @@ class EventInfo extends StatefulWidget {
 // image, title, daysUntilEvent, participants, time, date, weather, location
 class _EventInfoState extends State<EventInfo> {
 
+  Widget _buildEventImage() {
+    return Image.network('https://i.pinimg.com/originals/fd/d5/e4/fdd5e418094d8d41a10c0df3807f3a23.jpg');
+  }
+
+  Widget _buildExitButton(){
+    return IconButton(
+        onPressed: () {},
+        icon: Icon(
+          Icons.cancel,
+          size: 32.0,
+          color: Colors.white,
+        )
+    );
+  }
+
   Widget _buildCountdown(){
     return Container(
         padding: const EdgeInsets.only(
@@ -138,6 +153,19 @@ class _EventInfoState extends State<EventInfo> {
     );
   }
 
+  Widget EventImage() {
+    return Stack(
+      children: [
+        _buildEventImage(),
+        Positioned(
+            top: 12.0,
+            left: 16.0,
+            child: _buildExitButton()
+        ),
+      ],
+    );
+  }
+
   Widget EventTitle() {
     return Stack(
       children: [
@@ -208,7 +236,7 @@ class _EventInfoState extends State<EventInfo> {
           padding: EdgeInsets.only(top: 24.0),
           child: Column(
             children: [
-              Image.network('https://vignette.wikia.nocookie.net/kiminonawa/images/d/d9/Comet_Tiamat_by_Taki.png/revision/latest/scale-to-width-down/340?cb=20180718231515'),
+              EventImage(),
               EventTitle(),
               EventSpecifications(),
               Padding(
