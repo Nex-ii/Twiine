@@ -181,7 +181,7 @@ class ProfileState extends State<Profile> {
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: TextFormField(
-                      initialValue: Auth.user.email,
+                      initialValue: Auth.userData["email"],
                       decoration: InputDecoration(border: InputBorder.none),
                       textAlign: TextAlign.center,
                       style: TextStyle(

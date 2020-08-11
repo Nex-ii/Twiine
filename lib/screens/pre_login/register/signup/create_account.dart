@@ -61,7 +61,7 @@ class CreateAccountState extends State<CreateAccount> {
       };
       _registerUser(data).then(
             (value) => {
-          if (Auth.user != null)
+          if (Auth().user != null)
             {
               setEmailLoginPreferences(
                 true,
@@ -99,7 +99,7 @@ class CreateAccountState extends State<CreateAccount> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      Auth.user = credential.user;
+      // Auth.user = credential.user;
     } catch (error) {
       print("Unable to create account: ${error.toString()}");
     }

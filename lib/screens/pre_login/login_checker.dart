@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/components/navbar.dart';

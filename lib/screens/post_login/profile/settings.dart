@@ -189,7 +189,6 @@ class _SettingsState extends State<Settings> {
   }
 
   _logOut() async{
-    Auth.user = null;
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("hasLoggedIn", false);
     Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);

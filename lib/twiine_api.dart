@@ -24,7 +24,13 @@ class TwiineApi {
   static Future<void> createNewUser(Map<String, String> data) async {
     return Firestore.instance
         .collection("Users")
-        .document(Auth.user.uid)
+        .document((await Auth.firebaseAuth.currentUser()).uid)
         .setData(data);
+  }
+
+  static Future<DocumentSnapshot> getUserData(String uid) async {
+    return await Firestore.instance
+        .collection("Users")
+        .document((await Auth.firebaseAuth.currentUser()).uid).get();
   }
 }

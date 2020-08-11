@@ -25,7 +25,8 @@ class ChangePassowrdState extends State<ChangePassowrd> {
 
   static TextEditingController _oldPasswordController = TextEditingController();
   static TextEditingController _newPasswordController = TextEditingController();
-  static TextEditingController _confirmNewPasswordController = TextEditingController();
+  static TextEditingController _confirmNewPasswordController =
+      TextEditingController();
 
   static Function oldPasswordValidator;
   static Function newPasswordValidator;
@@ -61,37 +62,35 @@ class ChangePassowrdState extends State<ChangePassowrd> {
       }
       _formKey.currentState.save();
 
-      Auth.user
-          .reauthenticateWithCredential(
-          EmailAuthProvider.getCredential(
-              email: Auth.user.email,
-              password: _oldPassword))
-          .catchError((error) {
-        setState(() {
-          _changePasswordMessage =
-          "Unable to change password";
-        });
-      }).then((result) {
-        if (result != null) {
-          Auth.user.updatePassword(_confirmPassword);
+      Auth.firebaseAuth.currentUser().then((user) {
+        user
+            .reauthenticateWithCredential(EmailAuthProvider.getCredential(
+                email: user.email, password: _oldPassword))
+            .catchError((error) {
           setState(() {
-            _changePasswordMessage =
-            "Successfully changed password";
+            _changePasswordMessage = "Unable to change password";
           });
-        }
+        }).then((result) {
+          if (result != null) {
+            user.updatePassword(_confirmPassword);
+            setState(() {
+              _changePasswordMessage = "Successfully changed password";
+            });
+          }
+        });
       });
     };
 
     return TextForm.textForm([
-      FormElement(
-          "Old Password", FormTypes.PASSWORDFIELD, validator: oldPasswordValidator,
-          controller: _oldPasswordController),
-      FormElement(
-          "New Password", FormTypes.PASSWORDFIELD, validator: newPasswordValidator,
-          controller: _newPasswordController),
-      FormElement(
-          "Confirm New Password", FormTypes.PASSWORDFIELD, validator: confirmNewPasswordValidator,
+      FormElement("Old Password", FormTypes.PASSWORDFIELD,
+          validator: oldPasswordValidator, controller: _oldPasswordController),
+      FormElement("New Password", FormTypes.PASSWORDFIELD,
+          validator: newPasswordValidator, controller: _newPasswordController),
+      FormElement("Confirm New Password", FormTypes.PASSWORDFIELD,
+          validator: confirmNewPasswordValidator,
           controller: _confirmNewPasswordController),
-    ], [ButtonElement("Continue", onContinueTap)], _formKey, title: "Change Password", trailingSpacing: 30);
+    ], [
+      ButtonElement("Continue", onContinueTap)
+    ], _formKey, title: "Change Password", trailingSpacing: 30);
   }
 }

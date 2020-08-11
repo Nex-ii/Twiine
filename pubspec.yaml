@@ -30,26 +30,29 @@ dependencies:
   google_sign_in: ^4.5.1
   flutter_facebook_login: ^3.0.0
 
-  #For the search bar
+  # For the search bar
   flappy_search_bar: 1.4.1
 
-  #validation for forms
+  # validation for forms
   validators: ^2.0.1
 
   # svgs
   flutter_svg: ^0.18.0
 
-  #Google Maps
+  # Google Maps
   google_maps_flutter: ^0.5.28+1
 
-  #Accessing photos
+  # Accessing photos
   image_picker: ^0.6.7+4
 
-  #Storing Photos
+  # Storing Photos
   firebase_storage: ^3.1.6
 
-  #Permissions
+  # Permissions
   permission_handler: ^5.0.1+1
+
+  # Provider for state management
+  provider: ^4.3.2
 
 
 dev_dependencies:
