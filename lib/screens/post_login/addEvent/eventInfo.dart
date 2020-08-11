@@ -71,6 +71,19 @@ class _EventInfoState extends State<EventInfo> {
     return new Row(children: profilePics);
   }
 
+  Widget _buildAdditionalProfilePicsButton() {
+    return FlatButton(
+        onPressed: ()
+        { },
+        child: Text(
+            "+2 more",
+            style: TextStyle(
+                color: const Color(0xFFFF6E5E)
+            )
+        )
+    );
+  }
+
   Widget _buildTime(){
     return Container(
       padding: EdgeInsets.only(bottom: 16.0),
@@ -138,9 +151,14 @@ class _EventInfoState extends State<EventInfo> {
                   children: [
                     _buildCountdown(),
                     _buildTitle(),
-                    _buildRowOfProfilePics(),
+                    Row(
+                      children: [
+                        _buildRowOfProfilePics(),
+                        _buildAdditionalProfilePicsButton()
+                      ]
+                    ),
                     Padding(
-                       padding: EdgeInsets.only(top: 12.0),
+                        padding: EdgeInsets.only(top: 12.0),
                         child: Divider(color: const Color(0xFFC4C4C4),)
                     )
                   ],
