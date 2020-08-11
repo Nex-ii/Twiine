@@ -11,9 +11,6 @@ class Profile extends StatefulWidget {
 }
 
 class ProfileState extends State<Profile> {
-  double _cardRadius = 20.0;
-  double _cardHeight = 290.0;
-  double _cardWidth = 190.0;
   File _image;
   var _imageURL =
       'https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/ImageStorage%2FProfilePicture?alt=media&token=9958176c-3b7f-457f-935c-04ff166ffe15';
