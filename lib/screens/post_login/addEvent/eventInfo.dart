@@ -41,7 +41,7 @@ class _EventInfoState extends State<EventInfo> {
     return Container(
       padding: const EdgeInsets.only(top: 12.0, bottom: 8.0),
       child: Text(
-          'Title',
+          'Meteor Site',
           style: TextStyle(fontSize: 36.0)
       ),
     );
@@ -193,6 +193,10 @@ class _EventInfoState extends State<EventInfo> {
               Image.network('https://vignette.wikia.nocookie.net/kiminonawa/images/d/d9/Comet_Tiamat_by_Taki.png/revision/latest/scale-to-width-down/340?cb=20180718231515'),
               EventTitle(),
               EventSpecifications(),
+              Padding(
+                padding: EdgeInsets.all(24.0),
+                child: Image.network('https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/Test%20Location.PNG?alt=media&token=0b8d6236-2a08-47cb-9023-9be21b47ba8f'),
+              )
             ],
           ),
         ),
