@@ -65,13 +65,13 @@ class LoginState extends State<Login> {
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.envelope),
                   "Continue with Email",
-                  () => {Navigator.pushNamed(context, "/login_email")},
+                      () => {Navigator.pushNamed(context, "/login_email")},
                 ),
                 SizedBox(height: 5),
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.facebook),
                   "Continue with Facebook",
-                  () async => {
+                      () async => {
                     await Auth.signInFacebook(),
                     _updateMessage("Facebook"),
                   },
@@ -80,7 +80,7 @@ class LoginState extends State<Login> {
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.google),
                   "Continue with Google",
-                  () async => {
+                      () async => {
                     await Auth.signInGoogle(),
                     _updateMessage("Google"),
                   },
@@ -96,11 +96,11 @@ class LoginState extends State<Login> {
   void _updateMessage(String authType) {
     setState(() {
       Auth.firebaseAuth.currentUser().then((value) => {
-            if (value != null)
-              Navigator.of(context).pushNamed('/navBar')
-            else
-              _loginMessage = "Unable to authenticate with $authType"
-          });
+        if (value != null)
+          Navigator.of(context).pushNamed('/navBar')
+        else
+          _loginMessage = "Unable to authenticate with $authType"
+      });
     });
   }
 

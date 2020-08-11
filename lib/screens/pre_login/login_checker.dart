@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:twiine/TwiineApi.dart';
+import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:twiine/components/Navbar.dart';
+import 'package:twiine/components/navbar.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 
 class LoginChecker extends StatefulWidget {

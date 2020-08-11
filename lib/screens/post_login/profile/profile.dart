@@ -22,10 +22,9 @@ class ProfileState extends State<Profile> {
   Future getImage(BuildContext context) async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _image = image;
-      print('Image Path $_image');
-    });
+      setState((){
+        _image=image;
+      });
 
     uploadPic(context);
   }
@@ -40,12 +39,10 @@ class ProfileState extends State<Profile> {
 
     var downloadUrl = await snapshot.ref.getDownloadURL();
 
-    setState(() {
-      print("Profile Picture uploaded");
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+
+	  setState((){
+	    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
       _imageURL = downloadUrl;
-      print(_imageURL);
     });
   }
 
