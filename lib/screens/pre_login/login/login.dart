@@ -390,7 +390,6 @@ class LoginState extends State<Login> {
         updateLoginMessage("Failed to verified phone number");
       }).then((result) {
         updateLoginMessage("Successfully verified phone number");
-        Auth.user = result.user;
         _successfulLogin(
             LoginMethods.phone, SigninStatus.phoneNumber, SigninStatus.SMScode);
       });
@@ -427,7 +426,6 @@ class LoginState extends State<Login> {
             updateLoginMessage("Successfully verified phone number");
             _successfulLogin(LoginMethods.phone, SigninStatus.phoneNumber,
                 SigninStatus.SMScode);
-            Auth.user = result.user;
           }
         });
       } else {
@@ -460,7 +458,6 @@ class LoginState extends State<Login> {
           }).then((firebaseResult) {
             if (firebaseResult != null) {
               updateLoginMessage("Successfully authenticated with Facebook");
-              Auth.user = firebaseResult.user;
               _successfulLogin(LoginMethods.facebook, null, null);
             }
           });
@@ -487,7 +484,6 @@ class LoginState extends State<Login> {
             if (result != null) {
               updateLoginMessage("Successfully authenticated with Google");
               _successfulLogin(LoginMethods.google, null, null);
-              Auth.user = result.user;
             }
           });
         });
@@ -509,7 +505,6 @@ class LoginState extends State<Login> {
       }).then((result) {
         if (result != null) {
           updateLoginMessage("Successfully authenticated with email");
-          Auth.user = result.user;
           _successfulLogin(LoginMethods.email, SigninStatus.email,
               SigninStatus.emailPassword);
         }

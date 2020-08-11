@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:twiine/auth.dart';
 import 'package:twiine/screens/post_login/profile/settings.dart';
 import 'package:twiine/screens/pre_login/LoginChecker.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
@@ -16,27 +19,30 @@ void main() => runApp(App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Twiine',
-      theme: ThemeData(
-        fontFamily: 'Acumin Pro',
-        primaryColor: TwiineColors.red,
-        accentColor: TwiineColors.orange,
+    return StreamProvider<FirebaseUser>.value(
+      value: Auth().user,
+      child: new MaterialApp(
+        title: 'Twiine',
+        theme: ThemeData(
+          fontFamily: 'Acumin Pro',
+          primaryColor: TwiineColors.red,
+          accentColor: TwiineColors.orange,
+        ),
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => LoginChecker(),
+          '/landing': (context) => LandingPage(),
+          '/login': (context) => Login(),
+          '/signup': (context) => CreateAccount(),
+          '/home': (context) => Home(),
+          '/profile': (context) => Profile(),
+          '/forgotPassword': (context) => ForgotPassword(),
+          '/navBar': (context) => Navbar(),
+          '/addEvent': (context) => AddEvent(),
+          '/settings': (context) => Settings(),
+        },
       ),
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginChecker(),
-        '/landing': (context) => LandingPage(),
-        '/login': (context) => Login(),
-        '/signup': (context) => CreateAccount(),
-        '/home': (context) => Home(),
-        '/profile': (context) => Profile(),
-        '/forgotPassword': (context) => ForgotPassword(),
-        '/navBar': (context) => Navbar(),
-        '/addEvent': (context) => AddEvent(),
-        '/settings': (context) => Settings(),
-      },
     );
   }
 }

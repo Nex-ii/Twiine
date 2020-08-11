@@ -14,12 +14,8 @@ class LoginBasic extends StatefulWidget {
 class LoginBasicState extends State<LoginBasic> {
   String _loginMessage = "";
 
-  final formKey = new GlobalKey<FormState>();
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-
-  final emailController = TextEditingController(),
-      passwordController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   BoxShadow _dropShadow = BoxShadow(
     color: Colors.grey.withOpacity(0.9),
@@ -70,12 +66,12 @@ class LoginBasicState extends State<LoginBasic> {
                               labelText: "Email",
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: Colors.transparent),
+                                    BorderSide(color: Colors.transparent),
                               ),
                               border: InputBorder.none,
                             ),
                             keyboardType: TextInputType.text,
-                            controller: emailController,
+                            controller: _emailController,
                           ),
                         ),
                         Row(
@@ -96,11 +92,11 @@ class LoginBasicState extends State<LoginBasic> {
                               labelText: "Password",
                               focusedBorder: UnderlineInputBorder(
                                 borderSide:
-                                BorderSide(color: Colors.transparent),
+                                    BorderSide(color: Colors.transparent),
                               ),
                               border: InputBorder.none,
                             ),
-                            controller: passwordController,
+                            controller: _passwordController,
                           ),
                         ),
                       ],
@@ -155,17 +151,17 @@ class LoginBasicState extends State<LoginBasic> {
 
   _signInWithEmail() async {
     try {
-      Auth.user = (await _auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      ))
-          .user;
-      if (Auth.user != null) {
-        Auth.userRecord = TwiineApi.getUser("email", Auth.user.email);
+      var user = await Auth.signInEmail(
+        _emailController.text,
+        _passwordController.text,
+      );
+      if (user != null) {
+        Auth.userRecord = (await TwiineApi.getUserData(user.uid)).data;
       }
     } catch (error) {}
-    setState(() {
-      if (Auth.user != null) {
+
+    setState(() async {
+      if (await Auth.firebaseAuth.currentUser() != null) {
         Navigator.of(context).pushNamed('/navBar');
       } else {
         _loginMessage = "Unable to authenticate with email";
