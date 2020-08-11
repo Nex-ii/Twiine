@@ -19,6 +19,7 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   double _cardRadius = 20.0;
+<<<<<<< .merge_file_a08408
 <<<<<<< .merge_file_a14624
   double _cardHeight = 290.0;
   double _cardWidth = 190.0;
@@ -43,6 +44,8 @@ class ProfileState extends State<Profile> {
         .ref()
         .child(Auth.user.email + '/ProfilePicture')
 =======
+=======
+>>>>>>> .merge_file_a16884
 	double _cardHeight = 290.0;
 	double _cardWidth = 190.0;
 	File _image;
@@ -64,11 +67,15 @@ class ProfileState extends State<Profile> {
     final _storage = FirebaseStorage.instance;
     var snapshot = await _storage.ref()
         .child('ImageStorage/ProfilePicture')
+<<<<<<< .merge_file_a08408
 >>>>>>> .merge_file_a13296
+=======
+>>>>>>> .merge_file_a16884
         .putFile(_image)
         .onComplete;
 
     var downloadUrl = await snapshot.ref.getDownloadURL();
+<<<<<<< .merge_file_a08408
 <<<<<<< .merge_file_a14624
     print(downloadUrl);
 
@@ -92,6 +99,8 @@ class ProfileState extends State<Profile> {
     });
   }
 =======
+=======
+>>>>>>> .merge_file_a16884
 
 
 	  setState((){
@@ -101,7 +110,10 @@ class ProfileState extends State<Profile> {
       print(_imageURL);
     });
 	}
+<<<<<<< .merge_file_a08408
 >>>>>>> .merge_file_a13296
+=======
+>>>>>>> .merge_file_a16884
 
   // TODO: we probably don't want to leave this as a url
   // Returns a card with the name of the place and the image url as the background
@@ -158,10 +170,14 @@ class ProfileState extends State<Profile> {
     );
   }
 
+<<<<<<< .merge_file_a08408
 <<<<<<< .merge_file_a14624
 =======
 
 >>>>>>> .merge_file_a13296
+=======
+
+>>>>>>> .merge_file_a16884
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -260,17 +276,23 @@ class ProfileState extends State<Profile> {
                             size:30.0,
                           ),
                           onPressed: (){
+<<<<<<< .merge_file_a08408
 >>>>>>> .merge_file_a13296
+=======
+>>>>>>> .merge_file_a16884
                             getImage(context);
                           },
                         ),
                       ),
                     ],
                   ),
+<<<<<<< .merge_file_a08408
 <<<<<<< .merge_file_a14624
 
 =======
 >>>>>>> .merge_file_a13296
+=======
+>>>>>>> .merge_file_a16884
                   //TODO: Make it more clear you can edit username somehow by clicking the name
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
