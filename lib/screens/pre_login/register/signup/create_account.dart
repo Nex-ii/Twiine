@@ -205,8 +205,13 @@ class CreateAccountState extends State<CreateAccount> {
                         'email': _emailController.text,
                       };
                       _registerUser(data).then(
+<<<<<<< HEAD
                         (value) async => {
                           if (await Auth.firebaseAuth.currentUser() != null)
+=======
+                        (value) => {
+                          if (Auth.user != null)
+>>>>>>> edit_hangout
                             {
                               setEmailLoginPreferences(
                                 true,
@@ -235,7 +240,11 @@ class CreateAccountState extends State<CreateAccount> {
         email: _emailController.text,
         password: _passwordController.text,
       );
+<<<<<<< HEAD
       // Auth.user = credential.user;
+=======
+      Auth.user = credential.user;
+>>>>>>> edit_hangout
     } catch (error) {
       print("Unable to create account: ${error.toString()}");
     }

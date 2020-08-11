@@ -5,9 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TwiineApi {
   static HttpsCallable _createNewUser =
-      CloudFunctions.instance.getHttpsCallable(functionName: 'createNewUser');
+  CloudFunctions.instance.getHttpsCallable(functionName: 'createNewUser');
   static HttpsCallable _userExists =
-      CloudFunctions.instance.getHttpsCallable(functionName: 'getUser');
+  CloudFunctions.instance.getHttpsCallable(functionName: 'getUser');
 
   static Future<LinkedHashMap> getUser(
       String authType, String authField) async {
