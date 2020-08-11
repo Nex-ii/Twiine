@@ -71,26 +71,6 @@ class _EventInfoState extends State<EventInfo> {
     return new Row(children: profilePics);
   }
 
-  Widget EventTitle() {
-    return Container(
-      padding: const EdgeInsets.all(32.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildCountdown(),
-                _buildTitle(),
-                _buildRowOfProfilePics(),
-              ],
-            ),
-          )
-        ],
-      )
-    );
-  }
-
   Widget _buildTime(){
     return Container(
       padding: EdgeInsets.only(bottom: 16.0),
@@ -145,9 +125,46 @@ class _EventInfoState extends State<EventInfo> {
     );
   }
 
+  Widget EventTitle() {
+    return Stack(
+      children: [
+        Container(
+            padding: const EdgeInsets.all(24.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildCountdown(),
+                    _buildTitle(),
+                    _buildRowOfProfilePics(),
+                    Padding(
+                       padding: EdgeInsets.only(top: 12.0),
+                        child: Divider(color: const Color(0xFFC4C4C4),)
+                    )
+                  ],
+                ),
+              ),
+            ],
+          )
+        ),
+        Positioned(
+          top: 12.0,
+          right: 16.0,
+          child: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.info, size: 30.0)
+          ),
+        )
+      ]
+
+    );
+  }
+
   Widget EventSpecifications() {
     return Container(
-      padding: EdgeInsets.all(32.0),
+      padding: EdgeInsets.only(left: 32.0, right: 32.0),
       child: Row(
         children: [
           Expanded(
@@ -157,6 +174,7 @@ class _EventInfoState extends State<EventInfo> {
                 _buildTime(),
                 _buildDate(),
                 _buildWeather(),
+                Divider(color: const Color(0xFFC4C4C4),)
               ],
             ),
           )
@@ -167,14 +185,16 @@ class _EventInfoState extends State<EventInfo> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        padding: EdgeInsets.only(top: 24.0),
-        child: Column(
-          children: [
-            Image.network('https://vignette.wikia.nocookie.net/kiminonawa/images/d/d9/Comet_Tiamat_by_Taki.png/revision/latest/scale-to-width-down/340?cb=20180718231515'),
-            EventTitle(),
-            EventSpecifications(),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(top: 24.0),
+          child: Column(
+            children: [
+              Image.network('https://vignette.wikia.nocookie.net/kiminonawa/images/d/d9/Comet_Tiamat_by_Taki.png/revision/latest/scale-to-width-down/340?cb=20180718231515'),
+              EventTitle(),
+              EventSpecifications(),
+            ],
+          ),
         ),
       )
     );
