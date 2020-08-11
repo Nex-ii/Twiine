@@ -148,68 +148,80 @@ class CreateAccountState extends State<CreateAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+        title: Text(''),
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back_ios),
+          color: Colors.black,
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: Container(
         margin: EdgeInsets.symmetric(horizontal: 24),
         child: SingleChildScrollView(
-          child: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            child: Form(
-              key: _formKey,
-              child: Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    _buildTitle(),
-                    _buildFirstName(),
-                    _buildLastName(),
-                    _buildBirthday(),
-                    _buildEmail(),
-                    _buildPassword(),
-                    _buildConfirmPassword(),
-                    SizedBox(height: 70),
-                    ButtonTheme(
-                      minWidth: 300.0,
-                      height: 50.0,
-                      buttonColor: Colors.red,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        child: Text(
-                          'Continue',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                        onPressed: () {
-                          if (!_formKey.currentState.validate()) {
-                            return;
-                          }
-                          _formKey.currentState.save();
-                          var data = {
-                            'firstname': _firstNameController.text,
-                            'lastname': _lastNameController.text,
-                            'birthday': _birthdayController.text,
-                            'email': _emailController.text,
-                          };
-                          _registerUser(data).then(
-                            (value) => {
-                              if (Auth.user != null)
-                                {
-                                  setEmailLoginPreferences(
-                                    true,
-                                    "email",
-                                    _emailController.text,
-                                    _passwordController.text,
-                                  ),
-                                  Navigator.of(context).pushNamed('/navBar'),
-                                },
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                SizedBox(height: 50),
+                _buildTitle(),
+                SizedBox(height: 15),
+                _buildFirstName(),
+                SizedBox(height: 15),
+                _buildLastName(),
+                SizedBox(height: 15),
+                _buildBirthday(),
+                SizedBox(height: 15),
+                _buildEmail(),
+                SizedBox(height: 15),
+                _buildPassword(),
+                SizedBox(height: 15),
+                _buildConfirmPassword(),
+                SizedBox(height: 70),
+                ButtonTheme(
+                  minWidth: 300.0,
+                  height: 50.0,
+                  buttonColor: Colors.red,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    child: Text(
+                      'Continue',
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    onPressed: () {
+                      if (!_formKey.currentState.validate()) {
+                        return;
+                      }
+                      _formKey.currentState.save();
+                      var data = {
+                        'firstname': _firstNameController.text,
+                        'lastname': _lastNameController.text,
+                        'birthday': _birthdayController.text,
+                        'email': _emailController.text,
+                      };
+                      _registerUser(data).then(
+                        (value) async => {
+                          if (await Auth.firebaseAuth.currentUser() != null)
+                            {
+                              setEmailLoginPreferences(
+                                true,
+                                "email",
+                                _emailController.text,
+                                _passwordController.text,
+                              ),
+                              Navigator.of(context).pushNamed('/navBar'),
                             },
-                          );
                         },
-                      ),
-                    )
-                  ],
-                ),
-              ),
+                      );
+                    },
+                  ),
+                )
+              ],
             ),
           ),
         ),
@@ -223,7 +235,7 @@ class CreateAccountState extends State<CreateAccount> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      Auth.user = credential.user;
+      // Auth.user = credential.user;
     } catch (error) {
       print("Unable to create account: ${error.toString()}");
     }
