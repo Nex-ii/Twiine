@@ -18,14 +18,8 @@ class LoginCheckerState extends State<LoginChecker> {
     if (user == null) {
       return LandingPage();
     } else {
-      _updateUserData();
+      Auth.updateUserData();
       return Navbar();
     }
-  }
-
-  void _updateUserData() async {
-    var userData = await TwiineApi.getUserData(
-        (await Auth.firebaseAuth.currentUser()).uid);
-    Auth.userRecord = userData.data;
   }
 }

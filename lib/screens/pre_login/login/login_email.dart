@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/TwiineApi.dart';
 
-class LoginBasic extends StatefulWidget {
+class LoginEmail extends StatefulWidget {
   @override
-  LoginBasic({Key key}) : super(key: key);
+  LoginEmail({Key key}) : super(key: key);
 
-  LoginBasicState createState() => LoginBasicState();
+  LoginEmailState createState() => LoginEmailState();
 }
 
-class LoginBasicState extends State<LoginBasic> {
+class LoginEmailState extends State<LoginEmail> {
   String _loginMessage = "";
 
   final _emailController = TextEditingController();
@@ -150,22 +148,14 @@ class LoginBasicState extends State<LoginBasic> {
   }
 
   _signInWithEmail() async {
-    try {
-      var user = await Auth.signInEmail(
-        _emailController.text,
-        _passwordController.text,
-      );
-      if (user != null) {
-        Auth.userRecord = (await TwiineApi.getUserData(user.uid)).data;
-      }
-    } catch (error) {}
-
-    setState(() async {
-      if (await Auth.firebaseAuth.currentUser() != null) {
-        Navigator.of(context).pushNamed('/navBar');
-      } else {
-        _loginMessage = "Unable to authenticate with email";
-      }
+    Auth.signInEmail(_emailController.text, _passwordController.text);
+    setState(() {
+      Auth.firebaseAuth.currentUser().then((value) => {
+            if (value != null)
+              Navigator.of(context).pushNamed('/navBar')
+            else
+              _loginMessage = "Unable to authenticate with email"
+          });
     });
   }
 }
