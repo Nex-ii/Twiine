@@ -34,6 +34,12 @@ dependencies:
   #validation for forms
   validators: ^2.0.1
 
+<<<<<<< HEAD
+=======
+  # svgs
+  flutter_svg: ^0.17.4
+
+>>>>>>> dev
   #Google Maps
   google_maps_flutter: ^0.5.28+1
 
@@ -46,6 +52,7 @@ dependencies:
   #Permissions
   permission_handler: ^5.0.1+1
 
+<<<<<<< HEAD
   # svgs
   flutter_svg: ^0.17.4
 
@@ -61,6 +68,8 @@ dependencies:
   #Permissions
   permission_handler: ^5.0.1+1
 
+=======
+>>>>>>> dev
 
 dev_dependencies:
   flutter_test:
@@ -81,10 +90,17 @@ flutter:
         - asset: assets/fonts/facebook.ttf
     - family: Karla
       fonts:
+<<<<<<< HEAD
         - asset: lib/fonts/Karla-Regular.ttf
         - asset: lib/fonts/Karla-Bold.ttf
         - asset: lib/fonts/Karla-Italic.ttf
         - asset: lib/fonts/Karla-BoldItalic.ttf
+=======
+        - asset: assets/fonts/Karla-Regular.ttf
+        - asset: assets/fonts/Karla-Bold.ttf
+        - asset: assets/fonts/Karla-Italic.ttf
+        - asset: assets/fonts/Karla-BoldItalic.ttf
+>>>>>>> dev
     - family: Acumin Pro
       fonts: 
         - asset: assets/fonts/Acumin-BdItPro.otf

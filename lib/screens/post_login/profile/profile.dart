@@ -1,16 +1,23 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
+=======
+import 'package:twiine/auth.dart';
+>>>>>>> dev
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
+<<<<<<< HEAD
 import 'package:twiine/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
+=======
+>>>>>>> dev
 
 class Profile extends StatefulWidget {
   @override
@@ -19,6 +26,7 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   double _cardRadius = 20.0;
+<<<<<<< HEAD
 <<<<<<< .merge_file_a08408
 <<<<<<< .merge_file_a14624
   double _cardHeight = 290.0;
@@ -46,6 +54,8 @@ class ProfileState extends State<Profile> {
 =======
 =======
 >>>>>>> .merge_file_a16884
+=======
+>>>>>>> dev
 	double _cardHeight = 290.0;
 	double _cardWidth = 190.0;
 	File _image;
@@ -110,10 +120,13 @@ class ProfileState extends State<Profile> {
       print(_imageURL);
     });
 	}
+<<<<<<< HEAD
 <<<<<<< .merge_file_a08408
 >>>>>>> .merge_file_a13296
 =======
 >>>>>>> .merge_file_a16884
+=======
+>>>>>>> dev
 
   // TODO: we probably don't want to leave this as a url
   // Returns a card with the name of the place and the image url as the background
@@ -210,6 +223,7 @@ class ProfileState extends State<Profile> {
               child: Column(
                 children: <Widget>[
                   Align(
+<<<<<<< HEAD
                       alignment: Alignment.topRight,
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
@@ -248,6 +262,18 @@ class ProfileState extends State<Profile> {
                           ),
                           onPressed: () {
 =======
+=======
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
+                      child: IconButton(
+                        icon: Icon(Icons.settings),
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/settings');
+                        },
+                      ),
+>>>>>>> dev
                     ),
                   ),
                   Row(
@@ -286,6 +312,7 @@ class ProfileState extends State<Profile> {
                       ),
                     ],
                   ),
+<<<<<<< HEAD
 <<<<<<< .merge_file_a08408
 <<<<<<< .merge_file_a14624
 
@@ -293,6 +320,8 @@ class ProfileState extends State<Profile> {
 >>>>>>> .merge_file_a13296
 =======
 >>>>>>> .merge_file_a16884
+=======
+>>>>>>> dev
                   //TODO: Make it more clear you can edit username somehow by clicking the name
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
