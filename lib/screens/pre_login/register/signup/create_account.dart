@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:twiine/common/TextForm.dart';
 import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:twiine/colors.dart';
-import 'package:twiine/screens/pre_login/register/signup/date_picker.dart';
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -14,222 +13,87 @@ class CreateAccount extends StatefulWidget {
 }
 
 class CreateAccountState extends State<CreateAccount> {
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _birthdayController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _confirmPasswordController = TextEditingController();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static TextEditingController _firstNameController = TextEditingController();
+  static TextEditingController _lastNameController = TextEditingController();
+  static TextEditingController _birthdayController = TextEditingController();
+  static TextEditingController _emailController = TextEditingController();
+  static TextEditingController _passwordController = TextEditingController();
+  static TextEditingController _confirmPasswordController = TextEditingController();
 
-  // Title Widget
-  Widget _buildTitle() {
-    return Text(
-      "Join the Twiine Community",
-      style: TextStyle(height: 5, fontSize: 25, fontWeight: FontWeight.bold),
-    );
-  }
-
-  var _border = OutlineInputBorder(borderRadius: BorderRadius.circular(15.0));
-  var _focusedBorder = OutlineInputBorder(
-    borderSide: BorderSide(color: TwiineColors.red),
-    borderRadius: BorderRadius.circular(25.0),
-  );
-
-  // TextFormField Widgets
-  Widget _buildFirstName() {
-    return TextFormField(
-      controller: _firstNameController,
-      decoration: InputDecoration(
-        labelText: 'First Name',
-        border: _border,
-        focusedBorder: _focusedBorder,
-      ),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'First Name is Required';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _buildLastName() {
-    return TextFormField(
-      controller: _lastNameController,
-      decoration: InputDecoration(
-        labelText: 'Last name',
-        border: _border,
-        focusedBorder: _focusedBorder,
-      ),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Last Name is Required';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _buildBirthday() {
-    return DatePickerField(controller: _birthdayController);
-  }
-
-  Widget _buildEmail() {
-    return TextFormField(
-      controller: _emailController,
-      decoration: InputDecoration(
-        labelText: 'Email',
-        border: _border,
-        focusedBorder: _focusedBorder,
-      ),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Valid Email is Required';
-        }
-        if (!isValidEmail(value)) {
-          return 'Valid Email Address Required';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _buildPassword() {
-    return TextFormField(
-      controller: _passwordController,
-      decoration: InputDecoration(
-        labelText: 'Password',
-        border: _border,
-        focusedBorder: _focusedBorder,
-      ),
-      obscureText: true,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Password is Required';
-        }
-        if (value.length < 6) {
-          return 'Password must be at least 6 characters long';
-        }
-        return null;
-      },
-    );
-  }
-
-  Widget _buildConfirmPassword() {
-    return TextFormField(
-      controller: _confirmPasswordController,
-      decoration: InputDecoration(
-        labelText: 'Confirm Password',
-        border: _border,
-        focusedBorder: _focusedBorder,
-      ),
-      obscureText: true,
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Password Confirmation is Required';
-        }
-        if (_confirmPasswordController.text != _passwordController.text) {
-          return 'Passwords have to match';
-        }
-        return null;
-      },
-    );
-  }
-
-  // validation functions
-  bool isValidEmail(String input) {
-    return RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(input);
-  }
+  static Function passwordValidator;
+  static Function confirmPasswordValidator;
+  static Function onContinueTap;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Text(''),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back_ios),
-          color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-      body: Container(
-        margin: EdgeInsets.symmetric(horizontal: 24),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 50),
-                _buildTitle(),
-                SizedBox(height: 15),
-                _buildFirstName(),
-                SizedBox(height: 15),
-                _buildLastName(),
-                SizedBox(height: 15),
-                _buildBirthday(),
-                SizedBox(height: 15),
-                _buildEmail(),
-                SizedBox(height: 15),
-                _buildPassword(),
-                SizedBox(height: 15),
-                _buildConfirmPassword(),
-                SizedBox(height: 70),
-                ButtonTheme(
-                  minWidth: 300.0,
-                  height: 50.0,
-                  buttonColor: Colors.red,
-                  child: RaisedButton(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15.0),
-                    ),
-                    child: Text(
-                      'Continue',
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                    onPressed: () {
-                      if (!_formKey.currentState.validate()) {
-                        return;
-                      }
-                      _formKey.currentState.save();
-                      var data = {
-                        'firstname': _firstNameController.text,
-                        'lastname': _lastNameController.text,
-                        'birthday': _birthdayController.text,
-                        'email': _emailController.text,
-                      };
-                      _registerUser(data).then(
-                        (value) => {
-                          if (Auth.user != null)
-                            {
-                              setEmailLoginPreferences(
-                                true,
-                                "email",
-                                _emailController.text,
-                                _passwordController.text,
-                              ),
-                              Navigator.of(context).pushNamed('/navBar'),
-                            },
-                        },
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    passwordValidator = (String value) {
+      if (value.isEmpty) {
+        return 'Password is Required';
+      }
+      if (value.length < 6) {
+        return 'Password must be at least 6 characters long';
+      }
+      return null;
+    };
+
+    confirmPasswordValidator = (String value) {
+      if (value.isEmpty) {
+        return 'Password Confirmation is Required';
+      }
+      if (_confirmPasswordController.text != _passwordController.text) {
+        return 'Passwords have to match';
+      }
+      return null;
+    };
+
+    onContinueTap = () {
+      if (!_formKey.currentState.validate()) {
+        return;
+      }
+      _formKey.currentState.save();
+      var data = {
+        'firstname': _firstNameController.text,
+        'lastname': _lastNameController.text,
+        'birthday': _birthdayController.text,
+        'email': _emailController.text,
+      };
+      _registerUser(data).then(
+            (value) => {
+          if (Auth.user != null)
+            {
+              setEmailLoginPreferences(
+                true,
+                "email",
+                _emailController.text,
+                _passwordController.text,
+              ),
+              navigate(context),
+            },
+        },
+      );
+    };
+
+    Widget w = TextForm.textForm([
+      FormElement("First Name", FormTypes.TEXTFIELD,
+          controller: _firstNameController),
+      FormElement("Last Name", FormTypes.TEXTFIELD,
+          controller: _lastNameController),
+      FormElement("Birthday", FormTypes.DATEFIELD,
+          controller: _birthdayController),
+      FormElement("Email", FormTypes.EMAILFIELD, controller: _emailController),
+      FormElement("Password", FormTypes.PASSWORDFIELD,
+          controller: _passwordController, validator: passwordValidator),
+      FormElement("Confirm Password", FormTypes.PASSWORDFIELD,
+          controller: _confirmPasswordController, validator: confirmPasswordValidator),
+    ],
+        [ButtonElement("Continue", onContinueTap)], _formKey, title: "Join the Twiine Community", trailingSpacing: 30);
+
+    return w;
   }
 
-  Future<void> _registerUser(Map<String, String> data) async {
+  static Future<void> _registerUser(Map<String, String> data) async {
     try {
       var credential = await Auth.firebaseAuth.createUserWithEmailAndPassword(
         email: _emailController.text,
@@ -246,12 +110,16 @@ class CreateAccountState extends State<CreateAccount> {
     }
   }
 
-  setEmailLoginPreferences(bool hasLoggedIn, String loginMethod,
+  static setEmailLoginPreferences(bool hasLoggedIn, String loginMethod,
       String username, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool("hasLoggedIn", hasLoggedIn);
     prefs.setString("loginMethod", loginMethod);
     prefs.setString("username", username);
     prefs.setString("password", password);
+  }
+
+  static navigate(BuildContext context){
+    Navigator.of(context).pushNamed('/navBar');
   }
 }

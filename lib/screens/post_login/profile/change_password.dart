@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/common/TextForm.dart';
 
 class ChangePassowrd extends StatefulWidget {
   @override
@@ -20,192 +21,77 @@ class ChangePassowrdState extends State<ChangePassowrd> {
   String _changePasswordMessage = "";
 
   // styling design variables
-  Color inputBoxColor = Colors.grey;
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static TextEditingController _oldPasswordController = TextEditingController();
+  static TextEditingController _newPasswordController = TextEditingController();
+  static TextEditingController _confirmNewPasswordController = TextEditingController();
 
-  // Title Widget
-  Widget _buildTitle() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30.0),
-      child: Text(
-        "Change Password",
-        style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-  Widget _buildOldPassword() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Old Password',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
-        obscureText: true,
-        // ignore: missing_return
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Old Password is Required';
-          }
-        },
-        onChanged: (String value) {
-          _oldPassword = value;
-        },
-      ),
-    );
-  }
-
-  Widget _buildNewPassword() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'New Password',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
-        obscureText: true,
-        // ignore: missing_return
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'New Password is Required';
-          }
-        },
-        onChanged: (String value) {
-          _newPassword = value;
-        },
-      ),
-    );
-  }
-
-  Widget _buildConfirmPassword() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10.0),
-      child: TextFormField(
-        decoration: InputDecoration(
-            labelText: 'Confirm New Password',
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),
-            focusedBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.green),
-                borderRadius: BorderRadius.circular(25.0))),
-        obscureText: true,
-        // ignore: missing_return
-        validator: (String value) {
-          if (value.isEmpty) {
-            return 'Password New Confirmation is Required';
-          }
-          if (value != _newPassword) {
-            return 'Passwords Do Not Match';
-          }
-        },
-        onChanged: (String value) {
-          _confirmPassword = value;
-        },
-      ),
-    );
-  }
-
-  bool isValidEmail(String input) {
-    if (RegExp(
-            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
-        .hasMatch(input)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  static Function oldPasswordValidator;
+  static Function newPasswordValidator;
+  static Function confirmNewPasswordValidator;
+  static Function onContinueTap;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          elevation: 0.0,
-          backgroundColor: Colors.transparent,
-          title: Text(''),
-          leading: new IconButton(
-              icon: new Icon(Icons.arrow_back_ios),
-              color: Colors.black,
-              onPressed: () => Navigator.of(context).pop())),
-      body: Container(
-        margin: EdgeInsets.only(left: 24, right: 24),
-        child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buildTitle(),
-                _buildOldPassword(),
-                _buildNewPassword(),
-                _buildConfirmPassword(),
-                ButtonTheme(
-                  minWidth: 300.0,
-                  height: 50.0,
-                  buttonColor: Colors.red,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        boxShadow: <BoxShadow>[
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            blurRadius: 1.0,
-                            offset: Offset(4.0, 2.0),
-                          )
-                        ]),
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Text(
-                        'Continue',
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                      onPressed: () {
-                        if (!_formKey.currentState.validate()) {
-                          return;
-                        }
-                        _formKey.currentState.save();
+    oldPasswordValidator = (String value) {
+      if (value.isEmpty) {
+        return 'Old Password is Required';
+      }
+    };
 
-                        Auth.user
-                            .reauthenticateWithCredential(
-                                EmailAuthProvider.getCredential(
-                                    email: Auth.user.email,
-                                    password: _oldPassword))
-                            .catchError((error) {
-                          setState(() {
-                            _changePasswordMessage =
-                                "Unable to change password";
-                          });
-                        }).then((result) {
-                          if (result != null) {
-                            Auth.user.updatePassword(_confirmPassword);
-                            setState(() {
-                              _changePasswordMessage =
-                              "Successfully changed password";
-                            });
-                          }
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                Text(
-                  _changePasswordMessage,
-                  style: TextStyle(color: TwiineColors.red, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    newPasswordValidator = (String value) {
+      if (value.isEmpty) {
+        return 'New Password is Required';
+      }
+    };
+
+    confirmNewPasswordValidator = (String value) {
+      if (value.isEmpty) {
+        return 'Password New Confirmation is Required';
+      }
+      if (value != _newPassword) {
+        return 'Passwords Do Not Match';
+      }
+    };
+
+    onContinueTap = () {
+      if (!_formKey.currentState.validate()) {
+        return;
+      }
+      _formKey.currentState.save();
+
+      Auth.user
+          .reauthenticateWithCredential(
+          EmailAuthProvider.getCredential(
+              email: Auth.user.email,
+              password: _oldPassword))
+          .catchError((error) {
+        setState(() {
+          _changePasswordMessage =
+          "Unable to change password";
+        });
+      }).then((result) {
+        if (result != null) {
+          Auth.user.updatePassword(_confirmPassword);
+          setState(() {
+            _changePasswordMessage =
+            "Successfully changed password";
+          });
+        }
+      });
+    };
+
+    return TextForm.textForm([
+      FormElement(
+          "Old Password", FormTypes.PASSWORDFIELD, validator: oldPasswordValidator,
+          controller: _oldPasswordController),
+      FormElement(
+          "New Password", FormTypes.PASSWORDFIELD, validator: newPasswordValidator,
+          controller: _newPasswordController),
+      FormElement(
+          "Confirm New Password", FormTypes.PASSWORDFIELD, validator: confirmNewPasswordValidator,
+          controller: _confirmNewPasswordController),
+    ], [ButtonElement("Continue", onContinueTap)], _formKey, title: "Change Password", trailingSpacing: 30);
   }
 }

@@ -17,11 +17,11 @@ class Navbar extends StatefulWidget {
 class NavbarState extends State<Navbar> {
   int _currentIndex = 0;
 
-  final String searchIcon = "assets/icons/searchIcon.svg";
-  final String mapIcon = "assets/icons/mapIcon.svg";
-  final String addIcon = "assets/icons/addIcon.svg";
-  final String calendarIcon = "assets/icons/calendarIcon.svg";
-  final String personIcon = "assets/icons/personIcon.svg";
+  final String searchIcon = "assets/icons/search_icon.svg";
+  final String mapIcon = "assets/icons/map_icon.svg";
+  final String addIcon = "assets/icons/add_icon.svg";
+  final String calendarIcon = "assets/icons/calendar_icon.svg";
+  final String personIcon = "assets/icons/person_icon.svg";
   final String gearIcon = "assets/icons/settings.svg";
 
   final List<Widget> _children = [
