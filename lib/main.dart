@@ -8,7 +8,7 @@ import 'package:twiine/screens/pre_login/landing_page.dart';
 import 'package:twiine/screens/pre_login/login/login.dart';
 import 'package:twiine/components/Navbar.dart';
 import 'package:twiine/screens/post_login/profile/profile.dart';
-import 'package:twiine/screens/post_login/home/home.dart';
+import 'package:twiine/screens/post_login/plans/plans.dart';
 import 'package:twiine/screens/post_login/addEvent/AddEvent.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/pre_login/login/login_email.dart';
@@ -28,6 +28,29 @@ class App extends StatelessWidget {
           fontFamily: 'Acumin Pro',
           primaryColor: TwiineColors.red,
           accentColor: TwiineColors.orange,
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black
+            ),
+            headline2: TextStyle(
+              fontSize: 24,
+              color: Colors.black
+            ),
+            headline3: TextStyle(
+              fontSize: 16,
+              color: Colors.black
+            ),
+            bodyText1: TextStyle(
+              fontSize: 12,
+              color: Colors.black
+            ),
+            bodyText2: TextStyle(
+              fontSize: 12,
+              color: TwiineColors.lightGrey2
+            ),
+          )
         ),
         debugShowCheckedModeBanner: false,
         initialRoute: '/',
@@ -37,7 +60,7 @@ class App extends StatelessWidget {
           '/login': (context) => Login(),
           '/login_email': (context) => LoginEmail(),
           '/signup': (context) => CreateAccount(),
-          '/home': (context) => Home(),
+          '/plans': (context) => PlansPage(),
           '/profile': (context) => Profile(),
           '/forgotPassword': (context) => ForgotPassword(),
           '/navBar': (context) => Navbar(),
