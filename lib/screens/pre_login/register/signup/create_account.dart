@@ -28,29 +28,6 @@ class CreateAccountState extends State<CreateAccount> {
   static Function confirmPasswordValidator;
   static Function onContinueTap;
 
-//  void initState() {
-//    super.initState();
-//    WidgetsBinding.instance.addPostFrameCallback((_) {
-//      return showDialog<void>(
-//        context: context,
-//        builder: (BuildContext context) {
-//          return AlertDialog(
-//            content: Text(
-//                "You have not completed your profile. Please fill the following info"),
-//            actions: <Widget>[
-//              FlatButton(
-//                child: Text('Ok'),
-//                onPressed: () {
-//                  Navigator.of(context).pop();
-//                },
-//              ),
-//            ],
-//          );
-//        },
-//      );
-//    });
-//  }
-
   @override
   Widget build(BuildContext context) {
     passwordValidator = (String value) {
@@ -89,18 +66,6 @@ class CreateAccountState extends State<CreateAccount> {
       );
     };
 
-    AppBar bar = AppBar(
-      elevation: 0.0,
-      backgroundColor: Colors.transparent,
-      title: Text(''),
-      toolbarHeight: 30,
-      leading: new IconButton(
-        icon: new Icon(Icons.arrow_back_ios),
-        color: Colors.black,
-        onPressed: () => Navigator.of(context).pushNamed('/landing'),
-      ),
-    );
-
     Widget w = TextForm.textForm([
       FormElement("First Name", FormTypes.TEXTFIELD,
           controller: _firstNameController),
@@ -118,7 +83,9 @@ class CreateAccountState extends State<CreateAccount> {
     ], [
       ButtonElement("Continue", onContinueTap)
     ], _formKey,
-        appBar: bar,
+        appBar: TextForm.backBar(context, onTap: () {
+          Navigator.pushNamed(context, '/landing');
+        }),
         title: "Join the Twiine Community",
         headingSpacing: 0,
         trailingSpacing: 0);

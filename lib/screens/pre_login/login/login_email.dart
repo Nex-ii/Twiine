@@ -32,18 +32,6 @@ class LoginEmailState extends State<LoginEmail> {
       return null;
     };
 
-    AppBar bar = AppBar(
-      elevation: 0.0,
-      backgroundColor: Colors.transparent,
-      title: Text(''),
-      toolbarHeight: 30,
-      leading: new IconButton(
-        icon: new Icon(Icons.arrow_back_ios),
-        color: Colors.black,
-        onPressed: () => Navigator.pop(context),
-      ),
-    );
-
     return TextForm.textForm([
       FormElement("Email", FormTypes.EMAILFIELD, controller: _emailController),
       FormElement("Password", FormTypes.PASSWORDFIELD,
@@ -52,7 +40,7 @@ class LoginEmailState extends State<LoginEmail> {
           onTap: () => Navigator.pushNamed(context, '/forgotPassword')),
     ], [
       ButtonElement("Continue", _signInWithEmail),
-    ], GlobalKey(), appBar: bar, title: "Sign in to twiine", trailingSpacing: 0);
+    ], GlobalKey(), appBar: TextForm.backBar(context), title: "Sign in to twiine", trailingSpacing: 0);
   }
 
   _signInWithEmail() async {

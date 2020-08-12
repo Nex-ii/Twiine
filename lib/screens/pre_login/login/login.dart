@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/common/text_form.dart';
 import 'package:twiine/screens/pre_login/login/phone_login.dart';
 
 class Login extends StatefulWidget {
@@ -17,16 +18,7 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Text(''),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back_ios),
-          color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
+      appBar: TextForm.backBar(context),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
         child: SingleChildScrollView(
