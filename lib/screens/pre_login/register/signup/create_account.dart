@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:twiine/common/TextForm.dart';
+import 'package:twiine/common/text_form.dart';
 import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,18 +15,41 @@ class CreateAccount extends StatefulWidget {
 }
 
 class CreateAccountState extends State<CreateAccount> {
-
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static TextEditingController _firstNameController = TextEditingController();
   static TextEditingController _lastNameController = TextEditingController();
   static TextEditingController _birthdayController = TextEditingController();
   static TextEditingController _emailController = TextEditingController();
   static TextEditingController _passwordController = TextEditingController();
-  static TextEditingController _confirmPasswordController = TextEditingController();
+  static TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   static Function passwordValidator;
   static Function confirmPasswordValidator;
   static Function onContinueTap;
+
+//  void initState() {
+//    super.initState();
+//    WidgetsBinding.instance.addPostFrameCallback((_) {
+//      return showDialog<void>(
+//        context: context,
+//        builder: (BuildContext context) {
+//          return AlertDialog(
+//            content: Text(
+//                "You have not completed your profile. Please fill the following info"),
+//            actions: <Widget>[
+//              FlatButton(
+//                child: Text('Ok'),
+//                onPressed: () {
+//                  Navigator.of(context).pop();
+//                },
+//              ),
+//            ],
+//          );
+//        },
+//      );
+//    });
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,20 +85,21 @@ class CreateAccountState extends State<CreateAccount> {
         'email': _emailController.text,
       };
       _registerUser(data).then(
-            (value) => {
-          if (Auth().user != null)
-            {
-              setEmailLoginPreferences(
-                true,
-                "email",
-                _emailController.text,
-                _passwordController.text,
-              ),
-              navigate(context),
-            },
-        },
+        (value) => {if (Auth().user != null) navigate(context)},
       );
     };
+
+    AppBar bar = AppBar(
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      title: Text(''),
+      toolbarHeight: 30,
+      leading: new IconButton(
+        icon: new Icon(Icons.arrow_back_ios),
+        color: Colors.black,
+        onPressed: () => Navigator.of(context).pushNamed('/landing'),
+      ),
+    );
 
     Widget w = TextForm.textForm([
       FormElement("First Name", FormTypes.TEXTFIELD,
@@ -86,9 +112,16 @@ class CreateAccountState extends State<CreateAccount> {
       FormElement("Password", FormTypes.PASSWORDFIELD,
           controller: _passwordController, validator: passwordValidator),
       FormElement("Confirm Password", FormTypes.PASSWORDFIELD,
-          controller: _confirmPasswordController, validator: confirmPasswordValidator),
-    ],
-        [ButtonElement("Continue", onContinueTap)], _formKey, title: "Join the Twiine Community", trailingSpacing: 30);
+          controller: _confirmPasswordController,
+          validator: confirmPasswordValidator),
+      FormElement("Terms of Service", FormTypes.INKWELL, onTap: () {}),
+    ], [
+      ButtonElement("Continue", onContinueTap)
+    ], _formKey,
+        appBar: bar,
+        title: "Join the Twiine Community",
+        headingSpacing: 0,
+        trailingSpacing: 0);
 
     return w;
   }
@@ -104,22 +137,13 @@ class CreateAccountState extends State<CreateAccount> {
       print("Unable to create account: ${error.toString()}");
     }
     try {
-      return TwiineApi.createNewUser(data);
+      return TwiineApi.createNewUser(data: data);
     } catch (error) {
       print("API call error: ${error.toString()}");
     }
   }
 
-  static setEmailLoginPreferences(bool hasLoggedIn, String loginMethod,
-      String username, String password) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool("hasLoggedIn", hasLoggedIn);
-    prefs.setString("loginMethod", loginMethod);
-    prefs.setString("username", username);
-    prefs.setString("password", password);
-  }
-
-  static navigate(BuildContext context){
+  static navigate(BuildContext context) {
     Navigator.of(context).pushNamed('/navBar');
   }
 }

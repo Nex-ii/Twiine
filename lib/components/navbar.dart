@@ -62,14 +62,13 @@ class NavbarState extends State<Navbar> {
         );
       },
       child: new Scaffold(
-        body: _children[_currentIndex],
         appBar: AppBar(
           title: Text("twiine"),
-          actions: <Widget>[
-            PopupMenuButton(
+          actions: <Widget>[PopupMenuButton(
               onSelected: (r) => r(),
               initialValue: null,
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<Function>>[
+              itemBuilder: (BuildContext context) =>
+              <PopupMenuEntry<Function>>[
                 PopupMenuItem<Function>(
                   value: _settings,
                   child: Text("Settings"),
@@ -78,10 +77,11 @@ class NavbarState extends State<Navbar> {
                   value: _logout,
                   child: Text("Log out"),
                 ),
-              ],
-            )
+              ]
+          )
           ],
         ),
+        body: _children[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,

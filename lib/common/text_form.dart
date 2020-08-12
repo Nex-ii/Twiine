@@ -7,15 +7,14 @@ class TextForm {
     List<FormElement> params,
     List<ButtonElement> buttons,
     GlobalKey formKey, {
-    String title,
+    String title = "",
     AppBar appBar,
     double rowSpacing = 15,
-    double headingSpacing = 50,
-    double trailingSpacing = 55,
+    double headingSpacing = 20,
+    double trailingSpacing = 30,
     OutlineInputBorder displayBorder,
     OutlineInputBorder focusedBorder,
   }) {
-
     if (displayBorder == null)
       displayBorder =
           OutlineInputBorder(borderRadius: BorderRadius.circular(15.0));
@@ -35,20 +34,26 @@ class TextForm {
     Scaffold scaffold = new Scaffold(
         appBar: appBar,
         body: Container(
-            margin: EdgeInsets.only(left: 24, right: 24),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
             child: SingleChildScrollView(
                 child: Form(
               key: formKey,
               child: column,
-            ))));
+            )),
+          ),
+        ));
 
     // Title Widget
     column.children.add(
       Padding(
         padding: const EdgeInsets.only(bottom: 30.0),
-        child: Text(
-          title,
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        child: Align(
+          alignment: Alignment(-1, -1),
+          child: Text(
+            title,
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );
@@ -123,15 +128,14 @@ class TextForm {
 
     Widget _buildTermsAndServices(FormElement element) {
       return Align(
-        alignment: Alignment.centerLeft,
+        alignment: Alignment.center,
         child: Padding(
           padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
           child: InkWell(
-              child: Text('[${element._name}}]',
-                  style: TextStyle(color: Colors.grey)),
-              onTap: () {
-                // add terms and services page here
-              }),
+            child: Text(element._name,
+                style: TextStyle(color: Colors.grey)),
+            onTap: element._onTap,
+          ),
         ),
       );
     }
@@ -151,7 +155,7 @@ class TextForm {
         case FormTypes.DATEFIELD:
           column.children.add(_buildDateField(e));
           break;
-        case FormTypes.TOS:
+        case FormTypes.INKWELL:
           column.children.add(_buildTermsAndServices(e));
           break;
         default:
@@ -192,13 +196,15 @@ class FormElement {
   FormTypes _type;
   Function _validator;
   TextEditingController _controller;
+  Function _onTap;
 
   FormElement(String name, FormTypes type,
-      {Function validator, TextEditingController controller}) {
+      {Function validator, TextEditingController controller, Function onTap}) {
     _name = name;
     _type = type;
     _validator = validator;
     _controller = controller;
+    _onTap = onTap;
   }
 }
 
@@ -207,7 +213,7 @@ enum FormTypes {
   EMAILFIELD,
   PASSWORDFIELD,
   DATEFIELD,
-  TOS,
+  INKWELL,
 }
 
 class ButtonElement {

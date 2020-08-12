@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/common/TextForm.dart';
+import 'package:twiine/common/text_form.dart';
 
 class ChangePassowrd extends StatefulWidget {
   @override
