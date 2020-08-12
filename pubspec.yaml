@@ -68,6 +68,8 @@ flutter:
     - assets/icons/person_icon.svg
     - assets/icons/search_icon.svg
     - assets/icons/settings_icon.svg
+    - assets/default_profile.png
+    - assets/placeholder.png
   fonts:
     - family: Acumin Pro
       fonts: 

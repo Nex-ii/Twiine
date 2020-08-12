@@ -12,17 +12,33 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   File _image;
-  var _imageURL =
-      'https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/ImageStorage%2FProfilePicture?alt=media&token=9958176c-3b7f-457f-935c-04ff166ffe15';
+
+  Image profilePic = Image.asset("assets/placeholder.png");
+  ProfileState() {
+    _updateProfilePicture();
+  }
+
+  _updateProfilePicture() async {
+    var storageRef = await FirebaseStorage.instance.getReferenceFromUrl(
+        "gs://twiine.appspot.com/ProfilePictures/${Auth.userData["email"]}/ProfilePicture.png");
+    try {
+      String url = await storageRef.getDownloadURL();
+      setState(() {
+        profilePic = Image.network(url);
+      });
+    } catch (e) {
+      setState(() {
+        profilePic = Image.asset("assets/default_profile.png");
+      });
+    }
+  }
 
   //TODO: Ask for permission to access the gallery
   Future getImage(BuildContext context) async {
     File image = await ImagePicker.pickImage(source: ImageSource.gallery);
-
-      setState((){
-        _image=image;
-      });
-
+    setState(() {
+      _image = image;
+    });
     uploadPic(context);
   }
 
@@ -36,10 +52,10 @@ class ProfileState extends State<Profile> {
 
     var downloadUrl = await snapshot.ref.getDownloadURL();
 
-
-	  setState((){
-	    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
-      _imageURL = downloadUrl;
+    setState(() {
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
+      profilePic = Image.network(downloadUrl);
     });
   }
 
@@ -53,11 +69,7 @@ class ProfileState extends State<Profile> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            CircleAvatar(
-              radius: 25,
-              backgroundImage:
-                  Image.network("https://i.imgur.com/mNNGyWx.png").image,
-            ),
+            CircleAvatar(radius: 25, backgroundImage: profilePic.image),
             SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
