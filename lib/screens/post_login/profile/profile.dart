@@ -109,6 +109,8 @@ class ProfileState extends State<Profile> {
               _labelText("ABOUT"),
               _createButton(Icons.content_copy, "Terms of Use", () => {}),
               _createButton(Icons.lock_open, "Privacy Policy", () => {}),
+              _createButton(
+                  Icons.exit_to_app, "Sign out", () => {Auth.signOut()}),
             ],
           ),
         ),

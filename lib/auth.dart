@@ -71,4 +71,8 @@ class Auth {
         await TwiineApi.getUserData((await firebaseAuth.currentUser()).uid);
     Auth.userData = userData.data;
   }
+
+  static void signOut() async {
+    firebaseAuth.signOut();
+  }
 }
