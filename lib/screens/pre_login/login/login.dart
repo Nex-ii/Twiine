@@ -18,6 +18,7 @@ class LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         title: Text(''),
@@ -97,7 +98,7 @@ class LoginState extends State<Login> {
     setState(() {
       Auth.firebaseAuth.currentUser().then((value) => {
         if (value != null)
-          Navigator.of(context).pushNamed('/navBar')
+          Navigator.of(context).popUntil(ModalRoute.withName('/'))
         else
           _loginMessage = "Unable to authenticate with $authType"
       });
