@@ -1,23 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
-=======
-import 'package:twiine/auth.dart';
->>>>>>> dev
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'dart:io';
-import 'package:permission_handler/permission_handler.dart';
-<<<<<<< HEAD
 import 'package:twiine/auth.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
-=======
->>>>>>> dev
 
 class Profile extends StatefulWidget {
   @override
@@ -26,9 +14,6 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   double _cardRadius = 20.0;
-<<<<<<< HEAD
-<<<<<<< .merge_file_a08408
-<<<<<<< .merge_file_a14624
   double _cardHeight = 290.0;
   double _cardWidth = 190.0;
   File _image;
@@ -51,42 +36,10 @@ class ProfileState extends State<Profile> {
     var snapshot = await _storage
         .ref()
         .child(Auth.user.email + '/ProfilePicture')
-=======
-=======
->>>>>>> .merge_file_a16884
-=======
->>>>>>> dev
-	double _cardHeight = 290.0;
-	double _cardWidth = 190.0;
-	File _image;
-	var _imageURL = 'https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/ImageStorage%2FProfilePicture?alt=media&token=9958176c-3b7f-457f-935c-04ff166ffe15';
-
-	//TODO: Ask for permission to access the gallery
-	Future getImage(BuildContext context) async{
-      File image = await ImagePicker.pickImage(source:ImageSource.gallery);
-
-      setState((){
-        _image=image;
-        print('Image Path $_image');
-      });
-
-      uploadPic(context);
-  }
-
-  Future uploadPic(BuildContext context) async{
-    final _storage = FirebaseStorage.instance;
-    var snapshot = await _storage.ref()
-        .child('ImageStorage/ProfilePicture')
-<<<<<<< .merge_file_a08408
->>>>>>> .merge_file_a13296
-=======
->>>>>>> .merge_file_a16884
         .putFile(_image)
         .onComplete;
 
     var downloadUrl = await snapshot.ref.getDownloadURL();
-<<<<<<< .merge_file_a08408
-<<<<<<< .merge_file_a14624
     print(downloadUrl);
 
     print("Profile Picture uploaded");
@@ -108,25 +61,6 @@ class ProfileState extends State<Profile> {
       print(_imageURL);
     });
   }
-=======
-=======
->>>>>>> .merge_file_a16884
-
-
-	  setState((){
-	    print("Profile Picture uploaded");
-	    Scaffold.of(context).showSnackBar(SnackBar(content: Text('Profile Picture Uploaded')));
-      _imageURL = downloadUrl;
-      print(_imageURL);
-    });
-	}
-<<<<<<< HEAD
-<<<<<<< .merge_file_a08408
->>>>>>> .merge_file_a13296
-=======
->>>>>>> .merge_file_a16884
-=======
->>>>>>> dev
 
   // TODO: we probably don't want to leave this as a url
   // Returns a card with the name of the place and the image url as the background
@@ -183,14 +117,6 @@ class ProfileState extends State<Profile> {
     );
   }
 
-<<<<<<< .merge_file_a08408
-<<<<<<< .merge_file_a14624
-=======
-
->>>>>>> .merge_file_a13296
-=======
-
->>>>>>> .merge_file_a16884
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -223,7 +149,6 @@ class ProfileState extends State<Profile> {
               child: Column(
                 children: <Widget>[
                   Align(
-<<<<<<< HEAD
                       alignment: Alignment.topRight,
                       child: Padding(
                           padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
@@ -233,49 +158,6 @@ class ProfileState extends State<Profile> {
                               onPressed: () {
                                 Navigator.of(context).pushNamed('/settings');
                               }))),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      CircleAvatar(
-                        radius: 50, //Increase to have color ring around profile
-                        backgroundColor: Colors.brown,
-                        child: ClipOval(
-                          child: SizedBox(
-                            width: 100.0,
-                            height: 100.0,
-                            child: (_imageURL != null)
-                                ? Image.network(_imageURL, fit: BoxFit.fill)
-                                : Image.network(
-                                    'https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4',
-                                    fit: BoxFit.fill,
-                                  ),
-                          ),
-                        ),
-                      ),
-<<<<<<< .merge_file_a14624
-                      Padding(
-                        padding: EdgeInsets.only(top: 40.0),
-                        child: IconButton(
-                          icon: Icon(
-                            FontAwesomeIcons.camera,
-                            size: 30.0,
-                          ),
-                          onPressed: () {
-=======
-=======
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 25, 0, 0),
-                      child: IconButton(
-                        icon: Icon(Icons.settings),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/settings');
-                        },
-                      ),
->>>>>>> dev
-                    ),
-                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -302,26 +184,12 @@ class ProfileState extends State<Profile> {
                             size:30.0,
                           ),
                           onPressed: (){
-<<<<<<< .merge_file_a08408
->>>>>>> .merge_file_a13296
-=======
->>>>>>> .merge_file_a16884
                             getImage(context);
                           },
                         ),
                       ),
                     ],
                   ),
-<<<<<<< HEAD
-<<<<<<< .merge_file_a08408
-<<<<<<< .merge_file_a14624
-
-=======
->>>>>>> .merge_file_a13296
-=======
->>>>>>> .merge_file_a16884
-=======
->>>>>>> dev
                   //TODO: Make it more clear you can edit username somehow by clicking the name
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
@@ -360,28 +228,6 @@ class ProfileState extends State<Profile> {
                     "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
                 createPlaceCard("Ding Tea",
                     "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
-                createPlaceCard("7 Leaves",
-                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-            child: Text(
-              "Placeholder section",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: this._cardRadius),
-            height: this._cardHeight,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: <Widget>[
-                createPlaceCard("Ding Tea",
-                    "https://d1725r39asqzt3.cloudfront.net/aaa7aca1-a5ba-4740-a656-4ef0e5c3e52c/orig.jpg"),
-                createPlaceCard("7 Leaves",
-                    "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
                 createPlaceCard("7 Leaves",
                     "https://cdn.vox-cdn.com/thumbor/31J1fxcgvG5a_kT4pMnVhwP9bxM=/0x0:1402x1752/1200x800/filters:focal(522x1001:746x1225)/cdn.vox-cdn.com/uploads/chorus_image/image/64736820/7_leaves_teahouse.0.jpg"),
               ],
