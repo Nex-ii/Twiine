@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
 
 class TimeDifference extends StatefulWidget {
-  final DateTime _eventDate = DateTime(2020, 7, 26);
+  final DateTime eventDate;
+
+  TimeDifference({Key key, this.eventDate: null});
 
   @override
   _TimeDifferenceState createState() => _TimeDifferenceState();
@@ -53,7 +55,10 @@ class _TimeDifferenceState extends State<TimeDifference> {
 
   void _updateDate() {
     setState(() {
-      timeDiff = widget._eventDate.difference(DateTime.now()).inDays;
+      if (widget.eventDate == null)
+        timeDiff = 0;
+      else
+        timeDiff = widget.eventDate.difference(DateTime.now()).inDays;
     });
   }
 }

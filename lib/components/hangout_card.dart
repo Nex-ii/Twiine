@@ -1,12 +1,26 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/components/time_difference.dart';
 
-class HangoutCard extends StatelessWidget {
+class HangoutCard extends StatefulWidget {
+  final String eventId;
+  HangoutCard({Key key, this.eventId});
+
+  @override
+  _HangoutCardState createState() => _HangoutCardState();
+}
+
+class _HangoutCardState extends State<HangoutCard> {
   double _borderRadius = 10;
-  String _place = "Crater Disaster Site";
-  String _thumbnail = "https://i.imgur.com/oRt7Kcm.png";
+  String _place = "";
+  String _thumbnail = "";
+  DateTime _eventDate = DateTime.now();
+  bool _ready = false;
+
   @override
   Widget build(BuildContext context) {
+    _getEventData();
     return Container(
       height: 330,
       child: Card(
@@ -17,15 +31,17 @@ class HangoutCard extends StatelessWidget {
           children: <Widget>[
             Container(
               height: 219,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: Image.network(_thumbnail).image,
-                  fit: BoxFit.cover,
+              child: CachedNetworkImage(
+                imageUrl: _thumbnail,
+                imageBuilder: (context, imageProvider) => Container(
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(_borderRadius),
-                  topRight: Radius.circular(_borderRadius),
-                ),
+                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
             ),
             Container(
@@ -37,7 +53,7 @@ class HangoutCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      TimeDifference(),
+                      TimeDifference(eventDate: _eventDate),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                         child: Text(
@@ -90,5 +106,22 @@ class HangoutCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _getEventData() async {
+    Map<String, dynamic> eventData = (await Firestore.instance
+            .collection("Events")
+            .document(widget.eventId)
+            .get())
+        .data;
+    Map<String, dynamic> place = (await eventData["place"].get()).data;
+    if (this.mounted) {
+      setState(() {
+        _thumbnail = place["image_url"];
+        _place = place["name"];
+        _eventDate = (eventData["time"] as Timestamp).toDate();
+        _ready = true;
+      });
+    }
   }
 }

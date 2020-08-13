@@ -23,7 +23,7 @@ class _MyHangoutsState extends State<MyHangouts> {
               ),
             ),
           ),
-          HangoutCard(),
+          HangoutCard(eventId: "tDcccXrWrq3bPSrnJE83"),
           Align(
             alignment: Alignment.centerLeft,
             child: Container(
