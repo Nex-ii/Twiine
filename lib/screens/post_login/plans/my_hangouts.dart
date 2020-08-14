@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
+import 'package:twiine/colors.dart';
 import 'package:twiine/components/hangout_card.dart';
 import 'package:twiine/components/upcoming_hangout_card.dart';
 
@@ -20,10 +21,34 @@ class _MyHangoutsState extends State<MyHangouts> {
           },
         )),
       );
-      return Text("Loading");
-    }
-    else {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(
+              TwiineColors.red,
+            ),
+          ),
+          SizedBox(height: 10),
+          Text("Loading"),
+        ],
+      );
+    } else {
       var eventList = Auth.userData["events"];
+      if (eventList.length == 0) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "You currently have no hangouts planned",
+              style: Theme.of(context).textTheme.headline1,
+              textAlign: TextAlign.center,
+            ),
+          ],
+        );
+      }
       return Container(
         child: ListView(
           children: [
