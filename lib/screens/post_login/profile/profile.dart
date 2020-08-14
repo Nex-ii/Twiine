@@ -13,24 +13,19 @@ class Profile extends StatefulWidget {
 class ProfileState extends State<Profile> {
   File _image;
 
-  Image profilePic = Image.asset("assets/placeholder.png");
+  Image profilePic;
   ProfileState() {
     _updateProfilePicture();
+    Auth.updateUserData().then((value) => {
+      setState(() {
+        _updateProfilePicture();
+      })
+    });
   }
-
-  _updateProfilePicture() async {
-    var storageRef = await FirebaseStorage.instance.getReferenceFromUrl(
-        "gs://twiine.appspot.com/ProfilePictures/${Auth.userData["email"]}/ProfilePicture.png");
-    try {
-      String url = await storageRef.getDownloadURL();
-      setState(() {
-        profilePic = Image.network(url);
-      });
-    } catch (e) {
-      setState(() {
-        profilePic = Image.asset("assets/default_profile.png");
-      });
-    }
+  _updateProfilePicture() {
+    profilePic = (Auth.userData.containsKey("pictureUrl"))
+      ? Image.network(Auth.userData["pictureUrl"])
+      : Image.asset("assets/placeholder.png");
   }
 
   //TODO: Ask for permission to access the gallery

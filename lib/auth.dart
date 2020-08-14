@@ -84,7 +84,7 @@ class Auth {
     }
   }
 
-  static void updateUserData() async {
+  static Future updateUserData() async {
     DocumentSnapshot userData =
         await TwiineApi.getUserData((await firebaseAuth.currentUser()).uid);
     Auth.userData = userData.data;
