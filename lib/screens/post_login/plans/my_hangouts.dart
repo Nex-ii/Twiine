@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/components/hangout_card.dart';
@@ -25,7 +24,6 @@ class _MyHangoutsState extends State<MyHangouts> {
     }
     else {
       var eventList = Auth.userData["events"];
-      print(eventList.toString());
       return Container(
         child: ListView(
           children: [
