@@ -56,7 +56,8 @@ class _UpcomingHangoutCardState extends State<UpcomingHangoutCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     TimeDifference(eventDate: _eventDate),
-                    Padding(
+                    Container(
+                      width: 200,
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                       child: Text(
                         _place,
@@ -91,6 +92,7 @@ class _UpcomingHangoutCardState extends State<UpcomingHangoutCard> {
       if (this.mounted) {
         setState(() {
           _thumbnail = place["image_url"];
+          _address = "${place["city"]}, ${place["state"]}";
           _place = place["name"];
           _eventDate = (eventData["time"] as Timestamp).toDate();
         });
