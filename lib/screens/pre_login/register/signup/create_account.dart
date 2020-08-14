@@ -128,11 +128,11 @@ class CreateAccountState extends State<CreateAccount> {
 
   static Future<void> _registerUser(Map<String, String> data) async {
     try {
-      var credential = await Auth.firebaseAuth.createUserWithEmailAndPassword(
+      await Auth.firebaseAuth.createUserWithEmailAndPassword(
         email: _emailController.text,
         password: _passwordController.text,
       );
-      // Auth.user = credential.user;
+      await Auth.signInEmail(_emailController.text, _passwordController.text);
     } catch (error) {
       print("Unable to create account: ${error.toString()}");
     }
@@ -143,7 +143,7 @@ class CreateAccountState extends State<CreateAccount> {
     }
   }
 
-  static navigate(BuildContext context) {
-    Navigator.of(context).pushNamed('/navBar');
+  static navigate(BuildContext context){
+    Navigator.of(context).popUntil(ModalRoute.withName('/'));
   }
 }
