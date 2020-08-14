@@ -16,7 +16,6 @@ class _HangoutCardState extends State<HangoutCard> {
   String _place = "";
   String _thumbnail = "";
   DateTime _eventDate = DateTime.now();
-  bool _ready = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +34,10 @@ class _HangoutCardState extends State<HangoutCard> {
                 imageUrl: _thumbnail,
                 imageBuilder: (context, imageProvider) => Container(
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(_borderRadius),
+                      topRight: Radius.circular(_borderRadius),
+                    ),
                     image: DecorationImage(
                       image: imageProvider,
                       fit: BoxFit.cover,
@@ -120,7 +123,6 @@ class _HangoutCardState extends State<HangoutCard> {
         _thumbnail = place["image_url"];
         _place = place["name"];
         _eventDate = (eventData["time"] as Timestamp).toDate();
-        _ready = true;
       });
     }
   }
