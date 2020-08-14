@@ -25,7 +25,7 @@ class ProfileState extends State<Profile> {
   _updateProfilePicture() {
     profilePic = (Auth.userData.containsKey("pictureUrl"))
       ? Image.network(Auth.userData["pictureUrl"])
-      : Image.asset("assets/placeholder.png");
+      : Image.asset("assets/default_profile.png");
   }
 
   //TODO: Ask for permission to access the gallery
