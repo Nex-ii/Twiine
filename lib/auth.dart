@@ -36,7 +36,16 @@ class Auth {
               accessToken: result.accessToken.token,
             ),
           );
-          updateUserData();
+          var name = firebaseResult.user.displayName.split(' ');
+          Firestore.instance.collection("Users").document(firebaseResult.user.uid).get().then((doc) {
+            if (doc.data == null) {
+              TwiineApi.createNewUser(
+                  firstname: name[0],
+                  lastname: name[name.length-1],
+                  email: firebaseResult.user.email);
+            }
+            updateUserData();
+          });
           return firebaseResult.user;
           break;
         default:
@@ -58,7 +67,16 @@ class Auth {
           accessToken: auth.idToken,
         ),
       );
-      updateUserData();
+      var name = firebaseResult.user.displayName.split(' ');
+      Firestore.instance.collection("Users").document(firebaseResult.user.uid).get().then((doc) {
+        if (doc.data == null) {
+          TwiineApi.createNewUser(
+              firstname: name[0],
+              lastname: name[name.length-1],
+              email: firebaseResult.user.email);
+        }
+        updateUserData();
+      });
       return firebaseResult.user;
     } catch (error) {
       print(error.toString());

@@ -28,17 +28,20 @@ class LoginState extends State<Login> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Center(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+        child: SingleChildScrollView(
+          child: SafeArea(
             child: Column(
               children: [
-                SizedBox(height: 30),
-                Text(
-                  "Welcome to Twiine",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
+                Align(
+                  alignment: Alignment(-1, -1),
+                  child: Text(
+                    "Welcome to Twiine",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -57,7 +60,6 @@ class LoginState extends State<Login> {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
                 Text(
                   _loginMessage,
                   style: TextStyle(color: TwiineColors.red),
@@ -66,13 +68,13 @@ class LoginState extends State<Login> {
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.envelope),
                   "Continue with Email",
-                      () => {Navigator.pushNamed(context, "/login_email")},
+                  () => {Navigator.pushNamed(context, "/login_email")},
                 ),
                 SizedBox(height: 5),
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.facebook),
                   "Continue with Facebook",
-                      () async => {
+                  () async => {
                     await Auth.signInFacebook(),
                     _updateMessage("Facebook"),
                   },
@@ -81,10 +83,34 @@ class LoginState extends State<Login> {
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.google),
                   "Continue with Google",
-                      () async => {
+                  () async => {
                     await Auth.signInGoogle(),
                     _updateMessage("Google"),
                   },
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/login_email');
+                      },
+                      child: Text(
+                        "Log in",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
