@@ -12,7 +12,6 @@ import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/plans/plans.dart';
 import 'package:twiine/screens/post_login/addEvent/AddEvent.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/pre_login/login/login_checker.dart';
 import 'package:twiine/screens/pre_login/login/login_email.dart';
 import 'package:twiine/screens/pre_login/register/forgot_password/forgot_password.dart';
 import 'package:twiine/screens/pre_login/register/signup/create_account.dart';
