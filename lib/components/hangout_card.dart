@@ -121,14 +121,12 @@ class _HangoutCardState extends State<HangoutCard> {
           .data;
       Map<String, dynamic> place = (await eventData["place"].get()).data;
       if (this.mounted) {
-        for (DocumentReference userRef in eventData["users"]) {
-          var user = (await userRef.get()).data;
-          if (user.containsKey("pictureUrl")) {
-            userThumbnails.add(Image.network(user["pictureUrl"]));
-          } else {
+        eventData["users"].forEach((name, pictureUrl) {
+          if (pictureUrl != "")
+            userThumbnails.add(Image.network(pictureUrl));
+          else
             userThumbnails.add(Image.asset("assets/default_profile.png"));
-          }
-        }
+        });
         setState(() {
           _thumbnail = place["image_url"];
           _place = place["name"];
