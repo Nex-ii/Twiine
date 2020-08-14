@@ -92,7 +92,6 @@ class _UpcomingHangoutCardState extends State<UpcomingHangoutCard> {
           _eventDate = (eventData["time"] as Timestamp).toDate();
         });
       }
-      print("event data gotted");
     }
   }
 }
