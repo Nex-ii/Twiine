@@ -28,81 +28,84 @@ class _HangoutCardState extends State<HangoutCard> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_borderRadius),
         ),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: 219,
-              child: CachedNetworkImage(
-                imageUrl: _thumbnail,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(_borderRadius),
-                      topRight: Radius.circular(_borderRadius),
-                    ),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
+        child: InkWell(
+          onTap: () => {},
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 219,
+                child: CachedNetworkImage(
+                  imageUrl: _thumbnail,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(_borderRadius),
+                        topRight: Radius.circular(_borderRadius),
+                      ),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
-                errorWidget: (context, url, error) => Icon(Icons.error),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.fromLTRB(15, 11, 3, 0),
-              child: Row(
+              Container(
+                padding: EdgeInsets.fromLTRB(15, 11, 3, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        TimeDifference(eventDate: _eventDate),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Text(
+                            _place,
+                            style: Theme.of(context).textTheme.headline2,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      TimeDifference(eventDate: _eventDate),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        child: Text(
-                          _place,
-                          style: Theme.of(context).textTheme.headline2,
+                  Container(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                      child: SizedBox(
+                        height: 37,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: _userThumbnails.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: EdgeInsets.fromLTRB(3, 3, 3, 10),
+                              child: SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircleAvatar(
+                                  backgroundImage: _userThumbnails[index].image,
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: SizedBox(
-                      height: 37,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: _userThumbnails.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.fromLTRB(3, 3, 3, 10),
-                            child: SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircleAvatar(
-                                backgroundImage: _userThumbnails[index].image,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

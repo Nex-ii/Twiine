@@ -27,51 +27,54 @@ class _UpcomingHangoutCardState extends State<UpcomingHangoutCard> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(_borderRadius),
         ),
-        child: Row(
-          children: <Widget>[
-            Container(
-              height: 125,
-              width: 100,
-              child: CachedNetworkImage(
-                imageUrl: _thumbnail,
-                imageBuilder: (context, imageProvider) => Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(_borderRadius),
-                      bottomLeft: Radius.circular(_borderRadius),
-                    ),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
+        child: InkWell(
+          onTap: () => {},
+          child: Row(
+            children: <Widget>[
+              Container(
+                height: 125,
+                width: 100,
+                child: CachedNetworkImage(
+                  imageUrl: _thumbnail,
+                  imageBuilder: (context, imageProvider) => Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(_borderRadius),
+                        bottomLeft: Radius.circular(_borderRadius),
+                      ),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  TimeDifference(eventDate: _eventDate),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Text(
-                      _place,
-                      style: Theme.of(context).textTheme.headline3,
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    TimeDifference(eventDate: _eventDate),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Text(
+                        _place,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Text(
-                      _address,
-                      style: Theme.of(context).textTheme.bodyText2,
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Text(
+                        _address,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            )
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
