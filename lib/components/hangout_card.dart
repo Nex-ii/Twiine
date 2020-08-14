@@ -16,6 +16,8 @@ class _HangoutCardState extends State<HangoutCard> {
   double _borderRadius = 10;
   String _place = "";
   String _thumbnail = "";
+  List<Image> _userThumbnails = [];
+  Map<String, dynamic> _eventData;
   bool _ready = false;
   @override
   Widget build(BuildContext context) {
@@ -75,31 +77,26 @@ class _HangoutCardState extends State<HangoutCard> {
                 Container(
                   child: Padding(
                     padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                    child: Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(3, 3, 3, 10),
-                          child: SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  "https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4"),
+                    child: SizedBox(
+                      height: 37,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: _userThumbnails.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: EdgeInsets.fromLTRB(3, 3, 3, 10),
+                            child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircleAvatar(
+                                backgroundImage: _userThumbnails[index].image,
+                              ),
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(3, 3, 3, 10),
-                          child: SizedBox(
-                            width: 24,
-                            height: 24,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  "https://avatars0.githubusercontent.com/u/8981287?s=460&u=4bf37a144d65af7f4d6aa1616fd734f83b566fac&v=4"),
-                            ),
-                          ),
-                        ),
-                      ],
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
@@ -112,6 +109,7 @@ class _HangoutCardState extends State<HangoutCard> {
   }
 
   void _getEventData() async {
+    List<Image> userThumbnails = [];
     if (!_ready) {
       Map<String, dynamic> eventData = (await Firestore.instance
               .collection("Events")
@@ -120,10 +118,20 @@ class _HangoutCardState extends State<HangoutCard> {
           .data;
       Map<String, dynamic> place = (await eventData["place"].get()).data;
       if (this.mounted) {
+        for (DocumentReference userRef in eventData["users"]) {
+          var user = (await userRef.get()).data;
+          if (user.containsKey("pictureUrl")) {
+            userThumbnails.add(Image.network(user["pictureUrl"]));
+          } else {
+            userThumbnails.add(Image.asset("assets/default_profile.png"));
+          }
+        }
         setState(() {
           _thumbnail = place["image_url"];
           _place = place["name"];
           _eventDate = (eventData["time"] as Timestamp).toDate();
+          _eventData = eventData;
+          _userThumbnails = userThumbnails;
           _ready = true;
         });
       }
