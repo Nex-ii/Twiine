@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:twiine/auth.dart';
 import 'package:twiine/components/hangout_card.dart';
 import 'package:twiine/components/upcoming_hangout_card.dart';
 
@@ -8,38 +10,58 @@ class MyHangouts extends StatefulWidget {
 }
 
 class _MyHangoutsState extends State<MyHangouts> {
+  bool _ready = false;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: ListView(
-        children: <Widget>[
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(4, 0, 0, 8),
-              child: Text(
-                "Current Hangout",
-                style: Theme.of(context).textTheme.headline1,
+    if (!_ready) {
+      Auth.updateUserData().then(
+        (value) => (setState(
+          () {
+            _ready = true;
+          },
+        )),
+      );
+      return Text("Loading");
+    }
+    else {
+      var eventList = Auth.userData["events"];
+      print(eventList.toString());
+      return Container(
+        child: ListView(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(4, 0, 0, 8),
+                child: Text(
+                  "Current Hangout",
+                  style: Theme.of(context).textTheme.headline1,
+                ),
               ),
             ),
-          ),
-          HangoutCard(eventId: "tDcccXrWrq3bPSrnJE83"),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              padding: EdgeInsets.fromLTRB(4, 20, 0, 20),
-              child: Text(
-                "Upcoming Hangouts",
-                style: Theme.of(context).textTheme.headline1,
+            HangoutCard(eventId: eventList[0].documentID),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                padding: EdgeInsets.fromLTRB(4, 20, 0, 20),
+                child: Text(
+                  "Upcoming Hangouts",
+                  style: Theme.of(context).textTheme.headline1,
+                ),
               ),
             ),
-          ),
-          UpcomingHangoutCard(eventId: "U3gzviOvGKWp3pMcQnCV"),
-          UpcomingHangoutCard(eventId: "TkfQchqpGZpbBw7C0BCb"),
-          UpcomingHangoutCard(eventId: "ZDOIWVuN2lIToMRLcLNr"),
-          UpcomingHangoutCard(eventId: "Fe37gd76S2esqR5BB0DY"),
-        ],
-      ),
-    );
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: eventList.length - 1,
+              itemBuilder: (BuildContext context, int index) {
+                return UpcomingHangoutCard(
+                    eventId: eventList[index + 1].documentID);
+              },
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
