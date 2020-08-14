@@ -12,11 +12,11 @@ class HangoutCard extends StatefulWidget {
 }
 
 class _HangoutCardState extends State<HangoutCard> {
+  DateTime _eventDate = DateTime.now();
   double _borderRadius = 10;
   String _place = "";
   String _thumbnail = "";
-  DateTime _eventDate = DateTime.now();
-
+  bool _ready = false;
   @override
   Widget build(BuildContext context) {
     _getEventData();
@@ -112,18 +112,21 @@ class _HangoutCardState extends State<HangoutCard> {
   }
 
   void _getEventData() async {
-    Map<String, dynamic> eventData = (await Firestore.instance
-            .collection("Events")
-            .document(widget.eventId)
-            .get())
-        .data;
-    Map<String, dynamic> place = (await eventData["place"].get()).data;
-    if (this.mounted) {
-      setState(() {
-        _thumbnail = place["image_url"];
-        _place = place["name"];
-        _eventDate = (eventData["time"] as Timestamp).toDate();
-      });
+    if (!_ready) {
+      Map<String, dynamic> eventData = (await Firestore.instance
+              .collection("Events")
+              .document(widget.eventId)
+              .get())
+          .data;
+      Map<String, dynamic> place = (await eventData["place"].get()).data;
+      if (this.mounted) {
+        setState(() {
+          _thumbnail = place["image_url"];
+          _place = place["name"];
+          _eventDate = (eventData["time"] as Timestamp).toDate();
+          _ready = true;
+        });
+      }
     }
   }
 }
