@@ -89,12 +89,9 @@ class ProfileState extends State<Profile> {
             children: [
               SizedBox(height: 30),
               _labelText("ACCOUNT"),
-              _createButton(
-                Icons.account_circle,
-                "Manage Account Information",
-                () => {},
-              ),
+              _createButton(Icons.account_circle, "Manage Account Information", () => {_toManage()}),
               _createButton(Icons.notifications, "Notifications", () => {}),
+
               _createButton(Icons.bookmark, "Saved", () => {}),
               _labelText("SUPPORT"),
               _createButton(Icons.help_outline, "Get Help", () => {}),
@@ -154,5 +151,9 @@ class ProfileState extends State<Profile> {
         onTap: onTap,
       ),
     );
+  }
+
+  _toManage() {
+    Navigator.of(context).pushNamed('/manage');
   }
 }
