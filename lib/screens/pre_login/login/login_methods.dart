@@ -6,7 +6,7 @@ enum LoginMethods{
 
 }
 
-extension LoginMethodsUtils on LoginMethods{
+class LoginMethodsUtils{
   static LoginMethods stringToEnum(String str){
     switch(str){
       case "phone":
@@ -18,7 +18,7 @@ extension LoginMethodsUtils on LoginMethods{
       case "google":
         return LoginMethods.google;
         break;
-      case "email":
+      default:
         return LoginMethods.email;
         break;
     }

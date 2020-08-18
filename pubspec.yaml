@@ -15,42 +15,48 @@ dependencies:
 
   intl_phone_number_input: ^0.4.6+2
   shared_preferences: ^0.5.1+2
+  pin_code_fields: ^4.0.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.3
 
-  # authentication stuff
+  # flutterfire
   firebase_core: ^0.4.0+9
   firebase_auth: ^0.16.1
-  flutter_webview_plugin: ^0.3.10+1
-  flutter_facebook_login: ^3.0.0
-  google_sign_in: ^4.5.1
   cloud_functions: ^0.5.0
+  cloud_firestore: ^0.13.7
 
-  #For the search bar
+  # authentication
+  google_sign_in: ^4.5.1
+  flutter_facebook_login: ^3.0.0
+
+  # For the search bar
   flappy_search_bar: 1.4.1
 
-  #validation for forms
+  # validation for forms
   validators: ^2.0.1
 
   # svgs
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
 
-  #Google Maps
+  # Google Maps
   google_maps_flutter: ^0.5.28+1
 
-  #Accessing photos
+  # Accessing photos
   image_picker: ^0.6.7+4
 
-  #Storing Photos
+  # Storing Photos
   firebase_storage: ^3.1.6
 
-  #Permissions
+  # Permissions
   permission_handler: ^5.0.1+1
 
-  #Cloud data for firebase
-  cloud_firestore: ^0.13.7
+  # Provider for state management
+  provider: ^4.3.2
+
+  # image cache
+  cached_network_image: ^2.2.0
 
 dev_dependencies:
   flutter_test:
@@ -59,22 +65,15 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/icons/addIcon.svg
-    - assets/icons/calendarIcon.svg
-    - assets/icons/mapIcon.svg
-    - assets/icons/personIcon.svg
-    - assets/icons/searchIcon.svg
-    - assets/icons/settings.svg
+    - assets/icons/add_icon.svg
+    - assets/icons/calendar_icon.svg
+    - assets/icons/map_icon.svg
+    - assets/icons/person_icon.svg
+    - assets/icons/search_icon.svg
+    - assets/icons/settings_icon.svg
+    - assets/default_profile.png
+    - assets/placeholder.png
   fonts:
-    - family: MyFlutterApp
-      fonts:
-        - asset: assets/fonts/facebook.ttf
-    - family: Karla
-      fonts:
-        - asset: assets/fonts/Karla-Regular.ttf
-        - asset: assets/fonts/Karla-Bold.ttf
-        - asset: assets/fonts/Karla-Italic.ttf
-        - asset: assets/fonts/Karla-BoldItalic.ttf
     - family: Acumin Pro
       fonts: 
         - asset: assets/fonts/Acumin-BdItPro.otf

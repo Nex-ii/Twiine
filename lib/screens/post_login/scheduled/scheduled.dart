@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/screens/post_login/scheduled/plannedDates.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -191,9 +191,6 @@ class _ScheduledState extends State<Scheduled> {
             (onValue) {
               //TODO: Debug database issues
               PlannedDates temp = onValue;
-              getUserID().then((value){
-                userID = value;
-              });
               Firestore.instance.collection('Events').add({
                 "location": temp.location,
                 "time" : Timestamp.fromDate(temp.dateInfo),
@@ -214,13 +211,7 @@ class _ScheduledState extends State<Scheduled> {
   }
 
   void getEvents() async{
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    Firestore.instance
-        .collection('Users')
-        .document(firebaseUser.uid)
-        .get()
-        .then((value){
-      List<dynamic> temp = value.data['events'];
+    List<dynamic> temp = Auth.userData['events'];
       for(int i=0; i<temp.length; i++){
         String documentID = temp[i].documentID;
         Firestore.instance
@@ -249,12 +240,5 @@ class _ScheduledState extends State<Scheduled> {
             });
         });
         }
-      });
+      }
     }
-
-  Future<String> getUserID() async {
-    var firebaseUser = await FirebaseAuth.instance.currentUser();
-    return firebaseUser.uid;
-  }
-
-  }
