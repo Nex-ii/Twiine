@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:twiine/login_checker.dart';
 import 'package:twiine/screens/post_login/profile/change_password.dart';
 import 'package:provider/provider.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/screens/post_login/profile/settings.dart';
-import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/login/login_checker.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 import 'package:twiine/screens/pre_login/login/login.dart';
 import 'package:twiine/components/navbar.dart';

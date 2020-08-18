@@ -44,14 +44,14 @@ class LoginEmailState extends State<LoginEmail> {
   }
 
   _signInWithEmail() async {
-    Auth.signInEmail(_emailController.text, _passwordController.text);
-    setState(() {
-      Auth.firebaseAuth.currentUser().then((value) => {
-            if (value != null)
-              Navigator.of(context).pushNamed('/navBar')
-            else
-              _loginMessage = "Unable to authenticate with email"
-          });
-    });
+    await Auth.signInEmail(_emailController.text, _passwordController.text);
+    Auth.firebaseAuth.currentUser().then((value) => {
+          if (value != null)
+            Navigator.of(context).popUntil(ModalRoute.withName('/'))
+          else
+            setState(() {
+              _loginMessage = "Unable to authenticate with email";
+            })
+        });
   }
 }
