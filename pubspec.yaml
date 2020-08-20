@@ -68,6 +68,13 @@ flutter:
     - assets/icons/person_icon.svg
     - assets/icons/search_icon.svg
     - assets/icons/settings_icon.svg
+    - assets/icons/restaurant-svgrepo-com.svg
+    - assets/icons/cocktail-svgrepo-com.svg
+    - assets/icons/ferris-wheel-svgrepo-com.svg
+    - assets/icons/amusement-park-svgrepo-com.svg
+    - assets/icons/camera-svgrepo-com.svg
+    - assets/icons/tree-svgrepo-com.svg
+    - assets/icons/more-svgrepo-com.svg
   fonts:
     - family: Acumin Pro
       fonts: 
