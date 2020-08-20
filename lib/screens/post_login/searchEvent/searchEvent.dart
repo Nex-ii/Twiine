@@ -1,11 +1,14 @@
 
+
 import 'package:flappy_search_bar/flappy_search_bar.dart';
 import 'package:flappy_search_bar/scaled_tile.dart';
 import 'package:flappy_search_bar/search_bar_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
+import 'package:twiine/screens/post_login/profile/profile.dart';
 
 class Post {
   final String title;
@@ -36,24 +39,22 @@ class SearchEvent extends StatelessWidget {
     });
   }
 
-
   Widget _buildSearchBar() {
     return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         child: SearchBar<Post>(
           onSearch: search,
           onItemFound: (Post post, int index) {
             return Container(
               decoration: BoxDecoration(
-                color: Colors.orange,
-                borderRadius: BorderRadius.circular(20.0),
+                color: Colors.white,
               ),
               child: ListTile(
                 title: Text(post.title),
                 subtitle: Text(post.description),
                 onTap: () {
                   //// Description should be the page of the business information
-                  //Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
+                  // Navigator.of(context).push(MaterialPageRoute(builder: (context) => Detail()));
                 },
               ),
             );
@@ -63,7 +64,7 @@ class SearchEvent extends StatelessWidget {
           ),
           icon: Icon(
             Icons.search,
-            color: Colors.red,
+            color: TwiineColors.red,
             size: 35,
           ),
           hintText: 'Where do you want to hangout?',
@@ -72,15 +73,13 @@ class SearchEvent extends StatelessWidget {
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
           loader: Text('loading...'),
           placeHolder: Text(''),
           onError: (error) {
             return Text('Error occurred: $error');
           },
           emptyWidget: Text("Empty"),
-          crossAxisCount: 2,
+          crossAxisCount: 1,
         ),
     );
   }
@@ -92,8 +91,11 @@ class SearchEvent extends StatelessWidget {
           padding: EdgeInsets.all(10.0),
           child: Column( // Replace with a Row for horizontal icon + text
             children: <Widget>[
-              SvgPicture.asset(iconAssetPath, width: 30, height: 30,),
-              Text(activityString),
+              SvgPicture.asset(iconAssetPath, width: 30, height: 30, color: TwiineColors.red,),
+              Padding(
+                  padding: EdgeInsets.only(top: 5.0),
+                  child: Text(activityString, style: TextStyle(color: Colors.black),)
+              ),
             ],
           ),
       ),
@@ -102,10 +104,10 @@ class SearchEvent extends StatelessWidget {
 
   Widget _buildListTitle(String title){
     return Container(
-      padding: EdgeInsets.only(left: 40.0, top: 13.0),
+      padding: EdgeInsets.only(left: 12.0, top: 13.0),
       child: Text(
         title,
-        style: TextStyle(fontSize: 16),
+        style: TextStyle(fontSize: 16, color: Colors.black),
         textAlign: TextAlign.left,
       ),
     );
@@ -137,14 +139,15 @@ class SearchEvent extends StatelessWidget {
               child: Text(
                 restaurantName,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(color: Colors.black,),
               ),
             ),
           ),
           Text(
             restaurantLocation,
-            style: TextStyle(
-                color: Colors.grey
-            ),
+//            style: TextStyle(
+//                color: Colors.grey
+//            ),
           ),
         ]
     );
@@ -158,11 +161,26 @@ class SearchEvent extends StatelessWidget {
           child: _buildListTitle(title)
       ),
       Container(
-          padding: EdgeInsets.only(left: 40.0),
+          padding: EdgeInsets.only(left: 12.0, right: 12.0),
           height: 218.0,
           child: ListView(
             scrollDirection: Axis.horizontal,
             children: <Widget> [
+              _buildBusinessCard(
+                  NetworkImage('https://s3-alpha-sig.figma.com/img/f01a/5001/99dc80250b77326c8c83740bec65261a?Expires=1598832000&Signature=FSIebYqiZurd2zCmGQObaZ75ObIf7kwOi9Y4-v1nDdpEWvZ-WCgjK-4SQKUvZGLvaVlcEJnbqXJArn4-3mxNciCdjSh~R8agdAm7GvIWCdtaJAvM1cVu~pyhmboMm9Q1rUheleKV9wIgSPLAtVxVHatUgHP6SFLXNBnzGbeADChzCZjNv0E~ffneSVxYeUoy9sFEw78Klb6jv-nGGFFFeaOYxn3LEBmzgQzlyA-T6NOwPw4W2gebeXNAZ84ZOyx9PCHFJHLyvl7MZXWp9~f49gBpZvT~-yKgnmD9kq4IorFypt5EyYEeA1t~9EZR~BGMiTwgA3-DcEg5ILu8JA4AHw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'),
+                  'Bopomofo',
+                  'San Gabriel, CA'
+              ),
+              _buildBusinessCard(
+                  NetworkImage('https://s3-alpha-sig.figma.com/img/7e35/5b20/0755ed687ff758a80226caef118b68ae?Expires=1598832000&Signature=fZ3wymmSyfQVcX~BUnvzpN7MIJwIuQEWb45awqX5Yr40ZqKEuUIVRD~j1MQ8TRchiyrZk7fa-tTpQMjdAej3IczGnjh5mfM7yK6GWTRMXAvGowHir0PtgmgIwaoJbkaW0JpxQuzDnE~Fnsc7RbuoQ1OOy4gi7saOtJ5GyZsY79-Ur4p-kAMiuqhheoEBjTBppFgRGqHWqw67LENPNTVpccns8Iy3waZeZZwjJ8iyAoDRyyYh4NPyCdDAKWAqQ2bO4fiaJ9BBKT6etx5T9vE1D67pJ4DFRkYu~6aTsbdJFoIWc7v4RP7ZuyNtL8dYo7czBe4sudp5DtYwIPd-dG8NNg__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'),
+                  'Myungrang Hot Dogs',
+                  'Rowland Heights, CA'
+              ),
+              _buildBusinessCard(
+                  NetworkImage('https://s3-alpha-sig.figma.com/img/40d0/e0d9/4c53e0f02ee5a7baaace3514d7fc0278?Expires=1598832000&Signature=UMfAVugRv3BdUcAN0C18rhU-aoBsFYnhQeZJcPPDfPWSrRvPIqmPAx3h4Y6OTIoFPwrPYPnNHqKdci4aKeo-gDBMwgb3Unj0n3JOukLmotpy9QiZcJ7YrfIavj-BObswnmsnuInzCWyKde2NgGEltK~MawbbaAp5dVIYZiqu1T7YZx1FIf2sFWAbCkmgCkBYYEoZWyQO85JKYDAoZ4tQ2hNr-8HT~4kzarv~PaUdPlXsEqb1WH0TiS8NGrDDBHsy1L4BY~0ecKz84anF-hx8QwDXk0ax04FbSoLwhNRuL06NvCZamt93HquMnyknXEEa5DVflZbargg2Ms9TfaxJQA__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'),
+                  'Hotties Fried Chicken',
+                  'Chino, CA'
+              ),
               _buildBusinessCard(
                   NetworkImage('https://s3-alpha-sig.figma.com/img/f01a/5001/99dc80250b77326c8c83740bec65261a?Expires=1598832000&Signature=FSIebYqiZurd2zCmGQObaZ75ObIf7kwOi9Y4-v1nDdpEWvZ-WCgjK-4SQKUvZGLvaVlcEJnbqXJArn4-3mxNciCdjSh~R8agdAm7GvIWCdtaJAvM1cVu~pyhmboMm9Q1rUheleKV9wIgSPLAtVxVHatUgHP6SFLXNBnzGbeADChzCZjNv0E~ffneSVxYeUoy9sFEw78Klb6jv-nGGFFFeaOYxn3LEBmzgQzlyA-T6NOwPw4W2gebeXNAZ84ZOyx9PCHFJHLyvl7MZXWp9~f49gBpZvT~-yKgnmD9kq4IorFypt5EyYEeA1t~9EZR~BGMiTwgA3-DcEg5ILu8JA4AHw__&Key-Pair-Id=APKAINTVSUGEWH5XD5UA'),
                   'Bopomofo',
@@ -217,6 +235,9 @@ class SearchEvent extends StatelessWidget {
                     ),
                       ..._buildRecommendationList('For You'),
                       ..._buildRecommendationList('Recommended Tea Places'),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 12.0),
+                      )
                     ],
                 ),
               ),
