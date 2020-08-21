@@ -83,12 +83,12 @@ class _UpcomingHangoutCardState extends State<UpcomingHangoutCard> {
 
   void _getEventData() async {
     if (!_ready) {
-      Map<String, dynamic> eventData = (await Firestore.instance
+      Map<String, dynamic> eventData = (await FirebaseFirestore.instance
               .collection("Events")
-              .document(widget.eventId)
+              .doc(widget.eventId)
               .get())
-          .data;
-      Map<String, dynamic> place = (await eventData["place"].get()).data;
+          .data();
+      Map<String, dynamic> place = (await eventData["place"].get()).data();
       if (this.mounted) {
         setState(() {
           _thumbnail = place["image_url"];
