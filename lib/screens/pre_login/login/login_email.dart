@@ -23,6 +23,7 @@ class LoginEmailState extends State<LoginEmail> {
 
   @override
   void initState() {
+    // subscribe to auth changes
     Auth.firebaseAuth.authStateChanges().listen((user) {
       print("logged in: " + user.toString());
       if (user != null) {
@@ -37,7 +38,6 @@ class LoginEmailState extends State<LoginEmail> {
 
   @override
   Widget build(BuildContext context) {
-    // subscribe to auth changes
     passwordValidator = (String value) {
       if (value.isEmpty) {
         return 'Password is Required';
@@ -74,7 +74,7 @@ class LoginEmailState extends State<LoginEmail> {
 
   _signInWithEmail() async {
     try {
-      Auth.signInEmail(_emailController.text, _passwordController.text);
+      await Auth.signInEmail(_emailController.text, _passwordController.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

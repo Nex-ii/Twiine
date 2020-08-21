@@ -4,6 +4,7 @@ import 'package:twiine/auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/screens/post_login/profile/account_settings.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -15,17 +16,12 @@ class ProfileState extends State<Profile> {
 
   Image profilePic;
   ProfileState() {
-    _updateProfilePicture();
+    profilePic = Auth.currentUser.profilePicture;
     Auth.updateUserData().then((value) => {
-      setState(() {
-        _updateProfilePicture();
-      })
-    });
-  }
-  _updateProfilePicture() {
-    profilePic = (Auth.userData.containsKey("pictureUrl"))
-      ? Image.network(Auth.userData["pictureUrl"])
-      : Image.asset("assets/default_profile.png");
+          setState(() {
+            profilePic = Auth.currentUser.profilePicture;
+          })
+        });
   }
 
   //TODO: Ask for permission to access the gallery
@@ -70,11 +66,11 @@ class ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${Auth.userData["firstname"]} ${Auth.userData["lastname"]}",
+                  "${Auth.currentUser.data["firstname"]} ${Auth.currentUser.data["lastname"]}",
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 Text(
-                  Auth.userData["email"],
+                  Auth.currentUser.data["email"],
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ],
@@ -92,10 +88,15 @@ class ProfileState extends State<Profile> {
               _labelText("ACCOUNT"),
               _createButton(
                 Icons.account_circle,
-                "Manage Account Information",
-                () => {},
+                "Account Settings",
+                () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AccountSettings()),
+                  )
+                },
               ),
-              _createButton(Icons.notifications, "Notifications", () => {}),
+              _createButton(Icons.people, "Friends", () => {}),
               _createButton(Icons.bookmark, "Saved", () => {}),
               _labelText("SUPPORT"),
               _createButton(Icons.help_outline, "Get Help", () => {}),

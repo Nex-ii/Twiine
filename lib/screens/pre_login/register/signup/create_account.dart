@@ -97,7 +97,7 @@ class CreateAccountState extends State<CreateAccount> {
       leading: new IconButton(
         icon: new Icon(Icons.arrow_back_ios),
         color: Colors.black,
-        onPressed: () => Navigator.of(context).pushNamed('/landing'),
+        onPressed: () => Navigator.of(context).pop(),
       ),
     );
 
