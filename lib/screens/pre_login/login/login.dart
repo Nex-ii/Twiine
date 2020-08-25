@@ -122,12 +122,11 @@ class LoginState extends State<Login> {
 
   void _updateMessage(String authType) {
     setState(() {
-      Auth.firebaseAuth.currentUser().then((value) =>
-      {
-        if (value != null)
-          Navigator.of(context).popUntil(ModalRoute.withName('/'))
+      Auth.firebaseAuth.authStateChanges().listen((user) {
+        if (user != null)
+          Navigator.of(context).popUntil(ModalRoute.withName('/'));
         else
-          _loginMessage = "Unable to authenticate with $authType"
+          _loginMessage = "Unable to authenticate with $authType";
       });
     });
   }

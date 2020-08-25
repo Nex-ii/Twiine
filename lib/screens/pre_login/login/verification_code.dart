@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/common/text_form.dart';
@@ -9,7 +8,7 @@ import 'package:twiine/twiine_api.dart';
 
 class VerificationCode extends StatefulWidget {
   VerificationCode({Key key, @required this.phone}) : super(key: key);
-  String phone;
+  final String phone;
 
   @override
   VerificationCodeState createState() => VerificationCodeState(phone);
@@ -18,7 +17,7 @@ class VerificationCode extends StatefulWidget {
 class VerificationCodeState extends State<VerificationCode> {
   String _phone;
   String verificationID;
-  TextEditingController SMSCodeController = TextEditingController();
+  TextEditingController smsCodeController = TextEditingController();
 
   VerificationCodeState(String phone) {
     _phone = phone;
@@ -59,7 +58,9 @@ class VerificationCodeState extends State<VerificationCode> {
                 SizedBox(height: 30),
                 PinCodeTextField(
                   length: 6,
+                  appContext: context,
                   obsecureText: false,
+                  onChanged: (str) {},
                   animationType: AnimationType.fade,
                   backgroundColor: Colors.transparent,
                   pinTheme: PinTheme(
@@ -72,7 +73,7 @@ class VerificationCodeState extends State<VerificationCode> {
                   ),
                   animationDuration: Duration(milliseconds: 300),
                   autoDismissKeyboard: true,
-                  controller: SMSCodeController,
+                  controller: smsCodeController,
                   onCompleted: _signInWithSMSCode,
                 ),
                 SizedBox(height: 10),
@@ -121,7 +122,7 @@ class VerificationCodeState extends State<VerificationCode> {
     };
 
     final PhoneVerificationFailed verificationfailed =
-        (AuthException authException) {
+        (FirebaseAuthException authException) {
       TextForm.popUp(context, "Failed to verify phone number");
     };
 
@@ -144,17 +145,17 @@ class VerificationCodeState extends State<VerificationCode> {
 
   _signInWithSMSCode(String smsCode) {
     FirebaseAuth.instance
-        .signInWithCredential(PhoneAuthProvider.getCredential(
-            verificationId: verificationID, smsCode: SMSCodeController.text))
+        .signInWithCredential(PhoneAuthProvider.credential(
+            verificationId: verificationID, smsCode: smsCodeController.text))
         .catchError((error) {
       TextForm.popUp(context,
           "The code you have entered is incorrect. Please re-enter the code.");
     }).then((result) {
       if (result != null) {
         Navigator.of(context).pushNamed('/signup');
-        Firestore.instance
+        FirebaseFirestore.instance
             .collection("Users")
-            .document(result.user.uid)
+            .doc(result.user.uid)
             .get()
             .then((doc) {
           if (doc.data == null) {

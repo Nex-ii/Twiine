@@ -1,8 +1,8 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/colors.dart';
 import 'package:twiine/common/text_form.dart';
 
 class ChangePassowrd extends StatefulWidget {
@@ -17,11 +17,12 @@ class ChangePassowrdState extends State<ChangePassowrd> {
   String _oldPassword;
   String _newPassword;
   String _confirmPassword;
-
-  String _changePasswordMessage = "";
+  Stream _authStream = Auth.firebaseAuth.authStateChanges();
 
   // styling design variables
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String _changePasswordMessage = "";
 
   static TextEditingController _oldPasswordController = TextEditingController();
   static TextEditingController _newPasswordController = TextEditingController();
@@ -62,9 +63,10 @@ class ChangePassowrdState extends State<ChangePassowrd> {
       }
       _formKey.currentState.save();
 
-      Auth.firebaseAuth.currentUser().then((user) {
+      StreamSubscription<User> subscription;
+      subscription = _authStream.listen((user) {
         user
-            .reauthenticateWithCredential(EmailAuthProvider.getCredential(
+            .reauthenticateWithCredential(EmailAuthProvider.credential(
                 email: user.email, password: _oldPassword))
             .catchError((error) {
           setState(() {
@@ -78,6 +80,8 @@ class ChangePassowrdState extends State<ChangePassowrd> {
             });
           }
         });
+        // we only need to listen for this once
+        subscription.cancel();
       });
     };
 

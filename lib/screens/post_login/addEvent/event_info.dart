@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:twiine/auth.dart';
-import 'package:twiine/common/app_text_field.dart';
-import 'package:flutter/material.dart';
 import 'package:twiine/components/time_difference.dart';
 
 class EventInfo extends StatefulWidget {
@@ -154,7 +151,7 @@ class _EventInfoState extends State<EventInfo> {
     );
   }
 
-  Widget EventImage() {
+  Widget eventImage() {
     return Stack(
       children: [
         _buildEventImage(),
@@ -167,7 +164,7 @@ class _EventInfoState extends State<EventInfo> {
     );
   }
 
-  Widget EventTitle() {
+  Widget eventTitle() {
     return Stack(
       children: [
         Container(
@@ -209,7 +206,7 @@ class _EventInfoState extends State<EventInfo> {
     );
   }
 
-  Widget EventSpecifications() {
+  Widget eventSpecifications() {
     return Container(
       padding: EdgeInsets.only(left: 32.0, right: 32.0),
       child: Row(
@@ -237,9 +234,9 @@ class _EventInfoState extends State<EventInfo> {
           padding: EdgeInsets.only(top: 24.0),
           child: Column(
             children: [
-              EventImage(),
-              EventTitle(),
-              EventSpecifications(),
+              eventImage(),
+              eventTitle(),
+              eventSpecifications(),
               Padding(
                 padding: EdgeInsets.all(24.0),
                 child: Image.network('https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/Test%20Location.PNG?alt=media&token=0b8d6236-2a08-47cb-9023-9be21b47ba8f'),

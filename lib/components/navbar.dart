@@ -106,10 +106,4 @@ class NavbarState extends State<Navbar> {
       ),
     );
   }
-
-  _logout() async {
-    Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);
-  }
-
-  _settings() {}
 }
