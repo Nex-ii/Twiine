@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/login_checker.dart';
-import 'package:twiine/screens/post_login/profile/change_password.dart';
 import 'package:provider/provider.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/screens/post_login/profile/settings.dart';
@@ -23,20 +23,60 @@ void main() => runApp(App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StreamProvider<FirebaseUser>.value(
-      value: Auth().user,
-      child: new MaterialApp(
-        title: 'Twiine',
-        theme: ThemeData(
-          fontFamily: 'Acumin Pro',
-          primaryColor: TwiineColors.red,
-          accentColor: TwiineColors.orange,
-          textTheme: TextTheme(
-            headline1: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black
+    Firebase.initializeApp();
+    return FutureBuilder<Object>(
+      future: Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return StreamProvider<User>.value(
+            value: Auth().user,
+            child: new MaterialApp(
+              title: 'Twiine',
+              theme: ThemeData(
+                fontFamily: 'Acumin Pro',
+                primaryColor: TwiineColors.red,
+                accentColor: TwiineColors.orange,
+                textTheme: TextTheme(
+                  headline1: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black
+                  ),
+                  headline2: TextStyle(
+                    fontSize: 24,
+                    color: Colors.black
+                  ),
+                  headline3: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black
+                  ),
+                  bodyText1: TextStyle(
+                    fontSize: 12,
+                    color: Colors.black
+                  ),
+                  bodyText2: TextStyle(
+                    fontSize: 12,
+                    color: TwiineColors.lightGrey2
+                  ),
+                )
+              ),
+              debugShowCheckedModeBanner: false,
+              initialRoute: '/',
+              routes: {
+                '/': (context) => LoginChecker(),
+                '/landing': (context) => LandingPage(),
+                '/login': (context) => Login(),
+                '/login_email': (context) => LoginEmail(),
+                '/signup': (context) => CreateAccount(),
+                '/plans': (context) => PlansPage(),
+                '/profile': (context) => Profile(),
+                '/forgotPassword': (context) => ForgotPassword(),
+                '/navBar': (context) => Navbar(),
+                '/addEvent': (context) => AddEvent(),
+                '/settings': (context) => Settings(),
+              },
             ),
+<<<<<<< HEAD
             headline2: TextStyle(
               fontSize: 24,
               color: Colors.black
@@ -72,6 +112,13 @@ class App extends StatelessWidget {
           '/manage': (context) => Manage(),
         },
       ),
+=======
+          );
+        }
+        else
+          return Container();
+      }
+>>>>>>> 3fb7668310338ac8bb5a4e6726ff516d7a62c6af
     );
   }
 }

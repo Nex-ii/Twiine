@@ -30,7 +30,7 @@ class _ManageState extends State<Manage> {
                   return null;
                 },
                 onSaved: (String value) {
-                  temp.name = value;
+                  //temp.name = value;
                 },
               ),
             ),
@@ -66,7 +66,6 @@ class MyTextFormField extends StatelessWidget {
           filled: true,
           fillColor: Colors.grey[200],
         ),
-        obscureText: isPassword ? true : false,
         validator: validator,
         onSaved: onSaved,
         keyboardType: isEmail ? TextInputType.emailAddress : TextInputType.text,

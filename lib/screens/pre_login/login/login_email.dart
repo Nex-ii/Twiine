@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
@@ -21,7 +22,22 @@ class LoginEmailState extends State<LoginEmail> {
   static Function onContinueTap;
 
   @override
+  void initState() {
+    Auth.firebaseAuth.authStateChanges().listen((user) {
+      print("logged in: " + user.toString());
+      if (user != null) {
+        print("logged in");
+        Navigator.of(context).popUntil(ModalRoute.withName('/'));
+      } else
+        setState(() {
+          _loginMessage = "Unable to authenticate with email";
+        });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // subscribe to auth changes
     passwordValidator = (String value) {
       if (value.isEmpty) {
         return 'Password is Required';
@@ -51,18 +67,19 @@ class LoginEmailState extends State<LoginEmail> {
           onTap: () => Navigator.pushNamed(context, '/forgotPassword')),
     ], [
       ButtonElement("Continue", _signInWithEmail),
-    ], GlobalKey(), appBar: bar, title: "Sign in to twiine", trailingSpacing: 0);
+    ], GlobalKey(),
+        appBar: bar, title: "Sign in to twiine", trailingSpacing: 0);
   }
 
   _signInWithEmail() async {
-    await Auth.signInEmail(_emailController.text, _passwordController.text);
-    Auth.firebaseAuth.currentUser().then((value) => {
-          if (value != null)
-            Navigator.of(context).popUntil(ModalRoute.withName('/'))
-          else
-            setState(() {
-              _loginMessage = "Unable to authenticate with email";
-            })
-        });
+    try {
+      Auth.signInEmail(_emailController.text, _passwordController.text);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
   }
 }
