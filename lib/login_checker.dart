@@ -13,7 +13,7 @@ class LoginChecker extends StatefulWidget {
 class LoginCheckerState extends State<LoginChecker> {
   @override
   Widget build(BuildContext context) {
-    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    User user = Provider.of<User>(context);
     if (user == null) {
       return LandingPage();
     } else {

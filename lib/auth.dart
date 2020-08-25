@@ -8,13 +8,13 @@ class Auth {
   static final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   static Map<String, dynamic> userData;
 
-  Stream<FirebaseUser> get user {
-    return firebaseAuth.onAuthStateChanged;
+  Stream<User> get user {
+    return firebaseAuth.authStateChanges();
   }
 
-  static Future<FirebaseUser> signInEmail(String email, String password) async {
+  static Future<User> signInEmail(String email, String password) async {
     try {
-      AuthResult result = await firebaseAuth.signInWithEmailAndPassword(
+      UserCredential result = await firebaseAuth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -26,22 +26,24 @@ class Auth {
     }
   }
 
-  static Future<FirebaseUser> signInFacebook() async {
+  static Future<User> signInFacebook() async {
     try {
       var result = await FacebookLogin().logIn(["email"]);
       switch (result.status) {
         case FacebookLoginStatus.loggedIn:
           var firebaseResult = await firebaseAuth.signInWithCredential(
-            FacebookAuthProvider.getCredential(
-              accessToken: result.accessToken.token,
-            ),
+            FacebookAuthProvider.credential(result.accessToken.token),
           );
           var name = firebaseResult.user.displayName.split(' ');
-          Firestore.instance.collection("Users").document(firebaseResult.user.uid).get().then((doc) {
+          FirebaseFirestore.instance
+              .collection("Users")
+              .doc(firebaseResult.user.uid)
+              .get()
+              .then((doc) {
             if (doc.data == null) {
               TwiineApi.createNewUser(
                   firstname: name[0],
-                  lastname: name[name.length-1],
+                  lastname: name[name.length - 1],
                   email: firebaseResult.user.email);
             }
             updateUserData();
@@ -57,22 +59,26 @@ class Auth {
     }
   }
 
-  static Future<FirebaseUser> signInGoogle() async {
+  static Future<User> signInGoogle() async {
     try {
       var result = await GoogleSignIn(scopes: ['email']).signIn();
       var auth = await result.authentication;
       var firebaseResult = await firebaseAuth.signInWithCredential(
-        GoogleAuthProvider.getCredential(
+        GoogleAuthProvider.credential(
           idToken: auth.idToken,
           accessToken: auth.idToken,
         ),
       );
       var name = firebaseResult.user.displayName.split(' ');
-      Firestore.instance.collection("Users").document(firebaseResult.user.uid).get().then((doc) {
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(firebaseResult.user.uid)
+          .get()
+          .then((doc) {
         if (doc.data == null) {
           TwiineApi.createNewUser(
               firstname: name[0],
-              lastname: name[name.length-1],
+              lastname: name[name.length - 1],
               email: firebaseResult.user.email);
         }
         updateUserData();
@@ -86,8 +92,8 @@ class Auth {
 
   static Future updateUserData() async {
     DocumentSnapshot userData =
-        await TwiineApi.getUserData((await firebaseAuth.currentUser()).uid);
-    Auth.userData = userData.data;
+        await TwiineApi.getUserData(firebaseAuth.currentUser.uid);
+    Auth.userData = userData.data();
   }
 
   static void signOut() async {
