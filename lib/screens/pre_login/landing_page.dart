@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:twiine/colors.dart';
 
 class LandingPage extends StatefulWidget {
   @override
@@ -6,99 +9,84 @@ class LandingPage extends StatefulWidget {
 }
 
 class LandingPageState extends State<LandingPage> {
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [Colors.purpleAccent, Colors.cyan],
-              ),
+    return WillPopScope(
+      onWillPop: () {
+        SystemNavigator.pop();
+      },
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(color: Colors.white),
             ),
-          ),
-          Center(
-            child: Container(
-              child: Text(
-                "twiine",
-                style: TextStyle(
-                  fontSize: 50,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+            Center(
+              child: SizedBox(
+                child: SvgPicture.asset(
+                  "assets/icons/twiine_word_logo.svg",
+                  height: 70,
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 50),
-                  child: InkWell(
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: <Widget>[
+                  InkWell(
                     child: Container(
-                      width: 150,
-                      height: 60,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 50,
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        border: Border.all(
-                          width: 3,
-                          color: Colors.white,
-                        ),
-                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(15),
+                        color: TwiineColors.red,
                       ),
-                      padding: EdgeInsets.all(10),
-                      child: Center(
-                        child: Text(
-                          "SIGN UP",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.black,
-                          ),
+                      child: Text(
+                        "Log In",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    onTap: () => {Navigator.of(context).pushNamed('/signup')},
+                    onTap: () {
+                      Navigator.pushNamed(context, "/login");
+                    },
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(20, 10, 20, 50),
-                  child: InkWell(
+                  SizedBox(height: 10),
+                  InkWell(
                     child: Container(
-                      width: 150,
-                      height: 60,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 50,
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
+                        borderRadius: BorderRadius.circular(15),
                         border: Border.all(
-                          width: 3,
-                          color: Colors.white,
+                          width: 2,
+                          color: TwiineColors.red,
                         ),
                       ),
-                      padding: EdgeInsets.all(10),
-                      child: Center(
-                        child: Text(
-                          "LOG IN",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 15,
-                            color: Colors.white,
-                          ),
+                      child: Text(
+                        "Sign Up",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
-                    onTap: () => {Navigator.of(context).pushNamed('/login')},
+                    onTap: () {
+                      Navigator.pushNamed(context, "/signup");
+                    },
                   ),
-                ),
-              ],
+                  SizedBox(height: 40),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

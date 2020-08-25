@@ -14,7 +14,7 @@ class Navbar extends StatefulWidget {
 }
 
 class NavbarState extends State<Navbar> {
-  int _currentIndex = 0;
+  int _currentIndex = 3;
 
   final String searchIcon = "assets/icons/search_icon.svg";
   final String mapIcon = "assets/icons/map_icon.svg";
@@ -25,10 +25,10 @@ class NavbarState extends State<Navbar> {
 
   final List<Widget> _children = [
     Scheduled(),
-    Profile(),
+    Favorites(),
     Requests(),
     PlansPage(),
-    Favorites(),
+    Profile(),
   ];
 
   void onTappedBar(int index) {
@@ -63,25 +63,6 @@ class NavbarState extends State<Navbar> {
       },
       child: new Scaffold(
         body: _children[_currentIndex],
-        appBar: AppBar(
-          title: Text("twiine"),
-          actions: <Widget>[
-            PopupMenuButton(
-              onSelected: (r) => r(),
-              initialValue: null,
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<Function>>[
-                PopupMenuItem<Function>(
-                  value: _settings,
-                  child: Text("Settings"),
-                ),
-                PopupMenuItem<Function>(
-                  value: _logout,
-                  child: Text("Log out"),
-                ),
-              ],
-            )
-          ],
-        ),
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
@@ -125,10 +106,4 @@ class NavbarState extends State<Navbar> {
       ),
     );
   }
-
-  _logout() async {
-    Navigator.pushNamedAndRemoveUntil(context, '/landing', (route) => false);
-  }
-
-  _settings() {}
 }

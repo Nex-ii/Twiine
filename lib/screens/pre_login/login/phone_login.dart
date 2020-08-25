@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/screens/pre_login/login/verification_code.dart';
 
 class PhoneLogin extends StatefulWidget {
   PhoneLogin({Key key}) : super(key: key);
@@ -10,21 +12,44 @@ class PhoneLogin extends StatefulWidget {
 }
 
 class PhoneLoginState extends State<PhoneLogin> {
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    String phone;
+    bool valid = false;
     return Column(
       children: [
         SizedBox(
-          width: screenWidth * 0.9,
           child: InternationalPhoneNumberInput(
             countries: ['US'],
+            initialValue: PhoneNumber(),
+            autoValidate: true,
+            onInputValidated: (bool) {
+              valid = bool;
+            },
+            onInputChanged: (number){
+              phone = number.phoneNumber;
+            },
           ),
         ),
         SizedBox(height: 40),
-        Text("[Terms and conditions statement]"),
+        Text(
+          "[Terms and conditions statement]",
+          style: TextStyle(
+            fontSize: 14,
+          ),
+        ),
         SizedBox(height: 40),
-        _createSendCodeButton(() => {})
+        _createSendCodeButton(() {
+          if (valid)
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      VerificationCode(phone: phone)),
+            );
+        })
       ],
     );
   }
@@ -64,82 +89,11 @@ class PhoneLoginState extends State<PhoneLogin> {
                   ],
                 ),
               ),
+              onTap: onTap,
             ),
           ),
         ),
       ),
     );
   }
-  //   _loginWithPhone() {
-  //     final PhoneVerificationCompleted verified = (AuthCredential credeitial) {
-  //       Auth.firebaseAuth.signInWithCredential(credeitial).catchError((error) {
-  //         updateLoginMessage("Failed to verified phone number");
-  //       }).then((result) {
-  //         updateLoginMessage("Successfully verified phone number");
-  //         _successfulLogin(
-  //             LoginMethods.phone, SigninStatus.phoneNumber, SigninStatus.SMScode);
-  //       });
-  //     };
-
-  //     final PhoneVerificationFailed verificationfailed =
-  //         (AuthException authException) {
-  //       updateLoginMessage("Failed to verify phone number");
-  //       SigninStatus.codeSent = false;
-  //     };
-
-  //     final PhoneCodeSent smsSent = (String verId, [int forceResend])         Auth.user = result.user;
-  //         _successfulLogin(
-  //             LoginMethods.phone, SigninStatus.phoneNumber, SigninStatus.SMScode);
-  //       });
-  //     };
-
-  //     final PhoneVerificationFailed verificationfailed =
-  //         (AuthException authException) {
-  //       updateLoginMessage("Failed to verify phone number");
-  //       SigninStatus.codeSent = false;
-  //     };
-
-  //     final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
-  //       setState(() {
-  //         SigninStatus.verificationId = verId;
-  //         SigninStatus.codeSent = true;
-  //       });
-  //     };
-
-  //     final PhoneCodeAutoRetrievalTimeout autoTimeout = (String verId) {
-  //       SigninStatus.verificationId = verId;
-  //       SigninStatus.codeSent = false;
-  //     };
-
-  //     if (SigninStatus.isPhoneLogin) {
-  //       if (SigninStatus.codeSent) {
-  //         Auth.firebaseAuth
-  //             .signInWithCredential(PhoneAuthProvider.getCredential(
-  //                 verificationId: SigninStatus.verificationId,
-  //                 smsCode: SigninStatus.SMScode))
-  //             .catchError((error) {
-  //           updateLoginMessage("Failed to verify phone number");
-  //         }).then((result) {
-  //           if (result != null) {
-  //             updateLoginMessage("Successfully verified phone number");
-  //             _successfulLogin(LoginMethods.phone, SigninStatus.phoneNumber,
-  //                 SigninStatus.SMScode);
-  //             Auth.user = result.user;
-  //           }
-  //         });
-  //       } else {
-  //         Auth.firebaseAuth.verifyPhoneNumber(
-  //             phoneNumber: SigninStatus.phoneNumber,
-  //             timeout: const Duration(seconds: 60),
-  //             verificationCompleted: verified,
-  //             verificationFailed: verificationfailed,
-  //             codeSent: smsSent,
-  //             codeAutoRetrievalTimeout: autoTimeout);
-  //       }
-  //     } else {
-  //       setState(() {
-  //         SigninStatus.isPhoneLogin = true;
-  //       });
-  //     }
-  //   }
 }

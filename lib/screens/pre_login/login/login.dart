@@ -18,6 +18,7 @@ class LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: true,
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         title: Text(''),
@@ -27,17 +28,20 @@ class LoginState extends State<Login> {
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Center(
+      body: Padding(
+        padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+        child: SingleChildScrollView(
+          child: SafeArea(
             child: Column(
               children: [
-                SizedBox(height: 30),
-                Text(
-                  "Welcome to Twiine",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
+                Align(
+                  alignment: Alignment(-1, -1),
+                  child: Text(
+                    "Welcome to Twiine",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                    ),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -56,7 +60,6 @@ class LoginState extends State<Login> {
                     ],
                   ),
                 ),
-                SizedBox(height: 30),
                 Text(
                   _loginMessage,
                   style: TextStyle(color: TwiineColors.red),
@@ -85,6 +88,30 @@ class LoginState extends State<Login> {
                     _updateMessage("Google"),
                   },
                 ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account?",
+                      style: TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                    FlatButton(
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('/login_email');
+                      },
+                      child: Text(
+                        "Log in",
+                        style: TextStyle(
+                          decoration: TextDecoration.underline,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
@@ -95,12 +122,12 @@ class LoginState extends State<Login> {
 
   void _updateMessage(String authType) {
     setState(() {
-      Auth.firebaseAuth.currentUser().then((value) => {
-            if (value != null)
-              Navigator.of(context).pushNamed('/navBar')
-            else
-              _loginMessage = "Unable to authenticate with $authType"
-          });
+      Auth.firebaseAuth.authStateChanges().listen((user) {
+        if (user != null)
+          Navigator.of(context).popUntil(ModalRoute.withName('/'));
+        else
+          _loginMessage = "Unable to authenticate with $authType";
+      });
     });
   }
 

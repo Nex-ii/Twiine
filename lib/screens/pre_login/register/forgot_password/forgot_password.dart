@@ -1,109 +1,57 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/colors.dart';
+import 'package:twiine/common/text_form.dart';
 
-class ForgotPassword extends StatelessWidget {
+class ForgotPassword extends StatefulWidget {
+  @override
+  ForgotPassword({Key key}) : super(key: key);
 
-  BoxShadow _dropShadow = BoxShadow(
-      color: Colors.grey.withOpacity(0.9),
-      spreadRadius: -2,
-      blurRadius: 6,
-      offset: Offset(0, 4));
+  ForgotPasswordState createState() => ForgotPasswordState();
+}
 
-  double _dividerThickness = 2;
-  double _buttonHeight = 50;
-  double _buttonRadius = 15;
-
-  String recoveryEmail;
+class ForgotPasswordState extends State<ForgotPassword> {
+  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  static TextEditingController _emailController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return Scaffold(
-        body: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 50, 10, 0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(5, 5, 5, 0),
-                        child: TextFormField(
-                          decoration: new InputDecoration(
-                            labelText: "Email",
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide:
-                              BorderSide(color: Colors.transparent),
-                            ),
-                            border: InputBorder.none,
-                          ),
-                          keyboardType: TextInputType.text,
-                          onChanged: (t) => recoveryEmail = t,
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              thickness: _dividerThickness,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 50, 10, 10),
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(_buttonRadius),
-                  child: Container(
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
-                    height: _buttonHeight,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(_buttonRadius),
-                      color: TwiineColors.red,
-                      boxShadow: [_dropShadow],
-                    ),
-                    padding: EdgeInsets.all(10),
-                    child: Center(
-                      child: Text(
-                        "Recover Password",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  onTap: _recoverPassword,
-                )
-                ,
-              )
-              ,
-            ]
-        )
+
+    AppBar bar = AppBar(
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      title: Text(''),
+      toolbarHeight: 30,
+      leading: new IconButton(
+        icon: new Icon(Icons.arrow_back_ios),
+        color: Colors.black,
+        onPressed: () => Navigator.pop(context),
+      ),
     );
+
+    return TextForm.textForm([
+      FormElement("Email", FormTypes.EMAILFIELD, controller: _emailController),
+    ], [
+      ButtonElement("Recover Password", _recoverPassword),
+    ], _formKey, appBar: bar, title: "Recover Password");
   }
 
   _recoverPassword() {
-    print("email sent to $recoveryEmail");
-    Auth.firebaseAuth.sendPasswordResetEmail(email: recoveryEmail);
+    Auth.firebaseAuth.sendPasswordResetEmail(email: _emailController.text);
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text("An email has been sent to the provided address!"),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

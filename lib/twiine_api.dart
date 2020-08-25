@@ -21,16 +21,31 @@ class TwiineApi {
         .data['found'];
   }
 
-  static Future<void> createNewUser(Map<String, String> data) async {
-    return Firestore.instance
+  static Future<void> createNewUser(
+      {Map<String, String> data,
+      String firstname = "",
+      String lastname = "",
+      String birthday = "",
+      String email = "",
+      String phone = ""}) async {
+    if (data == null) data = {};
+
+    if (firstname != "") data["firstname"] = firstname;
+    if (lastname != "") data["lastname"] = lastname;
+    if (birthday != "") data["birthday"] = birthday;
+    if (email != "") data["email"] = email;
+    if (phone != "") data["phone"] = phone;
+
+    return FirebaseFirestore.instance
         .collection("Users")
-        .document((await Auth.firebaseAuth.currentUser()).uid)
-        .setData(data);
+        .doc(Auth.firebaseAuth.currentUser.uid)
+        .set(data);
   }
 
   static Future<DocumentSnapshot> getUserData(String uid) async {
-    return await Firestore.instance
+    return await FirebaseFirestore.instance
         .collection("Users")
-        .document((await Auth.firebaseAuth.currentUser()).uid).get();
+        .doc(Auth.firebaseAuth.currentUser.uid)
+        .get();
   }
 }

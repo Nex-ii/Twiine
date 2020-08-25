@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:twiine/TwiineApi.dart';
 import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:twiine/components/Navbar.dart';
+import 'package:twiine/components/navbar.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 
 class LoginChecker extends StatefulWidget {
@@ -14,7 +13,7 @@ class LoginChecker extends StatefulWidget {
 class LoginCheckerState extends State<LoginChecker> {
   @override
   Widget build(BuildContext context) {
-    FirebaseUser user = Provider.of<FirebaseUser>(context);
+    User user = Provider.of<User>(context);
     if (user == null) {
       return LandingPage();
     } else {
