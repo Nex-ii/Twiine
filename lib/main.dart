@@ -10,11 +10,11 @@ import 'package:twiine/screens/pre_login/login/login.dart';
 import 'package:twiine/components/navbar.dart';
 import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/plans/plans.dart';
-import 'package:twiine/screens/post_login/addEvent/AddEvent.dart';
+import 'package:twiine/screens/post_login/addEvent/add_event.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/pre_login/login/login_email.dart';
-import 'package:twiine/screens/pre_login/register/forgot_password/forgot_password.dart';
-import 'package:twiine/screens/pre_login/register/signup/create_account.dart';
+import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/login/forgot_password.dart';
+import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/register/create_account.dart';
 
 
 void main() => runApp(App());
@@ -60,14 +60,8 @@ class App extends StatelessWidget {
           '/': (context) => LoginChecker(),
           '/landing': (context) => LandingPage(),
           '/login': (context) => Login(),
-          '/login_email': (context) => LoginEmail(),
           '/signup': (context) => CreateAccount(),
-          '/plans': (context) => PlansPage(),
-          '/profile': (context) => Profile(),
-          '/forgotPassword': (context) => ForgotPassword(),
           '/navBar': (context) => Navbar(),
-          '/addEvent': (context) => AddEvent(),
-          '/settings': (context) => Settings(),
         },
       ),
     );

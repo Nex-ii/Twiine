@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/common/text_form.dart';
+import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/login/forgot_password.dart';
 
 class LoginEmail extends StatefulWidget {
   @override
@@ -37,7 +38,9 @@ class LoginEmailState extends State<LoginEmail> {
       FormElement("Password", FormTypes.PASSWORDFIELD,
           validator: passwordValidator, controller: _passwordController),
       FormElement("Forgot Password?", FormTypes.INKWELL,
-          onTap: () => Navigator.pushNamed(context, '/forgotPassword')),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ForgotPassword()))),
     ], [
       ButtonElement("Continue", _signInWithEmail),
     ], GlobalKey(), appBar: TextForm.backBar(context), title: "Sign in to twiine", trailingSpacing: 0);

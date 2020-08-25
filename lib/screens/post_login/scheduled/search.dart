@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/post_login/scheduled/plannedDates.dart';
+import 'package:twiine/screens/post_login/scheduled/planned_dates.dart';
 
-class Scheduled extends StatefulWidget {
+class Search extends StatefulWidget {
   @override
-  _ScheduledState createState() => _ScheduledState();
+  SearchState createState() => SearchState();
 }
 
-class _ScheduledState extends State<Scheduled> {
+class SearchState extends State<Search> {
   List<dynamic> _selectedEvents;
   List<dynamic> _pastEvents;
 

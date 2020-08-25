@@ -6,6 +6,7 @@ class UpcomingHangoutCard extends StatelessWidget {
   final String _place = "Crater Disaster Site";
   final String _address = "Itomori, Gifu";
   final String _thumbnail = "https://i.imgur.com/oRt7Kcm.png";
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +22,9 @@ class UpcomingHangoutCard extends StatelessWidget {
               width: 100,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: Image.network(_thumbnail).image,
+                  image: Image
+                      .network(_thumbnail)
+                      .image,
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.only(
@@ -40,14 +43,20 @@ class UpcomingHangoutCard extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                     child: Text(
                       _place,
-                      style: Theme.of(context).textTheme.headline3,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .headline3,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                     child: Text(
                       _address,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .bodyText2,
                     ),
                   ),
                 ],
