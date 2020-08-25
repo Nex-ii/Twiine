@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:twiine/screens/post_login/addEvent/addEvent.dart';
-import 'package:twiine/screens/post_login/scheduled/plannedDates.dart';
+import 'package:twiine/screens/post_login/scheduled/planned_dates.dart';
 
 class TestResult extends StatelessWidget {
-  PlannedDates temp;
+  final PlannedDates temp;
 
   TestResult({this.temp});
 

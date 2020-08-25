@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/pre_login/register/signup/date_picker.dart';
+import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/register/date_picker.dart';
 
 class TextForm {
   static AppBar backBar(BuildContext context,
-      {Function onTap, double appBarHeight = 30}) {
+      {Function onTap,
+      double appBarHeight = 70,
+      String title = "",
+      Color titleColor = Colors.black}) {
     return AppBar(
       elevation: 0.0,
       backgroundColor: Colors.transparent,
-      title: Text(''),
+      title: Text(
+        title,
+        style: TextStyle(color: titleColor),
+      ),
       toolbarHeight: appBarHeight,
-      leading: new IconButton(
+      leading: IconButton(
         icon: new Icon(Icons.arrow_back_ios),
         color: Colors.black,
         onPressed: () => Navigator.pop(context),

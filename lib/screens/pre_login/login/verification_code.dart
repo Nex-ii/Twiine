@@ -8,7 +8,7 @@ import 'package:twiine/twiine_api.dart';
 
 class VerificationCode extends StatefulWidget {
   VerificationCode({Key key, @required this.phone}) : super(key: key);
-  String phone;
+  final String phone;
 
   @override
   VerificationCodeState createState() => VerificationCodeState(phone);
@@ -57,9 +57,10 @@ class VerificationCodeState extends State<VerificationCode> {
                 ),
                 SizedBox(height: 30),
                 PinCodeTextField(
-                  appContext: context,
                   length: 6,
+                  appContext: context,
                   obsecureText: false,
+                  onChanged: (str) {},
                   animationType: AnimationType.fade,
                   backgroundColor: Colors.transparent,
                   pinTheme: PinTheme(

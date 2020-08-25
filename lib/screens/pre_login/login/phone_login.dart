@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:twiine/colors.dart';
@@ -15,7 +14,6 @@ class PhoneLoginState extends State<PhoneLogin> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
     String phone;
     bool valid = false;
     return Column(
