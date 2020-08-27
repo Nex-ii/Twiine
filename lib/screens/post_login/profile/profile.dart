@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:twiine/auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -14,7 +15,6 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   File _image;
-
   Image profilePic;
 
   ProfileState() {
@@ -51,6 +51,15 @@ class ProfileState extends State<Profile> {
       profilePic = Image.network(downloadUrl);
     });
   }
+
+  final String settingsIcon = "assets/icons/settings_icon.svg";
+  final String friendsIcon = "assets/icons/friends_icon.svg";
+  final String savedIcon = "assets/icons/bookmark_icon.svg";
+  final String helpIcon = "assets/icons/help_icon.svg";
+  final String feedbackIcon = "assets/icons/feedback_icon.svg";
+  final String termsIcon = "assets/icons/copy_icon.svg";
+  final String privacyIcon = "assets/icons/no_lock_icon.svg";
+  final double iconSize = 30;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +102,7 @@ class ProfileState extends State<Profile> {
               SizedBox(height: 30),
               _labelText("ACCOUNT"),
               _createButton(
-                Icons.account_circle,
+                SvgPicture.asset(settingsIcon),
                 "Account Settings",
                 () => {
                   Navigator.push(
@@ -102,9 +111,9 @@ class ProfileState extends State<Profile> {
                   )
                 },
               ),
-              _createButton(Icons.notifications, "Notifications", () => {}),
+              _createButton(SvgPicture.asset(friendsIcon), "Friends", () => {}),
               _createButton(
-                Icons.bookmark,
+                SvgPicture.asset(savedIcon),
                 "Saved",
                 () => {
                   Navigator.push(
@@ -115,15 +124,24 @@ class ProfileState extends State<Profile> {
                   ),
                 },
               ),
+              SizedBox(height: 30),
               _labelText("SUPPORT"),
-              _createButton(Icons.help_outline, "Get Help", () => {}),
+              _createButton(SvgPicture.asset(helpIcon), "Get Help", () => {}),
               _createButton(
-                  Icons.question_answer, "Give us Feedback", () => {}),
+                  SvgPicture.asset(feedbackIcon), "Give us Feedback", () => {}),
+              SizedBox(height: 30),
               _labelText("ABOUT"),
-              _createButton(Icons.content_copy, "Terms of Use", () => {}),
-              _createButton(Icons.lock_open, "Privacy Policy", () => {}),
               _createButton(
-                  Icons.exit_to_app, "Sign out", () => {Auth.signOut()}),
+                  SvgPicture.asset(termsIcon), "Terms of Use", () => {}),
+              _createButton(
+                  SvgPicture.asset(privacyIcon), "Privacy Policy", () => {}),
+              _createButton(
+                  Icon(
+                    Icons.exit_to_app,
+                    size: iconSize,
+                  ),
+                  "Sign out",
+                  () => {Auth.signOut()}),
             ],
           ),
         ),
@@ -153,7 +171,7 @@ class ProfileState extends State<Profile> {
     );
   }
 
-  Widget _createButton(IconData icon, String text, Function onTap) {
+  Widget _createButton(Widget icon, String text, Function onTap) {
     return SizedBox(
       height: 60,
       child: InkWell(
@@ -161,7 +179,14 @@ class ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon),
+            Container(
+              alignment: Alignment(0.0, 0.0),
+              child: SizedBox(
+                height: iconSize,
+                width: iconSize,
+                child: icon,
+              ),
+            ),
             SizedBox(width: 10),
             Expanded(flex: 1, child: _buttonText(text)),
             Icon(

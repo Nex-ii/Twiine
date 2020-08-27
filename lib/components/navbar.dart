@@ -21,7 +21,6 @@ class NavbarState extends State<Navbar> {
   final String addIcon = "assets/icons/add_icon.svg";
   final String calendarIcon = "assets/icons/calendar_icon.svg";
   final String personIcon = "assets/icons/person_icon.svg";
-  final String gearIcon = "assets/icons/settings_icon.svg";
 
   final List<Widget> _children = [
     Search(),
