@@ -139,6 +139,7 @@ class ProfileState extends State<Profile> {
                   Icon(
                     Icons.exit_to_app,
                     size: iconSize,
+                    color: TwiineColors.grey,
                   ),
                   "Sign out",
                   () => {Auth.signOut()}),
@@ -191,6 +192,7 @@ class ProfileState extends State<Profile> {
             Expanded(flex: 1, child: _buttonText(text)),
             Icon(
               Icons.arrow_forward_ios,
+              color: TwiineColors.grey,
               size: 15,
             ),
           ],
