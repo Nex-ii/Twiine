@@ -15,43 +15,16 @@ class ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-
-    AppBar bar = AppBar(
-      elevation: 0.0,
-      backgroundColor: Colors.transparent,
-      title: Text(''),
-      toolbarHeight: 30,
-      leading: new IconButton(
-        icon: new Icon(Icons.arrow_back_ios),
-        color: Colors.black,
-        onPressed: () => Navigator.pop(context),
-      ),
-    );
-
+    
     return TextForm.textForm([
       FormElement("Email", FormTypes.EMAILFIELD, controller: _emailController),
     ], [
       ButtonElement("Recover Password", _recoverPassword),
-    ], _formKey, appBar: bar, title: "Recover Password");
+    ], _formKey, appBar: TextForm.backBar(context), title: "Recover Password");
   }
 
   _recoverPassword() {
     Auth.firebaseAuth.sendPasswordResetEmail(email: _emailController.text);
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Text("An email has been sent to the provided address!"),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    TextForm.popUp(context, "An email has been sent to the provided address!");
   }
 }

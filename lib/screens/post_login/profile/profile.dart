@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/profile/account_settings.dart';
+import 'package:twiine/screens/post_login/profile/profile_elements/saved.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -15,6 +16,7 @@ class ProfileState extends State<Profile> {
   File _image;
 
   Image profilePic;
+
   ProfileState() {
     profilePic = Auth.currentUser.profilePicture;
     Auth.updateUserData().then((value) => {
@@ -52,6 +54,10 @@ class ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    String name =
+        "${Auth.currentUser.data["firstname"]} ${Auth.currentUser.data["lastname"]}";
+    String email = Auth.currentUser.data["email"];
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
@@ -66,11 +72,11 @@ class ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${Auth.currentUser.data["firstname"]} ${Auth.currentUser.data["lastname"]}",
+                  name != null ? name : "",
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 Text(
-                  Auth.currentUser.data["email"],
+                  email != null ? email : "",
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ],
@@ -96,8 +102,19 @@ class ProfileState extends State<Profile> {
                   )
                 },
               ),
-              _createButton(Icons.people, "Friends", () => {}),
-              _createButton(Icons.bookmark, "Saved", () => {}),
+              _createButton(Icons.notifications, "Notifications", () => {}),
+              _createButton(
+                Icons.bookmark,
+                "Saved",
+                () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Saved(),
+                    ),
+                  ),
+                },
+              ),
               _labelText("SUPPORT"),
               _createButton(Icons.help_outline, "Get Help", () => {}),
               _createButton(

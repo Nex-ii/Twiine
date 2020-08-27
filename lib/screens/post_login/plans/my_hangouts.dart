@@ -36,7 +36,7 @@ class _MyHangoutsState extends State<MyHangouts> {
       );
     } else {
       var eventList = Auth.currentUser.data["events"];
-      if (eventList.length == 0) {
+      if (eventList == null || eventList.length == 0) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,

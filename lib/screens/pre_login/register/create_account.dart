@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/common/text_form.dart';
 import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -27,29 +24,6 @@ class CreateAccountState extends State<CreateAccount> {
   static Function passwordValidator;
   static Function confirmPasswordValidator;
   static Function onContinueTap;
-
-//  void initState() {
-//    super.initState();
-//    WidgetsBinding.instance.addPostFrameCallback((_) {
-//      return showDialog<void>(
-//        context: context,
-//        builder: (BuildContext context) {
-//          return AlertDialog(
-//            content: Text(
-//                "You have not completed your profile. Please fill the following info"),
-//            actions: <Widget>[
-//              FlatButton(
-//                child: Text('Ok'),
-//                onPressed: () {
-//                  Navigator.of(context).pop();
-//                },
-//              ),
-//            ],
-//          );
-//        },
-//      );
-//    });
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +92,9 @@ class CreateAccountState extends State<CreateAccount> {
     ], [
       ButtonElement("Continue", onContinueTap)
     ], _formKey,
-        appBar: bar,
+        appBar: TextForm.backBar(context, onTap: () {
+          Navigator.pushNamed(context, '/landing');
+        }),
         title: "Join the Twiine Community",
         headingSpacing: 0,
         trailingSpacing: 0);
