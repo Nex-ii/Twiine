@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
-import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/register/date_picker.dart';
-
+import 'package:twiine/screens/pre_login/register/date_picker.dart';
 class TextForm {
   static AppBar backBar(BuildContext context,
       {Function onTap,

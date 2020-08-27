@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/common/text_form.dart';
-import 'file:///D:/CS/Flutter/twiine/lib/screens/pre_login/login/forgot_password.dart';
+import 'package:twiine/screens/pre_login/login/forgot_password.dart';
 
 class LoginEmail extends StatefulWidget {
   @override
