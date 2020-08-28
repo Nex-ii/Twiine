@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 
@@ -19,20 +22,142 @@ class _ManageState extends State<Manage> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Text('First Name'),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Text(
+                  "First Name",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15.0,
+                  ),
+                ),
+              ),
+            ),
             Container(
               child: MyTextFormField(
                 hintText: Auth.userData["firstname"],
                 validator: (String value) {
-                  if (value.isEmpty) {
-                    return 'Enter the Event Name';
-                  }
-                  return null;
+                  return;
                 },
-                onSaved: (String value) {
-                  //temp.name = value;
+                onSaved: (String value) async {
+                  if(value.isEmpty){
+                    return null;
+                  }
+                  var firebaseUser = await FirebaseAuth.instance.currentUser;
+                  FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(firebaseUser.uid)
+                      .update({"firstname": value});
                 },
               ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Text(
+                  "Last Name",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: MyTextFormField(
+                hintText: Auth.userData["lastname"],
+                validator: (String value) {
+                  return;
+                },
+                onSaved: (String value) async{
+                  if(value.isEmpty){
+                    return null;
+                  }
+                  var firebaseUser = await FirebaseAuth.instance.currentUser;
+                  FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(firebaseUser.uid)
+                      .update({"lastname": value});
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Text(
+                  "Email",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: MyTextFormField(
+                hintText: Auth.userData["email"],
+                validator: (String value) {
+                  return;
+                },
+                onSaved: (String value) async{
+                  if(value.isEmpty){
+                    return null;
+                  }
+                  var firebaseUser = await FirebaseAuth.instance.currentUser;
+                  FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(firebaseUser.uid)
+                      .update({"email": value});
+                },
+              ),
+            ),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                child: Text(
+                  "Birthday",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              child: MyTextFormField(
+                hintText: Auth.userData["birthday"],
+                validator: (String value) {
+                  return;
+                },
+                onSaved: (String value) async {
+                  if(value.isEmpty){
+                    return null;
+                  }
+                  var firebaseUser = await FirebaseAuth.instance.currentUser;
+                  FirebaseFirestore.instance
+                      .collection("Users")
+                      .doc(firebaseUser.uid)
+                      .update({"birthday": value});
+                },
+              ),
+            ),
+            RaisedButton(
+              color: Colors.blueAccent,
+              child: Text(
+                'Save',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              onPressed: () {
+                if (_formKey.currentState.validate()) {
+                  _formKey.currentState.save();
+                  Auth.updateUserData();
+                  print("saved");
+                  Navigator.pop(context);
+                }
+              },
             ),
           ],
         ),

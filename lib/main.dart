@@ -72,53 +72,16 @@ class App extends StatelessWidget {
                 '/profile': (context) => Profile(),
                 '/forgotPassword': (context) => ForgotPassword(),
                 '/navBar': (context) => Navbar(),
-                '/addEvent': (context) => AddEvent(),
+                '/addEvent': (context) => addEvent(),
                 '/settings': (context) => Settings(),
+                '/manage': (context) => Manage(),
               },
             ),
-<<<<<<< HEAD
-            headline2: TextStyle(
-              fontSize: 24,
-              color: Colors.black
-            ),
-            headline3: TextStyle(
-              fontSize: 16,
-              color: Colors.black
-            ),
-            bodyText1: TextStyle(
-              fontSize: 12,
-              color: Colors.black
-            ),
-            bodyText2: TextStyle(
-              fontSize: 12,
-              color: TwiineColors.lightGrey2
-            ),
-          )
-        ),
-        debugShowCheckedModeBanner: false,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => LoginChecker(),
-          '/landing': (context) => LandingPage(),
-          '/login': (context) => Login(),
-          '/login_email': (context) => LoginEmail(),
-          '/signup': (context) => CreateAccount(),
-          '/plans': (context) => PlansPage(),
-          '/profile': (context) => Profile(),
-          '/forgotPassword': (context) => ForgotPassword(),
-          '/navBar': (context) => Navbar(),
-          '/addEvent': (context) => addEvent(),
-          '/settings': (context) => Settings(),
-          '/manage': (context) => Manage(),
-        },
-      ),
-=======
           );
         }
         else
           return Container();
       }
->>>>>>> 3fb7668310338ac8bb5a4e6726ff516d7a62c6af
     );
   }
 }

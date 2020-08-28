@@ -191,16 +191,16 @@ class _ScheduledState extends State<Scheduled> {
             (onValue) {
               //TODO: Debug database issues
               PlannedDates temp = onValue;
-              Firestore.instance.collection('Events').add({
+              FirebaseFirestore.instance.collection('Events').add({
                 "location": temp.location,
                 "time" : Timestamp.fromDate(temp.dateInfo),
                 "title" : temp.name,
                 "userID" : userID,
               }).then((value){
-                Firestore.instance
+                FirebaseFirestore.instance
                     .collection("Users")
-                    .document(userID)
-                    .updateData({"events": FieldValue.arrayUnion([value.documentID])});
+                    .doc(userID)
+                    .update({"events": FieldValue.arrayUnion([value.id])});
               });
               getEvents();
             },
@@ -214,15 +214,15 @@ class _ScheduledState extends State<Scheduled> {
     List<dynamic> temp = Auth.userData['events'];
       for(int i=0; i<temp.length; i++){
         String documentID = temp[i].documentID;
-        Firestore.instance
+        FirebaseFirestore.instance
             .collection('Events')
-            .document(documentID)
+            .doc(documentID)
             .get()
             .then((value2) {
             PlannedDates newDate = PlannedDates();
-            newDate.name = value2.data['title'];
-            newDate.location = value2.data['location'];
-            newDate.dateInfo = value2.data['time'].toDate();
+            newDate.name = value2.get('title');
+            newDate.location = value2.get('location');
+            newDate.dateInfo = value2.get('time').toDate();
             newDate.day = newDate.dateInfo.day;
             newDate.month = newDate.dateInfo.month;
             newDate.year = newDate.dateInfo.year;
