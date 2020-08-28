@@ -28,20 +28,20 @@ class _ManageState extends State<Manage> {
                 child: Text(
                   "First Name",
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15.0,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15.0,
                   ),
                 ),
               ),
             ),
             Container(
               child: MyTextFormField(
-                hintText: Auth.userData["firstname"],
+                hintText: Auth.currentUser.data["firstname"],
                 validator: (String value) {
                   return;
                 },
                 onSaved: (String value) async {
-                  if(value.isEmpty){
+                  if (value.isEmpty) {
                     return null;
                   }
                   var firebaseUser = await FirebaseAuth.instance.currentUser;
@@ -66,12 +66,12 @@ class _ManageState extends State<Manage> {
             ),
             Container(
               child: MyTextFormField(
-                hintText: Auth.userData["lastname"],
+                hintText: Auth.currentUser.data["lastname"],
                 validator: (String value) {
                   return;
                 },
-                onSaved: (String value) async{
-                  if(value.isEmpty){
+                onSaved: (String value) async {
+                  if (value.isEmpty) {
                     return null;
                   }
                   var firebaseUser = await FirebaseAuth.instance.currentUser;
@@ -96,12 +96,12 @@ class _ManageState extends State<Manage> {
             ),
             Container(
               child: MyTextFormField(
-                hintText: Auth.userData["email"],
+                hintText: Auth.currentUser.data["email"],
                 validator: (String value) {
                   return;
                 },
-                onSaved: (String value) async{
-                  if(value.isEmpty){
+                onSaved: (String value) async {
+                  if (value.isEmpty) {
                     return null;
                   }
                   var firebaseUser = await FirebaseAuth.instance.currentUser;
@@ -126,12 +126,12 @@ class _ManageState extends State<Manage> {
             ),
             Container(
               child: MyTextFormField(
-                hintText: Auth.userData["birthday"],
+                hintText: Auth.currentUser.data["birthday"],
                 validator: (String value) {
                   return;
                 },
                 onSaved: (String value) async {
-                  if(value.isEmpty){
+                  if (value.isEmpty) {
                     return null;
                   }
                   var firebaseUser = await FirebaseAuth.instance.currentUser;
