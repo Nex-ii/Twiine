@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/screens/post_login/profile/manage.dart';
 
 class EditProfile extends StatefulWidget {
   @override
@@ -42,7 +43,14 @@ class EditProfileState extends State<EditProfile> {
             _createButton(
               "Name",
               "${Auth.currentUser.data["firstname"]} ${Auth.currentUser.data["lastname"]}",
-              () {},
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Manage()),
+                ).then((value) {
+                  setState(() {});
+                });
+              },
             ),
             Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
             _createButton("Email", "${Auth.currentUser.data["email"]}", () {}),

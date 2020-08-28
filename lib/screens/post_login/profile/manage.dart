@@ -153,9 +153,9 @@ class _ManageState extends State<Manage> {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   _formKey.currentState.save();
-                  Auth.updateUserData();
-                  print("saved");
-                  Navigator.pop(context);
+                  Auth.updateUserData().then((value) {
+                    Navigator.pop(context);
+                  });
                 }
               },
             ),
