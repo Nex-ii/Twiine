@@ -8,7 +8,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  var _imageURL = Auth.userData['pictureUrl'];
+  var _imageURL = Auth.currentUser.data['pictureUrl'];
 
   Container _buildDivider() {
     return Container(
