@@ -66,8 +66,6 @@ class App extends StatelessWidget {
                 '/signup': (context) => CreateAccount(),
                 '/navBar': (context) => Navbar(),
                 '/addEvent': (context) => addEvent(),
-                '/settings': (context) => Settings(),
-                '/manage': (context) => Manage(),
               },
             ),
           );
