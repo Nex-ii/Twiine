@@ -70,26 +70,29 @@ class ProfileState extends State<Profile> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(radius: 25, backgroundImage: profilePic.image),
-            SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name != null ? name : "",
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                Text(
-                  email != null ? email : "",
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ],
-            )
-          ],
+        toolbarHeight: 90,
+        title: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(radius: 25, backgroundImage: profilePic.image),
+              SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name != null ? name : "",
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Text(
+                    email != null ? email : "",
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -107,7 +110,9 @@ class ProfileState extends State<Profile> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => AccountSettings()),
-                  )
+                  ).then((value) {
+                    setState(() {});
+                  })
                 },
               ),
               _createButton(SvgPicture.asset(friendsIcon), "Friends", () => {}),
