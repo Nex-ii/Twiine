@@ -8,8 +8,7 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  var _imageURL =
-      'https://firebasestorage.googleapis.com/v0/b/twiine.appspot.com/o/ImageStorage%2FProfilePicture?alt=media&token=9958176c-3b7f-457f-935c-04ff166ffe15';
+  var _imageURL = Auth.userData['pictureUrl'];
 
   Container _buildDivider() {
     return Container(

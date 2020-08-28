@@ -1,7 +1,7 @@
+import 'package:twiine/auth.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:twiine/auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:twiine/colors.dart';
@@ -69,7 +69,6 @@ class ProfileState extends State<Profile> {
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
         backgroundColor: Colors.white,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -200,5 +199,9 @@ class ProfileState extends State<Profile> {
         onTap: onTap,
       ),
     );
+  }
+
+  _toManage() {
+    Navigator.of(context).pushNamed('/manage');
   }
 }

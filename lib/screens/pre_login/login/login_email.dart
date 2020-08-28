@@ -48,6 +48,17 @@ class LoginEmailState extends State<LoginEmail> {
       return null;
     };
 
+    AppBar bar = AppBar(
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      title: Text(''),
+      leading: new IconButton(
+        icon: new Icon(Icons.arrow_back_ios),
+        color: Colors.black,
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+
     return TextForm.textForm([
       FormElement("Email", FormTypes.EMAILFIELD, controller: _emailController),
       FormElement("Password", FormTypes.PASSWORDFIELD,

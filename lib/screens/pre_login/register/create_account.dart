@@ -67,7 +67,6 @@ class CreateAccountState extends State<CreateAccount> {
       elevation: 0.0,
       backgroundColor: Colors.transparent,
       title: Text(''),
-      toolbarHeight: 30,
       leading: new IconButton(
         icon: new Icon(Icons.arrow_back_ios),
         color: Colors.black,

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/screens/post_login/scheduled/planned_dates.dart';
 
-class AddEvent extends StatefulWidget {
+class addEvent extends StatefulWidget {
   @override
-  _AddEventState createState() => _AddEventState();
+  _addEventState createState() => _addEventState();
 }
 
-class _AddEventState extends State<AddEvent> {
+class _addEventState extends State<addEvent> {
   final _formKey = GlobalKey<FormState>();
   PlannedDates temp = PlannedDates();
 
