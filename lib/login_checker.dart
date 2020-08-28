@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:provider/provider.dart';
 import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/components/navbar.dart';
@@ -13,12 +12,23 @@ class LoginChecker extends StatefulWidget {
 class LoginCheckerState extends State<LoginChecker> {
   @override
   Widget build(BuildContext context) {
-    User user = Provider.of<User>(context);
-    if (user == null) {
-      return LandingPage();
-    } else {
-      Auth.updateUserData();
-      return Navbar();
-    }
+    return StreamBuilder(
+      stream: Auth.firebaseAuth.authStateChanges(),
+      builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.active:
+            if (snapshot.data == null) {
+              return LandingPage();
+            } else {
+              Auth.updateUserData();
+              return Navbar();
+            }
+            break;
+          default:
+            return Expanded(child: Container(color: Colors.white));
+            break;
+        }
+      },
+    );
   }
 }
