@@ -13,7 +13,7 @@ class LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        SystemNavigator.pop();
+        return SystemNavigator.pop();
       },
       child: Scaffold(
         body: Stack(

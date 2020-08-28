@@ -5,7 +5,7 @@ import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/plans/plans.dart';
 import 'package:twiine/screens/post_login/profile/profile.dart';
 import 'package:twiine/screens/post_login/requests/requests.dart';
-import 'package:twiine/screens/post_login/scheduled/scheduled.dart';
+import 'package:twiine/screens/post_login/scheduled/search.dart';
 import 'package:twiine/screens/post_login/favorites/favorites.dart';
 
 class Navbar extends StatefulWidget {
@@ -21,10 +21,9 @@ class NavbarState extends State<Navbar> {
   final String addIcon = "assets/icons/add_icon.svg";
   final String calendarIcon = "assets/icons/calendar_icon.svg";
   final String personIcon = "assets/icons/person_icon.svg";
-  final String gearIcon = "assets/icons/settings_icon.svg";
 
   final List<Widget> _children = [
-    Scheduled(),
+    Search(),
     Favorites(),
     Requests(),
     PlansPage(),

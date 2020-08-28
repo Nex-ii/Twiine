@@ -3,11 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:twiine/auth.dart';
+import 'package:twiine/common/text_form.dart';
 import 'package:twiine/twiine_api.dart';
 
 class VerificationCode extends StatefulWidget {
   VerificationCode({Key key, @required this.phone}) : super(key: key);
-  String phone;
+  final String phone;
 
   @override
   VerificationCodeState createState() => VerificationCodeState(phone);
@@ -31,16 +32,7 @@ class VerificationCodeState extends State<VerificationCode> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Text(''),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back_ios),
-          color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
+      appBar: TextForm.backBar(context),
       body: Padding(
         padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
         child: SingleChildScrollView(
@@ -65,9 +57,10 @@ class VerificationCodeState extends State<VerificationCode> {
                 ),
                 SizedBox(height: 30),
                 PinCodeTextField(
-                  appContext: context,
                   length: 6,
+                  appContext: context,
                   obsecureText: false,
+                  onChanged: (str) {},
                   animationType: AnimationType.fade,
                   backgroundColor: Colors.transparent,
                   pinTheme: PinTheme(
@@ -96,7 +89,7 @@ class VerificationCodeState extends State<VerificationCode> {
                     FlatButton(
                       onPressed: () {
                         _sendSMSCode();
-                        _popUp(
+                        TextForm.popUp(context,
                             "A new code has been sent. It will time out in 60 seconds");
                       },
                       child: Text(
@@ -122,7 +115,7 @@ class VerificationCodeState extends State<VerificationCode> {
       FirebaseAuth.instance
           .signInWithCredential(credeitial)
           .catchError((error) {
-        _popUp("Failed to verify phone number");
+        TextForm.popUp(context, "Failed to verify phone number");
       }).then((result) {
         Navigator.of(context).pushNamed('/navbar');
       });
@@ -130,7 +123,7 @@ class VerificationCodeState extends State<VerificationCode> {
 
     final PhoneVerificationFailed verificationfailed =
         (FirebaseAuthException authException) {
-      _popUp("Failed to verify phone number");
+      TextForm.popUp(context, "Failed to verify phone number");
     };
 
     final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
@@ -155,7 +148,7 @@ class VerificationCodeState extends State<VerificationCode> {
         .signInWithCredential(PhoneAuthProvider.credential(
             verificationId: verificationID, smsCode: smsCodeController.text))
         .catchError((error) {
-      _popUp(
+      TextForm.popUp(context,
           "The code you have entered is incorrect. Please re-enter the code.");
     }).then((result) {
       if (result != null) {
@@ -172,24 +165,5 @@ class VerificationCodeState extends State<VerificationCode> {
         Auth.updateUserData();
       }
     });
-  }
-
-  Future<void> _popUp(String msg) {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          content: Text(msg),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 }

@@ -12,6 +12,7 @@ class UpcomingHangoutCard extends StatefulWidget {
 
 class _UpcomingHangoutCardState extends State<UpcomingHangoutCard> {
   final double _borderRadius = 10;
+
   String _place = "";
   String _address = "";
   String _thumbnail = "";

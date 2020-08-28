@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/common/text_form.dart';
+import 'package:twiine/screens/pre_login/login/login_email.dart';
 import 'package:twiine/screens/pre_login/login/phone_login.dart';
 
 class Login extends StatefulWidget {
@@ -17,19 +19,9 @@ class LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        elevation: 0.0,
-        backgroundColor: Colors.transparent,
-        title: Text(''),
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back_ios),
-          color: Colors.black,
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
+      appBar: TextForm.backBar(context),
       body: Padding(
-        padding: EdgeInsets.fromLTRB(30, 30, 30, 0),
+        padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
         child: SingleChildScrollView(
           child: SafeArea(
             child: Column(
@@ -48,7 +40,10 @@ class LoginState extends State<Login> {
                 PhoneLogin(),
                 SizedBox(height: 30),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.9,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.9,
                   child: Row(
                     children: <Widget>[
                       Expanded(child: Divider(thickness: 2)),
@@ -67,14 +62,18 @@ class LoginState extends State<Login> {
                 SizedBox(height: 30),
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.envelope),
-                  "Continue with Email",
-                  () => {Navigator.pushNamed(context, "/login_email")},
+                  "Continue with Email", () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginEmail()))
+                  },
                 ),
                 SizedBox(height: 5),
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.facebook),
                   "Continue with Facebook",
-                  () async => {
+                      () async =>
+                  {
                     await Auth.signInFacebook(),
                     _updateMessage("Facebook"),
                   },
@@ -83,7 +82,8 @@ class LoginState extends State<Login> {
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.google),
                   "Continue with Google",
-                  () async => {
+                      () async =>
+                  {
                     await Auth.signInGoogle(),
                     _updateMessage("Google"),
                   },
@@ -132,7 +132,10 @@ class LoginState extends State<Login> {
   }
 
   Widget _createLoginButton(FaIcon icon, String text, Function onTap) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    double screenWidth = MediaQuery
+        .of(context)
+        .size
+        .width;
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
