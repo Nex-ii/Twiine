@@ -21,13 +21,14 @@ class TwiineApi {
         .data['found'];
   }
 
-  static Future<void> createNewUser(
-      {Map<String, String> data,
-      String firstname = "",
-      String lastname = "",
-      String birthday = "",
-      String email = "",
-      String phone = ""}) async {
+  static Future<void> createNewUser({
+    Map<String, dynamic> data,
+    String firstname = "",
+    String lastname = "",
+    String birthday = "",
+    String email = "",
+    String phone = "",
+  }) async {
     if (data == null) data = {};
 
     if (firstname != "") data["firstname"] = firstname;
@@ -35,6 +36,8 @@ class TwiineApi {
     if (birthday != "") data["birthday"] = birthday;
     if (email != "") data["email"] = email;
     if (phone != "") data["phone"] = phone;
+    data["events"] = List<dynamic>();
+    data["requests"] = List<dynamic>();
 
     return FirebaseFirestore.instance
         .collection("Users")
