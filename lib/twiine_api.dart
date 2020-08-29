@@ -37,13 +37,20 @@ class TwiineApi {
     if (email != "") data["email"] = email;
     if (phone != "") data["phone"] = phone;
     data["pictureUrl"] = "";
-    data["events"] = List<dynamic>();
-    data["requests"] = List<dynamic>();
 
     return FirebaseFirestore.instance
         .collection("Users")
         .doc(Auth.firebaseAuth.currentUser.uid)
-        .set(data);
+        .set(data)
+        .then((_) {
+      FirebaseFirestore.instance
+          .collection("Users")
+          .doc(Auth.firebaseAuth.currentUser.uid)
+          .update({
+        "hangouts": FieldValue.arrayUnion([]),
+        "requests": FieldValue.arrayUnion([]),
+      });
+    });
   }
 
   static Future<DocumentSnapshot> getUserData(String uid) async {
