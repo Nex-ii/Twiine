@@ -5,12 +5,12 @@ import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/plans/components/hangout_card.dart';
 import 'package:twiine/screens/post_login/plans/components/upcoming_hangout_card.dart';
 
-class MyHangouts extends StatefulWidget {
+class RequestsPage extends StatefulWidget {
   @override
-  _MyHangoutsState createState() => _MyHangoutsState();
+  _RequestsPageState createState() => _RequestsPageState();
 }
 
-class _MyHangoutsState extends State<MyHangouts> {
+class _RequestsPageState extends State<RequestsPage> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
