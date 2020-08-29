@@ -24,6 +24,7 @@ class PlansPageState extends State<PlansPage> with TickerProviderStateMixin {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return [
             SliverAppBar(
+              toolbarHeight: 20,
               pinned: false,
               backgroundColor: Colors.transparent,
               bottom: TabBar(
