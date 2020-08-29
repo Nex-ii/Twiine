@@ -36,6 +36,7 @@ class TwiineApi {
     if (birthday != "") data["birthday"] = birthday;
     if (email != "") data["email"] = email;
     if (phone != "") data["phone"] = phone;
+    data["pictureUrl"] = "";
     data["events"] = List<dynamic>();
     data["requests"] = List<dynamic>();
 
