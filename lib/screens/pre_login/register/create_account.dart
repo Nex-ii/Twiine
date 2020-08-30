@@ -26,6 +26,22 @@ class CreateAccountState extends State<CreateAccount> {
   static Function onContinueTap;
 
   @override
+  void initState() {
+    super.initState();
+    Auth.firebaseAuth.authStateChanges().listen((user) {
+      print("logged in: " + user.toString());
+      if (user != null) {
+        print("logged in");
+        Navigator.of(context).popUntil(ModalRoute.withName('/'));
+      } else
+        setState(() {
+          print("Unable to authenticate with email");
+        });
+    });
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     passwordValidator = (String value) {
       if (value.isEmpty) {
@@ -58,9 +74,7 @@ class CreateAccountState extends State<CreateAccount> {
         'birthday': _birthdayController.text,
         'email': _emailController.text,
       };
-      _registerUser(data).then(
-        (value) => {if (Auth().user != null) navigate(context)},
-      );
+      _registerUser(data);
     };
 
     AppBar bar = AppBar(
@@ -92,7 +106,7 @@ class CreateAccountState extends State<CreateAccount> {
       ButtonElement("Continue", onContinueTap)
     ], _formKey,
         appBar: TextForm.backBar(context, onTap: () {
-          Navigator.pushNamed(context, '/landing');
+          Navigator.of(context).popUntil(ModalRoute.withName('/'));
         }),
         title: "Join the Twiine Community",
         headingSpacing: 0,
@@ -107,18 +121,10 @@ class CreateAccountState extends State<CreateAccount> {
         email: _emailController.text,
         password: _passwordController.text,
       );
+      await TwiineApi.createNewUser(data: data);
       await Auth.signInEmail(_emailController.text, _passwordController.text);
     } catch (error) {
       print("Unable to create account: ${error.toString()}");
     }
-    try {
-      return TwiineApi.createNewUser(data: data);
-    } catch (error) {
-      print("API call error: ${error.toString()}");
-    }
-  }
-
-  static navigate(BuildContext context){
-    Navigator.of(context).popUntil(ModalRoute.withName('/'));
   }
 }
