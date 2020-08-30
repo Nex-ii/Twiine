@@ -70,7 +70,7 @@ class _MyHangoutsState extends State<MyHangouts> {
                       child: Container(
                         padding: EdgeInsets.fromLTRB(4, 20, 0, 20),
                         child: Text(
-                          "Upcoming Hangouts",
+                          (eventList.length > 1) ? "Upcoming Hangouts" : "",
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
