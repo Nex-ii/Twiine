@@ -47,7 +47,7 @@ class TwiineApi {
           .collection("Users")
           .doc(Auth.firebaseAuth.currentUser.uid)
           .update({
-        "hangouts": FieldValue.arrayUnion([]),
+        "events": FieldValue.arrayUnion([]),
         "requests": FieldValue.arrayUnion([]),
       });
     });
