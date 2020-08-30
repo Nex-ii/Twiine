@@ -2,8 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/post_login/plans/components/hangout_card.dart';
-import 'package:twiine/screens/post_login/plans/components/upcoming_hangout_card.dart';
+import 'package:twiine/screens/post_login/plans/components/request_card.dart';
 
 class RequestsPage extends StatefulWidget {
   @override
@@ -37,14 +36,14 @@ class _RequestsPageState extends State<RequestsPage> {
             );
           case ConnectionState.active:
             Map<String, dynamic> userData = snapshot.data.data();
-            var eventList = userData["events"];
+            var eventList = userData["requests"];
             if (eventList == null || eventList.length == 0) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "You currently have no hangouts planned",
+                    "You currently have no pending requests",
                     style: Theme.of(context).textTheme.headline1,
                     textAlign: TextAlign.center,
                   ),
@@ -55,22 +54,10 @@ class _RequestsPageState extends State<RequestsPage> {
                 child: ListView(
                   children: [
                     Align(
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.center,
                       child: Container(
-                        padding: EdgeInsets.fromLTRB(4, 0, 0, 8),
                         child: Text(
-                          "Current Hangout",
-                          style: Theme.of(context).textTheme.headline1,
-                        ),
-                      ),
-                    ),
-                    HangoutCard(eventId: eventList[0].documentID),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        padding: EdgeInsets.fromLTRB(4, 20, 0, 20),
-                        child: Text(
-                          "Upcoming Hangouts",
+                          "Pending Requests",
                           style: Theme.of(context).textTheme.headline1,
                         ),
                       ),
@@ -78,10 +65,10 @@ class _RequestsPageState extends State<RequestsPage> {
                     ListView.builder(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: eventList.length - 1,
+                      itemCount: eventList.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return UpcomingHangoutCard(
-                            eventId: eventList[index + 1].documentID);
+                        return RequestCard(
+                            eventId: eventList[index].documentID);
                       },
                     ),
                   ],
