@@ -31,8 +31,8 @@ class _HangoutCardState extends State<HangoutCard> {
             builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 Map<String, dynamic> place = snapshot.data.data();
+                _userThumbnails = [];
                 _eventData["users"].forEach((name, pictureUrl) {
-                  _userThumbnails = [];
                   if (pictureUrl != "")
                     _userThumbnails.add(Image.network(pictureUrl));
                   else
