@@ -81,7 +81,8 @@ class _MyHangoutsState extends State<MyHangouts> {
                       itemCount: eventList.length - 1,
                       itemBuilder: (BuildContext context, int index) {
                         return UpcomingHangoutCard(
-                            eventId: eventList[index + 1].documentID);
+                          eventId: eventList[index + 1].documentID,
+                        );
                       },
                     ),
                   ],

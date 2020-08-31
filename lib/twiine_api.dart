@@ -8,6 +8,8 @@ class TwiineApi {
       CloudFunctions.instance.getHttpsCallable(functionName: 'createNewUser');
   static HttpsCallable _userExists =
       CloudFunctions.instance.getHttpsCallable(functionName: 'getUser');
+  static HttpsCallable _acceptHangoutRequest = CloudFunctions.instance
+      .getHttpsCallable(functionName: 'acceptHangoutRequest');
 
   static Future<LinkedHashMap> getUser(
       String authType, String authField) async {
@@ -58,5 +60,13 @@ class TwiineApi {
         .collection("Users")
         .doc(Auth.firebaseAuth.currentUser.uid)
         .get();
+  }
+
+  static Future<void> acceptHangoutRequest(String hangoutId) async {
+    TwiineApi._acceptHangoutRequest.call(
+      <dynamic, dynamic>{
+        "hangout_id": hangoutId,
+      },
+    );
   }
 }

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/components/time_difference.dart';
+import 'package:twiine/twiine_api.dart';
 
 class RequestCard extends StatefulWidget {
   final String eventId;
@@ -144,14 +145,20 @@ class _RequestCardState extends State<RequestCard> {
                                     borderRadius:
                                         BorderRadius.circular(_borderRadius),
                                   ),
-                                  child: Center(
-                                    child: Text(
-                                      "Accept",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold
+                                  child: InkWell(
+                                    child: Center(
+                                      child: Text(
+                                        "Accept",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
                                       ),
                                     ),
+                                    onTap: () {
+                                      TwiineApi.acceptHangoutRequest(
+                                        widget.eventId,
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
@@ -168,9 +175,8 @@ class _RequestCardState extends State<RequestCard> {
                                     child: Text(
                                       "Decline",
                                       style: TextStyle(
-                                        color: TwiineColors.grey,
-                                        fontWeight: FontWeight.bold
-                                      ),
+                                          color: TwiineColors.grey,
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                 ),
