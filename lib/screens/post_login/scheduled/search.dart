@@ -211,7 +211,7 @@ class SearchState extends State<Search> {
   }
 
   void getEvents() async{
-    List<dynamic> temp = Auth.userData['events'];
+    List<dynamic> temp = Auth.currentUser.data['events'];
       for(int i=0; i<temp.length; i++){
         String documentID = temp[i].documentID;
         FirebaseFirestore.instance

@@ -15,7 +15,6 @@ class ForgotPasswordState extends State<ForgotPassword> {
 
   @override
   Widget build(BuildContext context) {
-
     AppBar bar = AppBar(
       elevation: 0.0,
       backgroundColor: Colors.transparent,
