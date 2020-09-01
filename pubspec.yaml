@@ -65,6 +65,7 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/logos/
   fonts:
     - family: Acumin Pro
       fonts: 

@@ -12,91 +12,108 @@ class UpcomingHangoutCard extends StatefulWidget {
 
 class _UpcomingHangoutCardState extends State<UpcomingHangoutCard> {
   final double _borderRadius = 10;
-  String _place = "";
-  String _address = "";
-  String _thumbnail = "";
-  bool _ready = false;
-  DateTime _eventDate = DateTime.now();
+  final double _height = 125;
+  final double _thumbnailwidth = 100;
+  final double _cardwidth = 200;
+  Map<String, dynamic> _eventData;
 
   @override
   Widget build(BuildContext context) {
-    _getEventData();
-    return Container(
-      height: 125,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(_borderRadius),
-        ),
-        child: InkWell(
-          onTap: () => {},
-          child: Row(
-            children: <Widget>[
-              Container(
-                height: 125,
-                width: 100,
-                child: CachedNetworkImage(
-                  imageUrl: _thumbnail,
-                  imageBuilder: (context, imageProvider) => Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(_borderRadius),
-                        bottomLeft: Radius.circular(_borderRadius),
-                      ),
-                      image: DecorationImage(
-                        image: imageProvider,
-                        fit: BoxFit.cover,
+    Future<DocumentSnapshot> eventFuture = FirebaseFirestore.instance
+        .collection("Events")
+        .doc(widget.eventId)
+        .get();
+    return FutureBuilder(
+      future: eventFuture,
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          _eventData = snapshot.data.data();
+          return FutureBuilder(
+            future: snapshot.data.data()["place"].get(),
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                Map<String, dynamic> place = snapshot.data.data();
+                return Container(
+                  height: _height,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(_borderRadius),
+                    ),
+                    child: InkWell(
+                      onTap: () => {},
+                      child: Row(
+                        children: <Widget>[
+                          Container(
+                            height: _height,
+                            width: _thumbnailwidth,
+                            child: CachedNetworkImage(
+                              imageUrl: place["image_url"],
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(_borderRadius),
+                                    bottomLeft: Radius.circular(_borderRadius),
+                                  ),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                TimeDifference(
+                                  eventDate: _eventData["time"].toDate(),
+                                ),
+                                Container(
+                                  width: _cardwidth,
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  child: Text(
+                                    place["name"],
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                  child: Text(
+                                    "${place["city"]}, ${place["state"]}",
+                                    style:
+                                        Theme.of(context).textTheme.bodyText2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   ),
-                ),
+                );
+              } else {
+                return Container();
+              }
+            },
+          );
+        } else {
+          return Container(
+            height: _height,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(_borderRadius),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    TimeDifference(eventDate: _eventDate),
-                    Container(
-                      width: 200,
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                      child: Text(
-                        _place,
-                        style: Theme.of(context).textTheme.headline3,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                      child: Text(
-                        _address,
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        }
+      },
     );
-  }
-
-  void _getEventData() async {
-    if (!_ready) {
-      Map<String, dynamic> eventData = (await FirebaseFirestore.instance
-              .collection("Events")
-              .doc(widget.eventId)
-              .get())
-          .data();
-      Map<String, dynamic> place = (await eventData["place"].get()).data();
-      if (this.mounted) {
-        setState(() {
-          _thumbnail = place["image_url"];
-          _address = "${place["city"]}, ${place["state"]}";
-          _place = place["name"];
-          _eventDate = (eventData["time"] as Timestamp).toDate();
-        });
-      }
-    }
   }
 }

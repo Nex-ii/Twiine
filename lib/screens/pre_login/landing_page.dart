@@ -13,7 +13,7 @@ class LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () {
-        SystemNavigator.pop();
+        return SystemNavigator.pop();
       },
       child: Scaffold(
         body: Stack(
@@ -24,7 +24,7 @@ class LandingPageState extends State<LandingPage> {
             Center(
               child: SizedBox(
                 child: SvgPicture.asset(
-                  "assets/icons/twiine_word_logo.svg",
+                  "assets/logos/twiine_word_logo_lowercase.svg",
                   height: 70,
                 ),
               ),

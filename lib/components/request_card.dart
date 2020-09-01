@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:twiine/components/time_difference.dart';
 
 class RequestCard extends StatelessWidget {
-  double _borderRadius = 10;
-  String _place = "Crater Disaster Site";
-  String _thumbnail = "https://i.imgur.com/oRt7Kcm.png";
+  final double _borderRadius = 10;
+  final String _place = "Crater Disaster Site";
+  final String _thumbnail = "https://i.imgur.com/oRt7Kcm.png";
   @override
   Widget build(BuildContext context) {
     return Container(

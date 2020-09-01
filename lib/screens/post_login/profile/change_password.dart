@@ -19,10 +19,10 @@ class ChangePassowrdState extends State<ChangePassowrd> {
   String _confirmPassword;
   Stream _authStream = Auth.firebaseAuth.authStateChanges();
 
-  String _changePasswordMessage = "";
-
   // styling design variables
   static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  String _changePasswordMessage = "";
 
   static TextEditingController _oldPasswordController = TextEditingController();
   static TextEditingController _newPasswordController = TextEditingController();

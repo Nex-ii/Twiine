@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:twiine/common/text_form.dart';
 import 'package:twiine/twiine_api.dart';
 import 'package:twiine/auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateAccount extends StatefulWidget {
   @override
@@ -28,28 +25,21 @@ class CreateAccountState extends State<CreateAccount> {
   static Function confirmPasswordValidator;
   static Function onContinueTap;
 
-//  void initState() {
-//    super.initState();
-//    WidgetsBinding.instance.addPostFrameCallback((_) {
-//      return showDialog<void>(
-//        context: context,
-//        builder: (BuildContext context) {
-//          return AlertDialog(
-//            content: Text(
-//                "You have not completed your profile. Please fill the following info"),
-//            actions: <Widget>[
-//              FlatButton(
-//                child: Text('Ok'),
-//                onPressed: () {
-//                  Navigator.of(context).pop();
-//                },
-//              ),
-//            ],
-//          );
-//        },
-//      );
-//    });
-//  }
+  @override
+  void initState() {
+    super.initState();
+    Auth.firebaseAuth.authStateChanges().listen((user) {
+      print("logged in: " + user.toString());
+      if (user != null) {
+        print("logged in");
+        Navigator.of(context).popUntil(ModalRoute.withName('/'));
+      } else
+        setState(() {
+          print("Unable to authenticate with email");
+        });
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -84,9 +74,7 @@ class CreateAccountState extends State<CreateAccount> {
         'birthday': _birthdayController.text,
         'email': _emailController.text,
       };
-      _registerUser(data).then(
-        (value) => {if (Auth().user != null) navigate(context)},
-      );
+      _registerUser(data);
     };
 
     AppBar bar = AppBar(
@@ -117,7 +105,9 @@ class CreateAccountState extends State<CreateAccount> {
     ], [
       ButtonElement("Continue", onContinueTap)
     ], _formKey,
-        appBar: bar,
+        appBar: TextForm.backBar(context, onTap: () {
+          Navigator.of(context).popUntil(ModalRoute.withName('/'));
+        }),
         title: "Join the Twiine Community",
         headingSpacing: 0,
         trailingSpacing: 0);
@@ -131,18 +121,10 @@ class CreateAccountState extends State<CreateAccount> {
         email: _emailController.text,
         password: _passwordController.text,
       );
+      await TwiineApi.createNewUser(data: data);
       await Auth.signInEmail(_emailController.text, _passwordController.text);
     } catch (error) {
       print("Unable to create account: ${error.toString()}");
     }
-    try {
-      return TwiineApi.createNewUser(data: data);
-    } catch (error) {
-      print("API call error: ${error.toString()}");
-    }
-  }
-
-  static navigate(BuildContext context){
-    Navigator.of(context).popUntil(ModalRoute.withName('/'));
   }
 }

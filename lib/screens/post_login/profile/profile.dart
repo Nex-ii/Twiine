@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/screens/post_login/profile/profile_elements/saved.dart';
 
 class Profile extends StatefulWidget {
   @override
@@ -14,14 +15,16 @@ class ProfileState extends State<Profile> {
   File _image;
 
   Image profilePic;
+
   ProfileState() {
     _updateProfilePicture();
     Auth.updateUserData().then((value) => {
-      setState(() {
-        _updateProfilePicture();
-      })
-    });
+          setState(() {
+            _updateProfilePicture();
+          })
+        });
   }
+
   _updateProfilePicture() {
     profilePic = (Auth.userData.containsKey("pictureUrl"))
         ? Image.network(Auth.userData["pictureUrl"])
@@ -56,6 +59,9 @@ class ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    String name = "${Auth.userData["firstname"]} ${Auth.userData["lastname"]}";
+    String email = Auth.userData["email"];
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -69,11 +75,11 @@ class ProfileState extends State<Profile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${Auth.userData["firstname"]} ${Auth.userData["lastname"]}",
+                  name != null ? name : "",
                   style: Theme.of(context).textTheme.headline2,
                 ),
                 Text(
-                  Auth.userData["email"],
+                  email != null ? email : "",
                   style: Theme.of(context).textTheme.headline3,
                 ),
               ],
@@ -89,16 +95,22 @@ class ProfileState extends State<Profile> {
             children: [
               SizedBox(height: 30),
               _labelText("ACCOUNT"),
-              _createButton(Icons.account_circle, "Manage Account Information", () => {_toManage()}),
+              _createButton(Icons.account_circle, "Edit Profile", () => {_toManage()}),
               _createButton(Icons.notifications, "Notifications", () => {}),
-
-              _createButton(Icons.bookmark, "Saved", () => {}),
+              _createButton(
+                  Icons.bookmark,
+                  "Saved",
+                  () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => Saved()),
+                        )},),
               _labelText("SUPPORT"),
               _createButton(Icons.help_outline, "Get Help", () => {}),
               _createButton(
                   Icons.question_answer, "Give us Feedback", () => {}),
               _labelText("ABOUT"),
-              _createButton(Icons.content_copy, "Terms of Use", () => {}),
+              _createButton(Icons.content_copy, "Terms and Conditions", () => {_toTerms()}),
               _createButton(Icons.lock_open, "Privacy Policy", () => {}),
               _createButton(
                   Icons.exit_to_app, "Sign out", () => {Auth.signOut()}),
@@ -155,5 +167,9 @@ class ProfileState extends State<Profile> {
 
   _toManage() {
     Navigator.of(context).pushNamed('/manage');
+  }
+
+  _toTerms() {
+    Navigator.of(context).pushNamed('/toc');
   }
 }

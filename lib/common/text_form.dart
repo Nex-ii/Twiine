@@ -1,8 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/pre_login/register/signup/date_picker.dart';
-
+import 'package:twiine/screens/pre_login/register/date_picker.dart';
 class TextForm {
+  static AppBar backBar(BuildContext context,
+      {Function onTap,
+      double appBarHeight = 70,
+      String title = "",
+      Color titleColor = Colors.black}) {
+    return AppBar(
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      title: Text(
+        title,
+        style: TextStyle(color: titleColor),
+      ),
+      toolbarHeight: appBarHeight,
+      leading: IconButton(
+        icon: new Icon(Icons.arrow_back_ios),
+        color: Colors.black,
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
+  }
+
+  static Future<void> popUp(BuildContext context, String msg) {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          content: Text(msg),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   static Widget textForm(
     List<FormElement> params,
     List<ButtonElement> buttons,
@@ -68,6 +107,7 @@ class TextForm {
         ),
         validator: element._validator == null
             ? (String value) {
+                element._controller.text = element._controller.text.trim();
                 if (value.isEmpty) {
                   return '${element._name} is Required';
                 }
@@ -97,6 +137,7 @@ class TextForm {
         ),
         validator: element._validator == null
             ? (String value) {
+                element._controller.text = element._controller.text.trim();
                 if (value.isEmpty) {
                   return 'Valid Email is Required';
                 }
@@ -132,8 +173,7 @@ class TextForm {
         child: Padding(
           padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
           child: InkWell(
-            child: Text(element._name,
-                style: TextStyle(color: Colors.grey)),
+            child: Text(element._name, style: TextStyle(color: Colors.grey)),
             onTap: element._onTap,
           ),
         ),

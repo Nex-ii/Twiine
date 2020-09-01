@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
-import 'package:twiine/colors.dart';
 import 'package:twiine/common/text_form.dart';
+import 'package:twiine/screens/pre_login/login/forgot_password.dart';
 
 class LoginEmail extends StatefulWidget {
   @override
@@ -12,17 +12,18 @@ class LoginEmail extends StatefulWidget {
 }
 
 class LoginEmailState extends State<LoginEmail> {
-  String _loginMessage = "";
-  static final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  String _loginMessage = "";
 
   static Function passwordValidator;
   static Function onContinueTap;
 
   @override
   void initState() {
+    super.initState();
     Auth.firebaseAuth.authStateChanges().listen((user) {
       print("logged in: " + user.toString());
       if (user != null) {
@@ -64,11 +65,14 @@ class LoginEmailState extends State<LoginEmail> {
       FormElement("Password", FormTypes.PASSWORDFIELD,
           validator: passwordValidator, controller: _passwordController),
       FormElement("Forgot Password?", FormTypes.INKWELL,
-          onTap: () => Navigator.pushNamed(context, '/forgotPassword')),
+          onTap: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ForgotPassword()))),
     ], [
       ButtonElement("Continue", _signInWithEmail),
     ], GlobalKey(),
-        appBar: bar, title: "Sign in to twiine", trailingSpacing: 0);
+        appBar: TextForm.backBar(context),
+        title: "Sign in to twiine",
+        trailingSpacing: 0);
   }
 
   _signInWithEmail() async {
