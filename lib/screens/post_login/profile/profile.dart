@@ -111,7 +111,7 @@ class ProfileState extends State<Profile> {
                   Icons.question_answer, "Give us Feedback", () => {}),
               _labelText("ABOUT"),
               _createButton(Icons.content_copy, "Terms and Conditions", () => {_toTerms()}),
-              _createButton(Icons.lock_open, "Privacy Policy", () => {}),
+              _createButton(Icons.lock_open, "Privacy Policy", () => {_toPrivacy()}),
               _createButton(
                   Icons.exit_to_app, "Sign out", () => {Auth.signOut()}),
             ],
@@ -171,5 +171,9 @@ class ProfileState extends State<Profile> {
 
   _toTerms() {
     Navigator.of(context).pushNamed('/toc');
+  }
+
+  _toPrivacy() {
+    Navigator.of(context).pushNamed('/privacy');
   }
 }

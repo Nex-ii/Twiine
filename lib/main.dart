@@ -13,6 +13,7 @@ import 'package:twiine/screens/pre_login/register/create_account.dart';
 import 'package:twiine/screens/post_login/profile/manage.dart';
 import 'package:twiine/screens/post_login/profile/settings.dart';
 import 'package:twiine/screens/post_login/profile/terms_and_conditions.dart';
+import 'package:twiine/screens/post_login/profile/privacy_policy.dart';
 
 void main() => runApp(App());
 
@@ -68,6 +69,7 @@ class App extends StatelessWidget {
                 '/settings': (context) => Settings(),
                 '/manage': (context) => Manage(),
                 '/toc': (context) => TermsAndConditions(),
+                '/privacy': (context) => PrivacyPolicy(),
               },
             ),
           );
