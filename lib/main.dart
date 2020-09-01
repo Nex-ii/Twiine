@@ -5,7 +5,6 @@ import 'package:twiine/login_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/screens/post_login/profile/settings.dart';
-import 'package:twiine/screens/post_login/searchEvent/searchEvent.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 import 'package:twiine/screens/pre_login/login/login.dart';
 import 'package:twiine/components/navbar.dart';
@@ -63,7 +62,7 @@ class App extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               initialRoute: '/',
               routes: {
-                '/': (context) => SearchEvent(),
+                '/': (context) => LoginChecker(),
                 '/landing': (context) => LandingPage(),
                 '/login': (context) => Login(),
                 '/login_email': (context) => LoginEmail(),
