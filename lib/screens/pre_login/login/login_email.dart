@@ -25,9 +25,7 @@ class LoginEmailState extends State<LoginEmail> {
   void initState() {
     super.initState();
     Auth.firebaseAuth.authStateChanges().listen((user) {
-      print("logged in: " + user.toString());
       if (user != null) {
-        print("logged in");
         Navigator.of(context).popUntil(ModalRoute.withName('/'));
       } else
         setState(() {

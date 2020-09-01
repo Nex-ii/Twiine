@@ -97,13 +97,13 @@ class ProfileState extends State<Profile> {
               SizedBox(height: 30),
               _labelText("ACCOUNT"),
               _createButton(
-                Icons.account_circle,
+                Icons.settings,
                 "Profile",
                 () => {},
               ),
-              _createButton(Icons.notifications, "Notifications", () => {}),
+              _createButton(Icons.people_outline, "Friends", () => {}),
               _createButton(
-                  Icons.bookmark,
+                  Icons.bookmark_border,
                   "Saved",
                   () => {
                         Navigator.push(
@@ -112,9 +112,8 @@ class ProfileState extends State<Profile> {
                         )
                       }),
               _labelText("SUPPORT"),
-              _createButton(Icons.help_outline, "Get Help", () => {}),
               _createButton(
-                  Icons.question_answer, "Give us Feedback", () => {}),
+                  Icons.question_answer, "Report a Bug", () => {}),
               _labelText("ABOUT"),
               _createButton(Icons.content_copy, "Terms of Use", () => {}),
               _createButton(Icons.lock_open, "Privacy Policy", () => {}),

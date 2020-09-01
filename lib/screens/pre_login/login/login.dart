@@ -62,11 +62,12 @@ class LoginState extends State<Login> {
                 SizedBox(height: 30),
                 _createLoginButton(
                   FaIcon(FontAwesomeIcons.envelope),
-                  "Continue with Email", () => {
+                  "Continue with Email", () =>
+                {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginEmail()))
-                  },
+                      context,
+                      MaterialPageRoute(builder: (context) => LoginEmail()))
+                },
                 ),
                 SizedBox(height: 5),
                 _createLoginButton(
@@ -100,7 +101,10 @@ class LoginState extends State<Login> {
                     ),
                     FlatButton(
                       onPressed: () {
-                        Navigator.of(context).pushNamed('/login_email');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) =>
+                                LoginEmail()));
                       },
                       child: Text(
                         "Log in",

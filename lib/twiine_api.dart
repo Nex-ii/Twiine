@@ -31,12 +31,23 @@ class TwiineApi {
   }) async {
     if (data == null) data = {};
 
+    if(data["firstname"] == null || data["firstname"] == "")
+      data["firstname"] = firstname;
+    if(data["lastname"] == null || data["lastname"] == "")
+      data["lastname"] = lastname;
+    if(data["birthday"] == null || data["birthday"] == "")
+      data["birthday"] = birthday;
+    if(data["email"] == null || data["email"] == "")
+      data["email"] = email;
+    if(data["phone"] == null || data["phone"] == "")
+      data["phone"] = phone;
+
     if (firstname != "") data["firstname"] = firstname;
     if (lastname != "") data["lastname"] = lastname;
     if (birthday != "") data["birthday"] = birthday;
     if (email != "") data["email"] = email;
     if (phone != "") data["phone"] = phone;
-    data["pictureUrl"] = "";
+    data["pictureUrl"] = "gs://twiine.appspot.com/ProfilePictures/default_profile.png";
 
     return FirebaseFirestore.instance
         .collection("Users")

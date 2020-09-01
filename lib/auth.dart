@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
@@ -75,7 +77,7 @@ class Auth {
           .doc(firebaseResult.user.uid)
           .get()
           .then((doc) {
-        if (doc.data == null) {
+        if (!doc.exists) {
           TwiineApi.createNewUser(
               firstname: name[0],
               lastname: name[name.length - 1],

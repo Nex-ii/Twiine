@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:twiine/auth.dart';
 import 'package:twiine/screens/post_login/scheduled/planned_dates.dart';
 
 class Search extends StatefulWidget {
@@ -103,6 +104,16 @@ class SearchState extends State<Search> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Scheduled Screen'),
+        actions: <Widget>[
+          // action button
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Auth.signOut();
+
+            },
+          ),
+        ],
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
@@ -120,25 +131,26 @@ class SearchState extends State<Search> {
           Expanded(
             child: ListView.builder(
               itemCount: _selectedEvents.length,
-              itemBuilder: (context, index) => ExpansionTile(
-                title: Text(_selectedEvents[index].month.toString() +
-                    '/' +
-                    _selectedEvents[index].day.toString() +
-                    '/' +
-                    _selectedEvents[index].year.toString() +
-                    '      ' +
-                    _selectedEvents[index].hour.toString() +
-                    ':' +
-                    _selectedEvents[index].minute.toString()),
-                children: <Widget>[
-                  new ListTile(
-                    title: Text(_selectedEvents[index].name),
+              itemBuilder: (context, index) =>
+                  ExpansionTile(
+                    title: Text(_selectedEvents[index].month.toString() +
+                        '/' +
+                        _selectedEvents[index].day.toString() +
+                        '/' +
+                        _selectedEvents[index].year.toString() +
+                        '      ' +
+                        _selectedEvents[index].hour.toString() +
+                        ':' +
+                        _selectedEvents[index].minute.toString()),
+                    children: <Widget>[
+                      new ListTile(
+                        title: Text(_selectedEvents[index].name),
+                      ),
+                      new ListTile(
+                        title: Text(_selectedEvents[index].location),
+                      ),
+                    ],
                   ),
-                  new ListTile(
-                    title: Text(_selectedEvents[index].location),
-                  ),
-                ],
-              ),
             ),
           ),
           Padding(
@@ -154,27 +166,28 @@ class SearchState extends State<Search> {
           Expanded(
             child: ListView.builder(
               itemCount: _pastEvents.length,
-              itemBuilder: (context, index) => ExpansionTile(
-                title: Text(
-                  _pastEvents[index].month.toString() +
-                      '/' +
-                      _pastEvents[index].day.toString() +
-                      '/' +
-                      _pastEvents[index].year.toString() +
-                      '      ' +
-                      _pastEvents[index].hour.toString() +
-                      ':' +
-                      _pastEvents[index].minute.toString(),
-                ),
-                children: <Widget>[
-                  new ListTile(
-                    title: Text(_pastEvents[index].name),
+              itemBuilder: (context, index) =>
+                  ExpansionTile(
+                    title: Text(
+                      _pastEvents[index].month.toString() +
+                          '/' +
+                          _pastEvents[index].day.toString() +
+                          '/' +
+                          _pastEvents[index].year.toString() +
+                          '      ' +
+                          _pastEvents[index].hour.toString() +
+                          ':' +
+                          _pastEvents[index].minute.toString(),
+                    ),
+                    children: <Widget>[
+                      new ListTile(
+                        title: Text(_pastEvents[index].name),
+                      ),
+                      new ListTile(
+                        title: Text(_pastEvents[index].location),
+                      ),
+                    ],
                   ),
-                  new ListTile(
-                    title: Text(_pastEvents[index].location),
-                  ),
-                ],
-              ),
             ),
           ),
         ],
@@ -183,9 +196,9 @@ class SearchState extends State<Search> {
         child: Icon(Icons.add),
         onPressed: () {
           Navigator.of(context).pushNamed('/addEvent').then(
-            (onValue) {
+                (onValue) {
               setState(
-                () {
+                    () {
                   PlannedDates testing = onValue;
                   if (testing.dateInfo.isAfter(DateTime.now())) {
                     _selectedEvents.add(onValue);
