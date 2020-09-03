@@ -1,5 +1,7 @@
+import 'package:twiine/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:twiine/screens/post_login/scheduled/planned_dates.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Search extends StatefulWidget {
   @override
@@ -9,6 +11,7 @@ class Search extends StatefulWidget {
 class SearchState extends State<Search> {
   List<dynamic> _selectedEvents;
   List<dynamic> _pastEvents;
+  String userID;
 
   int partitionSelected(int low, int high) {
     PlannedDates pivot = _selectedEvents[high];
@@ -92,11 +95,13 @@ class SearchState extends State<Search> {
     }
   }
 
+
   @override
   void initState() {
     super.initState();
     _selectedEvents = [];
     _pastEvents = [];
+    getEvents();
   }
 
   Widget build(BuildContext context) {
@@ -181,25 +186,59 @@ class SearchState extends State<Search> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
+        onPressed: () async {
           Navigator.of(context).pushNamed('/addEvent').then(
             (onValue) {
-              setState(
-                () {
-                  PlannedDates testing = onValue;
-                  if (testing.dateInfo.isAfter(DateTime.now())) {
-                    _selectedEvents.add(onValue);
-                    sortSelected(0, _selectedEvents.length - 1);
-                  } else {
-                    _pastEvents.add(onValue);
-                    sortPast(0, _pastEvents.length - 1);
-                  }
-                },
-              );
+              //TODO: Debug database issues
+              PlannedDates temp = onValue;
+              FirebaseFirestore.instance.collection('Events').add({
+                "location": temp.location,
+                "time" : Timestamp.fromDate(temp.dateInfo),
+                "title" : temp.name,
+                "userID" : userID,
+              }).then((value){
+                FirebaseFirestore.instance
+                    .collection("Users")
+                    .doc(userID)
+                    .update({"events": FieldValue.arrayUnion([value.id])});
+              });
+              getEvents();
             },
           );
         },
       ),
     );
   }
-}
+
+  void getEvents() async{
+    List<dynamic> temp = Auth.currentUser.data['events'];
+      for(int i=0; i<temp.length; i++){
+        String documentID = temp[i].documentID;
+        FirebaseFirestore.instance
+            .collection('Events')
+            .doc(documentID)
+            .get()
+            .then((value2) {
+            PlannedDates newDate = PlannedDates();
+            newDate.name = value2.get('title');
+            newDate.location = value2.get('location');
+            newDate.dateInfo = value2.get('time').toDate();
+            newDate.day = newDate.dateInfo.day;
+            newDate.month = newDate.dateInfo.month;
+            newDate.year = newDate.dateInfo.year;
+            newDate.hour = newDate.dateInfo.hour;
+            newDate.minute = newDate.dateInfo.minute;
+
+            setState(() {
+              if(newDate.dateInfo.isAfter(DateTime.now())){
+                _selectedEvents.add(newDate);
+                sortSelected(0, _selectedEvents.length - 1);
+              }else{
+                _pastEvents.add(newDate);
+                sortPast(0, _pastEvents.length - 1);
+              }
+            });
+        });
+        }
+      }
+    }

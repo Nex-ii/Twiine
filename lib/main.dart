@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:twiine/login_checker.dart';
 import 'package:provider/provider.dart';
 import 'package:twiine/auth.dart';
+import 'package:twiine/screens/post_login/profile/manage.dart';
+import 'package:twiine/screens/post_login/profile/settings.dart';
 import 'package:twiine/screens/pre_login/landing_page.dart';
 import 'package:twiine/screens/pre_login/login/login.dart';
 import 'package:twiine/components/navbar.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/pre_login/register/create_account.dart';
+
+import 'screens/post_login/addEvent/add_event.dart';
 
 
 void main() => runApp(App());
@@ -61,6 +65,7 @@ class App extends StatelessWidget {
                 '/login': (context) => Login(),
                 '/signup': (context) => CreateAccount(),
                 '/navBar': (context) => Navbar(),
+                '/addEvent': (context) => addEvent(),
               },
             ),
           );

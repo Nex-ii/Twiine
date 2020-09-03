@@ -1,9 +1,11 @@
+import 'package:twiine/auth.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:twiine/auth.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:twiine/colors.dart';
+import 'package:twiine/screens/post_login/profile/account_settings.dart';
 import 'package:twiine/screens/post_login/profile/profile_elements/saved.dart';
 
 class Profile extends StatefulWidget {
@@ -13,22 +15,15 @@ class Profile extends StatefulWidget {
 
 class ProfileState extends State<Profile> {
   File _image;
-
   Image profilePic;
 
   ProfileState() {
-    _updateProfilePicture();
+    profilePic = Auth.currentUser.profilePicture;
     Auth.updateUserData().then((value) => {
           setState(() {
-            _updateProfilePicture();
+            profilePic = Auth.currentUser.profilePicture;
           })
         });
-  }
-
-  _updateProfilePicture() {
-    profilePic = (Auth.userData.containsKey("pictureUrl"))
-        ? Image.network(Auth.userData["pictureUrl"])
-        : Image.asset("assets/default_profile.png");
   }
 
   //TODO: Ask for permission to access the gallery
@@ -57,35 +52,47 @@ class ProfileState extends State<Profile> {
     });
   }
 
+  final String settingsIcon = "assets/icons/settings_icon.svg";
+  final String friendsIcon = "assets/icons/friends_icon.svg";
+  final String savedIcon = "assets/icons/bookmark_icon.svg";
+  final String helpIcon = "assets/icons/help_icon.svg";
+  final String feedbackIcon = "assets/icons/feedback_icon.svg";
+  final String termsIcon = "assets/icons/copy_icon.svg";
+  final String privacyIcon = "assets/icons/no_lock_icon.svg";
+  final double iconSize = 30;
+
   @override
   Widget build(BuildContext context) {
-    String name = "${Auth.userData["firstname"]} ${Auth.userData["lastname"]}";
-    String email = Auth.userData["email"];
+    String name =
+        "${Auth.currentUser.data["firstname"]} ${Auth.currentUser.data["lastname"]}";
+    String email = Auth.currentUser.data["email"];
 
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
         backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircleAvatar(radius: 25, backgroundImage: profilePic.image),
-            SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name != null ? name : "",
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                Text(
-                  email != null ? email : "",
-                  style: Theme.of(context).textTheme.headline3,
-                ),
-              ],
-            )
-          ],
+        toolbarHeight: 90,
+        title: SafeArea(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(radius: 25, backgroundImage: profilePic.image),
+              SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name != null ? name : "",
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
+                  Text(
+                    email != null ? email : "",
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -97,29 +104,49 @@ class ProfileState extends State<Profile> {
               SizedBox(height: 30),
               _labelText("ACCOUNT"),
               _createButton(
-                Icons.account_circle,
-                "Profile",
-                () => {},
+                SvgPicture.asset(settingsIcon),
+                "Account Settings",
+                () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AccountSettings()),
+                  ).then((value) {
+                    setState(() {});
+                  })
+                },
               ),
-              _createButton(Icons.notifications, "Notifications", () => {}),
+              _createButton(SvgPicture.asset(friendsIcon), "Friends", () => {}),
               _createButton(
-                  Icons.bookmark,
-                  "Saved",
-                  () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Saved()),
-                        )
-                      }),
+                SvgPicture.asset(savedIcon),
+                "Saved",
+                () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => Saved(),
+                    ),
+                  ),
+                },
+              ),
+              SizedBox(height: 30),
               _labelText("SUPPORT"),
-              _createButton(Icons.help_outline, "Get Help", () => {}),
+              _createButton(SvgPicture.asset(helpIcon), "Get Help", () => {}),
               _createButton(
-                  Icons.question_answer, "Give us Feedback", () => {}),
+                  SvgPicture.asset(feedbackIcon), "Give us Feedback", () => {}),
+              SizedBox(height: 30),
               _labelText("ABOUT"),
-              _createButton(Icons.content_copy, "Terms of Use", () => {}),
-              _createButton(Icons.lock_open, "Privacy Policy", () => {}),
               _createButton(
-                  Icons.exit_to_app, "Sign out", () => {Auth.signOut()}),
+                  SvgPicture.asset(termsIcon), "Terms of Use", () => {}),
+              _createButton(
+                  SvgPicture.asset(privacyIcon), "Privacy Policy", () => {}),
+              _createButton(
+                  Icon(
+                    Icons.exit_to_app,
+                    size: iconSize,
+                    color: TwiineColors.grey,
+                  ),
+                  "Sign out",
+                  () => {Auth.signOut()}),
             ],
           ),
         ),
@@ -149,7 +176,7 @@ class ProfileState extends State<Profile> {
     );
   }
 
-  Widget _createButton(IconData icon, String text, Function onTap) {
+  Widget _createButton(Widget icon, String text, Function onTap) {
     return SizedBox(
       height: 60,
       child: InkWell(
@@ -157,11 +184,19 @@ class ProfileState extends State<Profile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon),
+            Container(
+              alignment: Alignment(0.0, 0.0),
+              child: SizedBox(
+                height: iconSize,
+                width: iconSize,
+                child: icon,
+              ),
+            ),
             SizedBox(width: 10),
             Expanded(flex: 1, child: _buttonText(text)),
             Icon(
               Icons.arrow_forward_ios,
+              color: TwiineColors.grey,
               size: 15,
             ),
           ],
@@ -169,5 +204,9 @@ class ProfileState extends State<Profile> {
         onTap: onTap,
       ),
     );
+  }
+
+  _toManage() {
+    Navigator.of(context).pushNamed('/manage');
   }
 }

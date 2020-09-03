@@ -77,6 +77,17 @@ class CreateAccountState extends State<CreateAccount> {
       _registerUser(data);
     };
 
+    AppBar bar = AppBar(
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      title: Text(''),
+      leading: new IconButton(
+        icon: new Icon(Icons.arrow_back_ios),
+        color: Colors.black,
+        onPressed: () => Navigator.of(context).pop(),
+      ),
+    );
+
     Widget w = TextForm.textForm([
       FormElement("First Name", FormTypes.TEXTFIELD,
           controller: _firstNameController),

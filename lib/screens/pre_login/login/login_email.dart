@@ -38,7 +38,6 @@ class LoginEmailState extends State<LoginEmail> {
 
   @override
   Widget build(BuildContext context) {
-    // subscribe to auth changes
     passwordValidator = (String value) {
       if (value.isEmpty) {
         return 'Password is Required';
@@ -48,6 +47,17 @@ class LoginEmailState extends State<LoginEmail> {
       }
       return null;
     };
+
+    AppBar bar = AppBar(
+      elevation: 0.0,
+      backgroundColor: Colors.transparent,
+      title: Text(''),
+      leading: new IconButton(
+        icon: new Icon(Icons.arrow_back_ios),
+        color: Colors.black,
+        onPressed: () => Navigator.pop(context),
+      ),
+    );
 
     return TextForm.textForm([
       FormElement("Email", FormTypes.EMAILFIELD, controller: _emailController),
@@ -66,7 +76,7 @@ class LoginEmailState extends State<LoginEmail> {
 
   _signInWithEmail() async {
     try {
-      Auth.signInEmail(_emailController.text, _passwordController.text);
+      await Auth.signInEmail(_emailController.text, _passwordController.text);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');

@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:twiine/screens/twiine_user.dart';
 import 'package:twiine/twiine_api.dart';
 
 class Auth {
   static final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  static Map<String, dynamic> userData;
+  static TwiineUser currentUser;
 
   Stream<User> get user {
     return firebaseAuth.authStateChanges();
@@ -18,7 +20,7 @@ class Auth {
         email: email,
         password: password,
       );
-      updateUserData();
+      await updateUserData();
       return result.user;
     } catch (error) {
       print(error.toString());
@@ -35,19 +37,18 @@ class Auth {
             FacebookAuthProvider.credential(result.accessToken.token),
           );
           var name = firebaseResult.user.displayName.split(' ');
-          FirebaseFirestore.instance
+          DocumentSnapshot doc = await FirebaseFirestore.instance
               .collection("Users")
               .doc(firebaseResult.user.uid)
-              .get()
-              .then((doc) {
-            if (doc.data == null) {
-              TwiineApi.createNewUser(
-                  firstname: name[0],
-                  lastname: name[name.length - 1],
-                  email: firebaseResult.user.email);
-            }
-            updateUserData();
-          });
+              .get();
+          if (doc.data == null) {
+            await TwiineApi.createNewUser(
+              firstname: name[0],
+              lastname: name[name.length - 1],
+              email: firebaseResult.user.email,
+            );
+          }
+          await updateUserData();
           return firebaseResult.user;
           break;
         default:
@@ -70,19 +71,18 @@ class Auth {
         ),
       );
       var name = firebaseResult.user.displayName.split(' ');
-      FirebaseFirestore.instance
+      DocumentSnapshot doc = await FirebaseFirestore.instance
           .collection("Users")
           .doc(firebaseResult.user.uid)
-          .get()
-          .then((doc) {
-        if (doc.data == null) {
-          TwiineApi.createNewUser(
-              firstname: name[0],
-              lastname: name[name.length - 1],
-              email: firebaseResult.user.email);
-        }
-        updateUserData();
-      });
+          .get();
+      if (doc.data == null) {
+        await TwiineApi.createNewUser(
+          firstname: name[0],
+          lastname: name[name.length - 1],
+          email: firebaseResult.user.email,
+        );
+      }
+      await updateUserData();
       return firebaseResult.user;
     } catch (error) {
       print(error.toString());
@@ -93,7 +93,14 @@ class Auth {
   static Future updateUserData() async {
     DocumentSnapshot userData =
         await TwiineApi.getUserData(firebaseAuth.currentUser.uid);
-    Auth.userData = userData.data();
+    Image profilePicture = (userData.data().containsKey("pictureUrl") &&
+            userData.data()["pictureUrl"] != "")
+        ? Image.network(userData.data()["pictureUrl"])
+        : Image.asset("assets/default_profile.png");
+    currentUser = TwiineUser(
+      data: userData.data(),
+      profilePicture: profilePicture,
+    );
   }
 
   static void signOut() async {
