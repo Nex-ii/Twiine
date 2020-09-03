@@ -24,7 +24,7 @@ class LandingPageState extends State<LandingPage> {
             Center(
               child: SizedBox(
                 child: SvgPicture.asset(
-                  "assets/icons/twiine_word_logo.svg",
+                  "assets/logos/twiine_word_logo_lowercase.svg",
                   height: 70,
                 ),
               ),
