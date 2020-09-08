@@ -60,6 +60,7 @@ class ProfileState extends State<Profile> {
   final String feedbackIcon = "assets/icons/feedback_icon.svg";
   final String termsIcon = "assets/icons/copy_icon.svg";
   final String privacyIcon = "assets/icons/no_lock_icon.svg";
+  final String personIcon = "assets/icons/person_icon.svg";
   final double iconSize = 30;
 
   @override
@@ -104,16 +105,6 @@ class ProfileState extends State<Profile> {
             children: [
               SizedBox(height: 30),
               _labelText("ACCOUNT"),
-              _createButton(null, "Edit Profile", () => {_toManage()}),
-              _createButton(null, "Notifications", () => {}),
-              _createButton(
-                  null,
-                  "Saved",
-                  () => {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => Saved()),
-                        )},),
               _createButton(
                 SvgPicture.asset(settingsIcon),
                 "Account Settings",
@@ -146,8 +137,8 @@ class ProfileState extends State<Profile> {
                   SvgPicture.asset(feedbackIcon), "Give us Feedback", () => {}),
               SizedBox(height: 30),
               _labelText("ABOUT"),
-              _createButton(null, "Terms and Conditions", () => {_toTerms()}),
-              _createButton(null, "Privacy Policy", () => {_toPrivacy()}),
+              _createButton(SvgPicture.asset(termsIcon), "Terms and Conditions", () => {_toTerms()}),
+              _createButton(SvgPicture.asset(privacyIcon), "Privacy Policy", () => {_toPrivacy()}),
               _createButton(
                   Icon(
                     Icons.exit_to_app,

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/profile/edit_profile.dart';
-import 'package:twiine/screens/post_login/profile/edit_privacy.dart';
 
-class AccountSettings extends StatelessWidget {
+class EditPrivacy extends StatefulWidget {
+  @override
+  _EditPrivacyState createState() => _EditPrivacyState();
+}
+
+class _EditPrivacyState extends State<EditPrivacy> {
   final double _fontSize = 15;
   @override
   Widget build(BuildContext context) {
@@ -11,7 +16,7 @@ class AccountSettings extends StatelessWidget {
       appBar: AppBar(
         title: SafeArea(
           child: Text(
-            "Account settings",
+            "Security & Privacy",
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -29,21 +34,26 @@ class AccountSettings extends StatelessWidget {
       body: Container(
         child: Column(
           children: [
-            _createButton("Account", "Profile", () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditProfile()),
-              );
-            }),
+            _createButton("Email", Auth.currentUser.data["email"], () {}),
             Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
-            _createButton("Security & Privacy", "Phone, Password", () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => EditPrivacy()),
-              );
-            }),
+            _createButton("Birthdate", Auth.currentUser.data["birthday"], () {}),
             Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
-            _createButton("Notifications", "", () {}),
+            _createButton("Phone Number", "", () {}),
+            Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
+            Padding(
+              padding: EdgeInsets.all(30.0),
+              child: InkWell(
+                  child: Text(
+                    "Reset Password",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  onTap: (){}
+              ),
+            ),
           ],
         ),
       ),
