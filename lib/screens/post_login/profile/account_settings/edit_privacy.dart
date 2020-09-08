@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
 import 'package:twiine/screens/post_login/profile/account_settings/change_password.dart';
+import 'package:twiine/screens/post_login/profile/account_settings/change_email.dart';
 
 class EditPrivacy extends StatefulWidget {
   @override
@@ -34,7 +35,12 @@ class _EditPrivacyState extends State<EditPrivacy> {
       body: Container(
         child: Column(
           children: [
-            _createButton("Email", Auth.currentUser.data["email"], () {}),
+            _createButton("Email", Auth.currentUser.data["email"], () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ChangeEmail()),
+              );
+            }),
             Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
             _createButton("Birthdate", Auth.currentUser.data["birthday"], () {}),
             Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
