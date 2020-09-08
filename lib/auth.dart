@@ -42,7 +42,7 @@ class Auth {
               .doc(firebaseResult.user.uid)
               .get()
               .then((doc) {
-            if (doc.data == null) {
+            if (!doc.exists) {
               TwiineApi.createNewUser(
                   firstname: name[0],
                   lastname: name[name.length - 1],

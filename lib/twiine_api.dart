@@ -47,6 +47,7 @@ class TwiineApi {
     if (birthday != "") data["birthday"] = birthday;
     if (email != "") data["email"] = email;
     if (phone != "") data["phone"] = phone;
+    //default picture url
     data["pictureUrl"] = "gs://twiine.appspot.com/ProfilePictures/default_profile.png";
 
     return FirebaseFirestore.instance
@@ -59,6 +60,7 @@ class TwiineApi {
           .doc(Auth.firebaseAuth.currentUser.uid)
           .update({
         "events": FieldValue.arrayUnion([]),
+        "saved": {},
         "requests": FieldValue.arrayUnion([]),
       });
     });
@@ -68,6 +70,13 @@ class TwiineApi {
     return await FirebaseFirestore.instance
         .collection("Users")
         .doc(Auth.firebaseAuth.currentUser.uid)
+        .get();
+  }
+
+  static Future<DocumentSnapshot> getDocument(String collection, String document) async {
+    return await FirebaseFirestore.instance
+        .collection(collection)
+        .doc(document)
         .get();
   }
 }
