@@ -33,33 +33,35 @@ class _GMapState extends State<GMap> {
 //       .doc("7-leaves-cafe-alhambra-2")
 //       .get())
 //       .data();
-   Map<String, dynamic> eventData;
-   FirebaseFirestore.instance
-       .collection("Businesses_Debug")
-       .where('name', isEqualTo: searchAddr)
-       .get()
-       .then((event) {
-         if(event.docs.isNotEmpty) {
-           eventData = event.docs.single.data();
-         }
-   }).catchError((e) => print("error fetching data: $e"));
-   setState(() {
-     _address = "${eventData["address"][0]}, ${eventData["address"][1]}";
-   });
-   Geolocator().placemarkFromAddress(_address).then((result){
-     currentLocation = LatLng(result[0].position.latitude, result[0].position.longitude);
-     _markers.clear();
-     _markers.add(
-         Marker(
-           markerId: MarkerId(currentLocation.toString(),),
-           position: currentLocation,
-         )
-     );
-     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-     target: currentLocation,
-     zoom: 20.0,
-     )));
-   });
+
+
+//   Map<String, dynamic> eventData;
+//   FirebaseFirestore.instance
+//       .collection("Businesses_Debug")
+//       .where('name', isEqualTo: searchAddr)
+//       .get()
+//       .then((event) {
+//         if(event.docs.isNotEmpty) {
+//           eventData = event.docs.single.data();
+//         }
+//   }).catchError((e) => print("error fetching data: $e"));
+//   setState(() {
+//     _address = "${eventData["address"][0]}, ${eventData["address"][1]}";
+//   });
+//   Geolocator().placemarkFromAddress(_address).then((result){
+//     currentLocation = LatLng(result[0].position.latitude, result[0].position.longitude);
+//     _markers.clear();
+//     _markers.add(
+//         Marker(
+//           markerId: MarkerId(currentLocation.toString(),),
+//           position: currentLocation,
+//         )
+//     );
+//     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+//     target: currentLocation,
+//     zoom: 20.0,
+//     )));
+//   });
 
  }
 
@@ -70,23 +72,23 @@ class _GMapState extends State<GMap> {
  }
 
  searchAndNavigate() {
-     _getEventData();
+//     _getEventData();
 
-//   Geolocator().placemarkFromAddress(searchAddr).then((result) {
-//     currentLocation =
-//         LatLng(result[0].position.latitude, result[0].position.longitude);
-//     _markers.clear();
-//     _markers.add(
-//         Marker(
-//           markerId: MarkerId(currentLocation.toString(),),
-//           position: currentLocation,
-//         )
-//     );
-//     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-//       target: currentLocation,
-//       zoom: 20.0,
-//     )));
-//   });
+   Geolocator().placemarkFromAddress(searchAddr).then((result) {
+     currentLocation =
+         LatLng(result[0].position.latitude, result[0].position.longitude);
+     _markers.clear();
+     _markers.add(
+         Marker(
+           markerId: MarkerId(currentLocation.toString(),),
+           position: currentLocation,
+         )
+     );
+     _mapController.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+       target: currentLocation,
+       zoom: 12.0,
+     )));
+   });
  }
 
 
