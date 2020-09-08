@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/post_login/profile/account_settings.dart';
+import 'package:twiine/screens/post_login/profile/account_settings/account_settings.dart';
 import 'package:twiine/screens/post_login/profile/profile_elements/saved.dart';
 
 class Profile extends StatefulWidget {

@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/common/text_form.dart';
 
-class ChangePassowrd extends StatefulWidget {
+class ChangePassword extends StatefulWidget {
   @override
   // TODO: implement build
   State<StatefulWidget> createState() {
-    return ChangePassowrdState();
+    return ChangePasswordState();
   }
 }
 
-class ChangePassowrdState extends State<ChangePassowrd> {
+class ChangePasswordState extends State<ChangePassword> {
   String _oldPassword;
   String _newPassword;
   String _confirmPassword;
@@ -85,16 +85,35 @@ class ChangePassowrdState extends State<ChangePassowrd> {
       });
     };
 
-    return TextForm.textForm([
-      FormElement("Old Password", FormTypes.PASSWORDFIELD,
-          validator: oldPasswordValidator, controller: _oldPasswordController),
-      FormElement("New Password", FormTypes.PASSWORDFIELD,
-          validator: newPasswordValidator, controller: _newPasswordController),
-      FormElement("Confirm New Password", FormTypes.PASSWORDFIELD,
-          validator: confirmNewPasswordValidator,
-          controller: _confirmNewPasswordController),
-    ], [
-      ButtonElement("Continue", onContinueTap)
-    ], _formKey, title: "Change Password", trailingSpacing: 30);
-  }
+    return Scaffold(
+        appBar: AppBar(
+          title: SafeArea(
+            child: Text(
+              "Change Password",
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          toolbarHeight: 60,
+          leading: SafeArea(
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              color: Colors.black,
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+          ),
+        ),
+        body: TextForm.textForm([
+          FormElement("Old Password", FormTypes.PASSWORDFIELD,
+              validator: oldPasswordValidator, controller: _oldPasswordController),
+          FormElement("New Password", FormTypes.PASSWORDFIELD,
+              validator: newPasswordValidator, controller: _newPasswordController),
+          FormElement("Confirm New Password", FormTypes.PASSWORDFIELD,
+              validator: confirmNewPasswordValidator,
+              controller: _confirmNewPasswordController),
+        ], [
+          ButtonElement("Continue", onContinueTap)
+        ], _formKey,));
+    }
 }

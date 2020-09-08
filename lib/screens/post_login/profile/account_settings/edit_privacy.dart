@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/post_login/profile/manage.dart';
+import 'package:twiine/screens/post_login/profile/account_settings/change_password.dart';
 
-class EditProfile extends StatefulWidget {
+class EditPrivacy extends StatefulWidget {
   @override
-  EditProfileState createState() => EditProfileState();
+  _EditPrivacyState createState() => _EditPrivacyState();
 }
 
-class EditProfileState extends State<EditProfile> {
-  double _fontSize = 15;
+class _EditPrivacyState extends State<EditPrivacy> {
+  final double _fontSize = 15;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: SafeArea(
           child: Text(
-            "Account settings",
+            "Security & Privacy",
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -34,26 +34,31 @@ class EditProfileState extends State<EditProfile> {
       body: Container(
         child: Column(
           children: [
-            SizedBox(height: 30),
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: Auth.currentUser.profilePicture.image,
-            ),
-            SizedBox(height: 20),
-            _createButton(
-              "Name",
-              "${Auth.currentUser.data["firstname"]} ${Auth.currentUser.data["lastname"]}",
-              () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => Manage()),
-                ).then((value) {
-                  setState(() {});
-                });
-              },
-            ),
+            _createButton("Email", Auth.currentUser.data["email"], () {}),
             Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
-            _createButton("Email", "${Auth.currentUser.data["email"]}", () {}),
+            _createButton("Birthdate", Auth.currentUser.data["birthday"], () {}),
+            Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
+            _createButton("Phone Number", "", () {}),
+            Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
+            Padding(
+              padding: EdgeInsets.all(30.0),
+              child: InkWell(
+                  child: Text(
+                    "Reset Password",
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20.0,
+                    ),
+                  ),
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChangePassword()),
+                    );
+                  }
+              ),
+            ),
           ],
         ),
       ),

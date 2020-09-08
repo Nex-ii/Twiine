@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/post_login/profile/edit_profile.dart';
-import 'package:twiine/screens/post_login/profile/edit_privacy.dart';
+import 'package:twiine/screens/post_login/profile/account_settings/edit_profile.dart';
+import 'package:twiine/screens/post_login/profile/account_settings/edit_privacy.dart';
 
 class AccountSettings extends StatelessWidget {
   final double _fontSize = 15;

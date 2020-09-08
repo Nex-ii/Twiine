@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:twiine/auth.dart';
 import 'package:twiine/colors.dart';
-import 'package:twiine/screens/post_login/profile/edit_profile.dart';
+import 'package:twiine/screens/post_login/profile/account_settings/manage.dart';
 
-class EditPrivacy extends StatefulWidget {
+class EditProfile extends StatefulWidget {
   @override
-  _EditPrivacyState createState() => _EditPrivacyState();
+  EditProfileState createState() => EditProfileState();
 }
 
-class _EditPrivacyState extends State<EditPrivacy> {
-  final double _fontSize = 15;
+class EditProfileState extends State<EditProfile> {
+  double _fontSize = 15;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: SafeArea(
           child: Text(
-            "Security & Privacy",
+            "Account settings",
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -34,26 +34,26 @@ class _EditPrivacyState extends State<EditPrivacy> {
       body: Container(
         child: Column(
           children: [
-            _createButton("Email", Auth.currentUser.data["email"], () {}),
-            Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
-            _createButton("Birthdate", Auth.currentUser.data["birthday"], () {}),
-            Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
-            _createButton("Phone Number", "", () {}),
-            Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
-            Padding(
-              padding: EdgeInsets.all(30.0),
-              child: InkWell(
-                  child: Text(
-                    "Reset Password",
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0,
-                    ),
-                  ),
-                  onTap: (){}
-              ),
+            SizedBox(height: 30),
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: Auth.currentUser.profilePicture.image,
             ),
+            SizedBox(height: 20),
+            _createButton(
+              "Name",
+              "${Auth.currentUser.data["firstname"]} ${Auth.currentUser.data["lastname"]}",
+              () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Manage()),
+                ).then((value) {
+                  setState(() {});
+                });
+              },
+            ),
+            Divider(height: 3, thickness: 1, indent: 10, endIndent: 10),
+            _createButton("Email", "${Auth.currentUser.data["email"]}", () {}),
           ],
         ),
       ),
